@@ -38,7 +38,7 @@ export default defineConfig({
       { text: '更新日志', link: '/changelog/' },
       { text: '部署方案', link: '/deployment/' },
       {
-        text: 'v0.6.0',
+        text: 'v0.6.1',
         items: [
           { text: 'GitHub Releases', link: 'https://github.com/Xxcool/juejin-csdn-extension/releases' },
           { text: '接口兼容状态', link: 'https://xxcool.github.io/juejin-csdn-extension/status.html' }

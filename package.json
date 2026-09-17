@@ -1,6 +1,6 @@
 {
   "name": "artferry",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": true,
   "description": "文章摆渡 (Article Ferry) 官方网站与文档中心",
   "type": "module",
