@@ -2,7 +2,7 @@
 
 面向技术创作者的端侧安全内容摆渡中枢 · 官方展示与文档站点。
 
-- 🌐 **官方网址**：[https://ferry-site.vercel.app](https://ferry-site.vercel.app)
+- 🌐 **官方网址**：[https://artferry.vercel.app](https://artferry.vercel.app)
 - 🐙 **扩展核心源码**：[Xxcool/juejin-csdn-extension](https://github.com/Xxcool/juejin-csdn-extension)
 
 ## 🛠️ 本地运行
