@@ -1,0 +1,15 @@
+{
+  "name": "ferry-site",
+  "version": "0.6.0",
+  "private": true,
+  "description": "文章摆渡 (Article Ferry) 官方网站与文档中心",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}
