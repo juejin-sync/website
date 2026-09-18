@@ -5,7 +5,7 @@ const base = process.env.VITEPRESS_BASE || (process.env.GITHUB_ACTIONS ? '/jueji
 export default defineConfig({
   title: '文章摆渡 | 掘金同步助手',
   titleTemplate: ':title · 文章摆渡',
-  description: '面向技术创作者的端侧安全内容摆渡中枢 · 一处专注写作，优雅摆渡全网阵地',
+  description: '一款轻量开源的 Chrome 浏览器扩展：一处专注写作，顺手摆渡到各大平台草稿箱。首发支持掘金至 CSDN，自动转存无损原图，排版不乱码。',
   base,
   cleanUrls: true,
   ignoreDeadLinks: true,
@@ -23,7 +23,7 @@ export default defineConfig({
     ['meta', { name: 'keywords', content: '掘金, CSDN, 文章同步, 掘金同步助手, 文章摆渡, Chrome扩展, Markdown, 图床转存, 草稿幂等, Manifest V3' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: '文章摆渡 · 掘金同步助手' }],
-    ['meta', { property: 'og:description', content: '面向技术创作者的端侧安全内容摆渡中枢。一处专注写作，优雅摆渡全网阵地，消灭机械搬运与格式清洗。' }],
+    ['meta', { property: 'og:description', content: '一款轻量开源的 Chrome 浏览器扩展：一处专注写作，顺手摆渡到各大平台草稿箱。首发支持掘金至 CSDN，自动转存无损原图，排版不乱码。' }],
     ['meta', { property: 'og:image', content: `${base}logo-128.png` }]
   ],
   themeConfig: {
@@ -35,15 +35,7 @@ export default defineConfig({
       { text: '核心特性', link: '/features/sync-engine' },
       { text: '架构与安全', link: '/deep-dive/pipeline' },
       { text: '产品规划', link: '/roadmap/' },
-      { text: '更新日志', link: '/changelog/' },
-      { text: '部署方案', link: '/deployment/' },
-      {
-        text: 'v0.6.1',
-        items: [
-          { text: 'GitHub Releases', link: 'https://github.com/Xxcool/juejin-csdn-extension/releases' },
-          { text: '接口兼容状态', link: 'https://xxcool.github.io/juejin-csdn-extension/status.html' }
-        ]
-      }
+      { text: '更新日志', link: '/changelog/' }
     ],
     sidebar: {
       '/guide/': [
@@ -109,17 +101,21 @@ export default defineConfig({
       ],
       '/changelog/': [
         {
-          text: '版本履历',
+          text: '更新日志',
           items: [
-            { text: '更新日志', link: '/changelog/' }
-          ]
-        }
-      ],
-      '/deployment/': [
-        {
-          text: '部署方案',
-          items: [
-            { text: '部署方案完全指南', link: '/deployment/' }
+            { text: 'v0.6.1 (最新)', link: '/changelog/#v0-6-1' },
+            { text: 'v0.6.0', link: '/changelog/#v0-6-0' },
+            { text: 'v0.5.3', link: '/changelog/#v0-5-3' },
+            { text: 'v0.5.2', link: '/changelog/#v0-5-2' },
+            { text: 'v0.5.1', link: '/changelog/#v0-5-1' },
+            { text: 'v0.5.0', link: '/changelog/#v0-5-0' },
+            { text: 'v0.4.1', link: '/changelog/#v0-4-1' },
+            { text: 'v0.4.0', link: '/changelog/#v0-4-0' },
+            { text: 'v0.3.0', link: '/changelog/#v0-3-0' },
+            { text: 'v0.2.1', link: '/changelog/#v0-2-1' },
+            { text: 'v0.2.0', link: '/changelog/#v0-2-0' },
+            { text: 'v0.1.1', link: '/changelog/#v0-1-1' },
+            { text: 'v0.1.0', link: '/changelog/#v0-1-0' }
           ]
         }
       ]

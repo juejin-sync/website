@@ -12,7 +12,7 @@
 
 ### 第一步：下载最新发行包
 1. 前往 GitHub 发行版页面：[GitHub Releases](https://github.com/Xxcool/juejin-csdn-extension/releases)；
-2. 在最新版本（如 `v0.6.0`）的 **Assets** 列表中，下载名为 `article-ferry-v*.zip` 的压缩包；
+2. 在最新版本（如 `v0.6.1`）的 **Assets** 列表中，下载名为 `article-ferry-v*.zip` 的压缩包；
 3. 将下载的 ZIP 压缩包解压到本地固定目录（例如 `~/Documents/article-ferry`，**请勿放在临时下载目录以防误删**）。
 
 ### 第二步：在浏览器中加载已解压扩展

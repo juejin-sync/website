@@ -6,6 +6,7 @@ import StepGuide from './components/StepGuide.vue'
 import ScenarioCards from './components/ScenarioCards.vue'
 import FeatureShowcase from './components/FeatureShowcase.vue'
 import HomeView from './components/HomeView.vue'
+import ChangelogList from './components/ChangelogList.vue'
 
 export default {
   extends: DefaultTheme,
@@ -15,6 +16,7 @@ export default {
     app.component('ScenarioCards', ScenarioCards)
     app.component('FeatureShowcase', FeatureShowcase)
     app.component('HomeView', HomeView)
+    app.component('ChangelogList', ChangelogList)
   }
 }
 
