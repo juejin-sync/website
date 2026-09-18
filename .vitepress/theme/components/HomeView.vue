@@ -8,6 +8,7 @@ const { release } = useRelease()
 const isSimulating = ref(false)
 const simulateStep = ref(0) // 0: idle, 1: transferring, 2: saved
 const copied = ref(false)
+const activeDraftTab = ref('csdn')
 
 const copyExtensionUrl = async () => {
   try {
@@ -55,8 +56,8 @@ const runSimulation = () => {
       </h1>
 
       <p class="hero-subtitle">
-        写完文章点发布，无损原图与排版自动搬过去。<br>
-        纯浏览器本地运行，不碰账号密码，绝不擅自公开发布。
+        在掘金写完文章，点击「同步多平台」一键勾选同步。<br>
+        已支持 CSDN 与微信公众号草稿箱，无损原图、内联排版与封面自动对齐。
       </p>
 
       <!-- Primary Actions -->
@@ -111,8 +112,8 @@ const runSimulation = () => {
           <!-- Simulation Board Inside Browser -->
           <div class="mockup-inner">
             <div class="mockup-header-tip">
-              <span>💡 实际使用场景演示：以「掘金 ➔ CSDN」为例，写完文章点击发布时触发</span>
-              <span class="status-tip">{{ simulateStep === 0 ? '等待点击模拟' : simulateStep === 1 ? '正在后台自动搬运...' : '✓ 搬运完成，已安全入库' }}</span>
+              <span>💡 实际使用场景演示：在掘金写完文章点击「同步多平台」，勾选 CSDN & 微信公众号一键摆渡</span>
+              <span class="status-tip">{{ simulateStep === 0 ? '等待点击模拟' : simulateStep === 1 ? '正在并行搬运多平台...' : '✓ 双平台草稿已安全入库' }}</span>
             </div>
 
             <div class="pipeline-grid">
@@ -120,7 +121,7 @@ const runSimulation = () => {
               <div class="pipeline-card card-source">
                 <div class="card-tag tag-juejin">
                   <span class="tag-circle"></span>
-                  <span>① 源创作平台 (以掘金发文为例)</span>
+                  <span>① 掘金写作端 · 同步多平台</span>
                 </div>
                 <div class="article-info-box">
                   <div class="article-title">深入剖析 Chrome Extension MV3 架构实战</div>
@@ -133,21 +134,29 @@ const runSimulation = () => {
 
                 <!-- The Actual Checkbox Injected by Extension -->
                 <div class="injected-checkbox-box">
-                  <input type="checkbox" id="ferryCheck" checked class="checkbox-ui" />
-                  <label for="ferryCheck" class="checkbox-label">
-                    <span>同步到目标草稿箱</span>
-                    <span class="plugin-by">(文章摆渡扩展自动开启)</span>
-                  </label>
+                  <div class="checkbox-header">勾选同步目标平台：</div>
+                  <div class="platform-checks">
+                    <label class="check-item">
+                      <input type="checkbox" checked disabled class="checkbox-ui" />
+                      <span class="check-name">CSDN 草稿箱</span>
+                      <span class="check-badge">分类自动匹配</span>
+                    </label>
+                    <label class="check-item wechat-check">
+                      <input type="checkbox" checked disabled class="checkbox-ui" />
+                      <span class="check-name">微信公众号</span>
+                      <span class="check-badge badge-green">v1.0.0 航道</span>
+                    </label>
+                  </div>
                 </div>
 
                 <div class="action-row">
-                  <span class="column-match">已自动匹配专栏分类</span>
+                  <span class="column-match">已就绪 2 个发布渠道</span>
                   <button
                     class="btn-simulate-publish"
                     :disabled="isSimulating"
                     @click="runSimulation"
                   >
-                    {{ isSimulating ? '正在发文...' : simulateStep === 2 ? '↻ 重新模拟' : '▷ 模拟点击「发文」' }}
+                    {{ isSimulating ? '正在并行搬运...' : simulateStep === 2 ? '↻ 重新模拟' : '🚀 模拟点击「同步多平台」' }}
                   </button>
                 </div>
               </div>
@@ -170,36 +179,65 @@ const runSimulation = () => {
                   </div>
                 </div>
                 <div class="lane-text">
-                  <span v-if="simulateStep === 0">写完点发布，小船自动摆渡</span>
-                  <span v-else-if="simulateStep === 1" class="text-transit">正在转存第 3/3 张原图...</span>
-                  <span v-else class="text-success">原图转存完毕，格式清洗完成</span>
+                  <span v-if="simulateStep === 0">写完点同步，小船多航道并行摆渡</span>
+                  <span v-else-if="simulateStep === 1" class="text-transit">并发转存 CSDN 与微信素材库...</span>
+                  <span v-else class="text-success">两岸草稿已入库，微信三套封面就绪</span>
                 </div>
               </div>
 
               <!-- Right Shore: 目标草稿箱 -->
               <div class="pipeline-card card-target" :class="{ 'is-ready': simulateStep === 2 }">
-                <div class="card-tag tag-csdn">
+                <div class="card-tag tag-multi">
                   <span class="tag-circle"></span>
-                  <span>② 目标草稿箱 (以 CSDN 为例)</span>
+                  <span>② 目标平台草稿箱 (已同步 2 处)</span>
                 </div>
 
                 <div class="target-draft-box">
                   <div v-if="simulateStep === 2" class="draft-content">
-                    <div class="draft-title">深入剖析 Chrome Extension MV3 架构实战</div>
-                    <div class="draft-stats">
-                      <span class="badge-success">✓ 草稿已保存</span>
-                      <span>3 张原图无损转存</span>
-                      <span>排版已对齐</span>
+                    <div class="draft-target-tabs">
+                      <button
+                        type="button"
+                        class="target-tab-btn"
+                        :class="{ active: activeDraftTab === 'csdn' }"
+                        @click="activeDraftTab = 'csdn'"
+                      >
+                        CSDN 草稿
+                      </button>
+                      <button
+                        type="button"
+                        class="target-tab-btn wechat-tab-btn"
+                        :class="{ active: activeDraftTab === 'wechat' }"
+                        @click="activeDraftTab = 'wechat'"
+                      >
+                        微信公众号 🌟
+                      </button>
+                    </div>
+
+                    <div v-if="activeDraftTab === 'csdn'" class="tab-result-pane">
+                      <div class="draft-title">深入剖析 Chrome Extension MV3 架构实战</div>
+                      <div class="draft-stats">
+                        <span class="badge-success">✓ CSDN 草稿已保存</span>
+                        <span>3 张原图无损转存</span>
+                        <span>专栏分类已对齐</span>
+                      </div>
+                    </div>
+                    <div v-else class="tab-result-pane">
+                      <div class="draft-title">深入剖析 Chrome Extension MV3 架构实战</div>
+                      <div class="draft-stats">
+                        <span class="badge-success badge-green-fill">✓ 微信图文草稿就绪</span>
+                        <span>16:9/1:1/3:4 封面生成</span>
+                        <span>代码内联样式</span>
+                      </div>
                     </div>
                   </div>
                   <div v-else class="draft-waiting">
                     <span class="waiting-icon">⏳</span>
-                    <span>等待文章入库...</span>
+                    <span>等待文章进入草稿箱...</span>
                   </div>
                 </div>
 
                 <div class="safe-note">
-                  <strong>安心保证：</strong>文章只停在草稿箱，排版检查确认后，由你亲自点击发布。
+                  <strong>安心保证：</strong>双平台均只停在草稿箱，排版检查确认后，由你亲自点击发布。
                 </div>
               </div>
             </div>
@@ -220,31 +258,31 @@ const runSimulation = () => {
         <!-- Relief 1 -->
         <div class="relief-card">
           <div class="relief-icon">🖼️</div>
-          <h3 class="relief-title">原图自动搬运，不裂图、不模糊</h3>
+          <h3 class="relief-title">原图与封面自动搬运，不裂图、不模糊</h3>
           <p class="relief-desc">
-            直接复制的文章图片，经常因为防盗链直接裂成红叉，或者带上平台水印。文章摆渡会自动剔除原站水印，一张张稳稳转存，20 张架构图的长文也能原画保留。
+            文章图片经常因为防盗链裂成红叉，或者带上水印。插件不仅能剥离水印无损转存到 CSDN，还会将图片一并转存到微信素材库，并自动按 16:9、1:1、3:4 裁剪生成三套标准微信封面绑定草稿。
           </p>
-          <div class="relief-tag">再也不用把图片一张张下到电脑再重新上传</div>
+          <div class="relief-tag">再也不用把图片一张张另存再费劲裁封面图</div>
         </div>
 
         <!-- Relief 2 -->
         <div class="relief-card">
-          <div class="relief-icon">📝</div>
-          <h3 class="relief-title">提示框不乱码，代码高亮原汁原味</h3>
+          <div class="relief-icon">📱</div>
+          <h3 class="relief-title">微信排版与代码高亮原汁原味，无需第三方中转</h3>
           <p class="relief-desc">
-            源平台特有的 <code>:::tip</code> 等提示框语法在其他网站常会变成裸露的乱码字符。插件在后台自动帮你转成通用的 Markdown 引用块，代码缩进格式原封不动。
+            公众号排版向来最繁琐：代码块换行、字体样式错位。插件内置微信专属 Markdown 编译器，内联关键样式，代码逐行渲染保留缩进并支持横向平滑滚动，提示框变标准引用。
           </p>
-          <div class="relief-tag">省去 15 分钟手动调整排版间距的机械劳动</div>
+          <div class="relief-tag">省去复制到第三方排版工具微调 20 分钟的折磨</div>
         </div>
 
         <!-- Relief 3 -->
         <div class="relief-card">
           <div class="relief-icon">⚡</div>
-          <h3 class="relief-title">改了错别字重新同步，覆盖原草稿</h3>
+          <h3 class="relief-title">改了错别字重新同步，自动覆盖原草稿</h3>
           <p class="relief-desc">
-            发布后发现错别字或更新了代码？在源站改完重新点发文，插件会自动更新覆盖目标草稿箱的旧草稿，绝不会在你的草稿箱里造出一堆同名的垃圾废稿。
+            修改了错别字或调整了代码？在源站重新点击同步，插件会自动更新覆盖对应平台的旧草稿，双平台任务独立隔离，绝不会在草稿箱堆出一堆同名的垃圾废稿。
           </p>
-          <div class="relief-tag">即使删了目标旧草稿，也能自动重建不卡死</div>
+          <div class="relief-tag">即使删了旧草稿也能自愈重建，多平台互不干扰</div>
         </div>
       </div>
     </section>
@@ -684,6 +722,11 @@ const runSimulation = () => {
   color: #fc5531;
 }
 
+.tag-multi {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}
+
 .tag-circle {
   width: 6px;
   height: 6px;
@@ -718,13 +761,45 @@ const runSimulation = () => {
 
 .injected-checkbox-box {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 10px 12px;
   background: var(--vp-c-brand-soft);
   border: 1px solid var(--vp-c-brand-1);
   border-radius: 8px;
   margin-bottom: 14px;
+}
+
+.checkbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plugin-by {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+}
+
+.platform-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg);
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--vp-c-divider);
+  cursor: default;
 }
 
 .checkbox-ui {
@@ -732,19 +807,25 @@ const runSimulation = () => {
   accent-color: var(--vp-c-brand-1);
 }
 
-.checkbox-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--vp-c-brand-1);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
+.check-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.plugin-by {
+.check-badge {
   font-size: 10px;
-  font-weight: 400;
-  opacity: 0.85;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+}
+
+.check-badge.badge-green {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  font-weight: 600;
 }
 
 .action-row {
@@ -846,6 +927,53 @@ const runSimulation = () => {
   width: 100%;
 }
 
+.draft-target-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.target-tab-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.target-tab-btn:hover {
+  color: var(--vp-c-text-1);
+  border-color: var(--vp-c-brand-1);
+}
+
+.target-tab-btn.active {
+  background: var(--vp-c-brand-soft);
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+.wechat-tab-btn.active {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.tab-result-pane {
+  animation: fadeInPane 0.2s ease-in-out;
+}
+
+@keyframes fadeInPane {
+  from { opacity: 0.6; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .draft-title {
   font-size: 13px;
   font-weight: 600;
@@ -867,6 +995,11 @@ const runSimulation = () => {
   padding: 1px 6px;
   border-radius: 4px;
   font-weight: 600;
+}
+
+.badge-green-fill {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #10b981 !important;
 }
 
 .draft-waiting {

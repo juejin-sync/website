@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useData } from 'vitepress'
+
+const { theme } = useData()
 
 interface ReleaseAsset {
   name: string
@@ -21,6 +24,28 @@ const CACHE_TTL_MS = 15 * 60 * 1000 // 15 分钟缓存
 
 // 预置兜底数据（保障弱网、离线、SSG 阶段 0 延时渲染）
 const fallbackReleases: ReleaseItem[] = [
+  {
+    tagName: 'v1.0.0',
+    name: '🚀 v1.0.0 微信公众号完整同步与多平台架构',
+    date: '2026-09-18',
+    body: `### 📌 微信公众号完整同步
+- **新增微信公众号网页登录态检测与账号展示**：不申请 \`cookies\` 权限，不保存 Cookie 或上传票据；草稿链接可能包含微信页面 token。
+- **新增微信专用 Markdown 编译器**：按微信兼容约束重建标题、段落、列表、引用、代码块、表格与图片排版，并内联关键样式。
+- **正文图片全部转存到微信素材库**：源文章封面上传后自动生成 16:9、1:1、3:4 三套裁剪结果并绑定草稿。
+- **一键同步多平台**：掘金编辑器、创作者中心和个人文章列表统一使用“同步多平台”按钮，弹窗勾选目标平台后同步。
+- **微信和 CSDN 独立任务调度**：独立失败重试、进度、通知与草稿链接，正式版本号升级为 1.0.0。
+
+### 🛠️ 体验与健壮性优化
+- 微信任务与草稿映射绑定公众号账号，开始和最终写入前校验账号；未绑定账号的旧草稿不自动覆盖。
+- 代码块按微信“插入代码”结构逐行输出，保留空行、缩进与特殊字符，语言使用 Markdown 标注。
+- 草稿封面与摘要缓存按草稿隔离；无源封面文章允许同步草稿，发布所需封面由用户在微信后台补充。`,
+    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v1.0.0',
+    asset: {
+      name: 'article-ferry-v1.0.0.zip',
+      size: '约 100 KB',
+      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/download/v1.0.0/article-ferry-v1.0.0.zip'
+    }
+  },
   {
     tagName: 'v0.6.1',
     name: '🚀 v0.6.1 品牌升级与官网解耦',
@@ -291,6 +316,7 @@ onMounted(async () => {
         if (Array.isArray(cached.data) && cached.data.length > 0) {
           releases.value = cached.data
           isLive.value = true
+          syncSidebar(releases.value)
           if (isFresh) return
         }
       }
@@ -298,6 +324,9 @@ onMounted(async () => {
   } catch {
     // ignore
   }
+
+  // 初次尝试同步侧边栏（使用当前值）
+  syncSidebar(releases.value)
 
   // 2. 异步向 GitHub API 请求最新全量 Releases
   isLoading.value = true
@@ -334,6 +363,7 @@ onMounted(async () => {
 
         releases.value = parsed
         isLive.value = true
+        syncSidebar(releases.value)
 
         try {
           localStorage.setItem(
@@ -370,6 +400,29 @@ function scrollToCurrentHash() {
   const target = document.getElementById(rawHash) || document.getElementById(toAnchorId(rawHash))
   if (target) {
     target.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
+function syncSidebar(items: ReleaseItem[]) {
+  if (typeof window === 'undefined' || !items?.length) return
+  if (!theme.value || !theme.value.sidebar) return
+
+  const versionLinks = items.map((rel, index) => ({
+    text: index === 0 ? `${rel.tagName} (最新)` : rel.tagName,
+    link: `/changelog/#${toAnchorId(rel.tagName)}`
+  }))
+
+  theme.value = {
+    ...theme.value,
+    sidebar: {
+      ...theme.value.sidebar,
+      '/changelog/': [
+        {
+          text: '更新日志',
+          items: versionLinks
+        }
+      ]
+    }
   }
 }
 </script>
