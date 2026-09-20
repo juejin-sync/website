@@ -6,7 +6,7 @@
     "strict": false,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": []
   },
   "include": ["api/**/*"]
 }
