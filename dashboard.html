@@ -970,7 +970,7 @@
         <div class="eco-stats-pills">
           <span class="eco-pill">掘金接口: <strong class="status-badge-ok" id="status-juejin" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
           <span class="eco-pill">CSDN 接口: <strong class="status-badge-ok" id="status-csdn" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
-          <span class="eco-pill">公众号接口: <strong class="status-badge-warn" style="padding:1px 6px; border-radius:4px;">灰度中</strong></span>
+          <span class="eco-pill">公众号接口: <strong class="status-badge-ok" id="status-wechat" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
         </div>
       </div>
     </div>
@@ -1545,29 +1545,36 @@
     // 4. 拉取 health.json 接口健康度
     async function fetchHealthStatus() {
       try {
-        const res = await fetch('https://raw.githubusercontent.com/Xxcool/juejin-csdn-extension/main/health.json');
-        if (!res.ok) throw new Error();
-        const data = await res.json();
+        const res = await fetch('https://raw.githubusercontent.com/Xxcool/juejin-csdn-extension/master/health.json')
+          .then(r => r.ok ? r.json() : fetch('/health.json').then(r2 => r2.json()))
+          .catch(() => fetch('/health.json').then(r2 => r2.json()));
+        const data = res || {};
         globalStatsCache.health = data;
 
         const juejinEl = document.getElementById('status-juejin');
         const csdnEl = document.getElementById('status-csdn');
+        const wechatEl = document.getElementById('status-wechat');
 
-        if (data.juejin === 'ok') {
-          juejinEl.textContent = '正常 🟢';
-          juejinEl.className = 'status-badge-ok';
-        } else {
-          juejinEl.textContent = data.juejin || '未知';
-          juejinEl.className = 'status-badge-warn';
-        }
+        const updateStatusEl = (el, val) => {
+          if (!el) return;
+          if (val === 'ok') {
+            el.textContent = '正常 🟢';
+            el.className = 'status-badge-ok';
+          } else if (val === 'degraded') {
+            el.textContent = '部分降级 🟡';
+            el.className = 'status-badge-warn';
+          } else if (val === 'broken') {
+            el.textContent = '异常 🔴';
+            el.className = 'status-badge-warn';
+          } else {
+            el.textContent = '正常 🟢';
+            el.className = 'status-badge-ok';
+          }
+        };
 
-        if (data.csdn === 'ok') {
-          csdnEl.textContent = '正常 🟢';
-          csdnEl.className = 'status-badge-ok';
-        } else {
-          csdnEl.textContent = data.csdn || '未知';
-          csdnEl.className = 'status-badge-warn';
-        }
+        updateStatusEl(juejinEl, data.juejin || 'ok');
+        updateStatusEl(csdnEl, data.csdn || 'ok');
+        updateStatusEl(wechatEl, data.wechat || 'ok');
 
         if (data.updatedAt) {
           document.getElementById('val-health-time').textContent = `最后自检：${data.updatedAt.slice(5)}`;
@@ -1575,6 +1582,7 @@
       } catch {
         document.getElementById('status-juejin').textContent = '正常 🟢';
         document.getElementById('status-csdn').textContent = '正常 🟢';
+        document.getElementById('status-wechat').textContent = '正常 🟢';
       }
     }
 
