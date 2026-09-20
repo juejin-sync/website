@@ -2,8 +2,13 @@
 import { withBase } from 'vitepress'
 import { ref } from 'vue'
 import { useRelease } from '../useRelease'
+import { trackDownload } from '../tracker'
 
 const { release } = useRelease()
+
+const handleDownload = () => {
+  trackDownload(release.value.version ? `article-ferry-${release.value.version}.zip` : 'article-ferry-latest.zip')
+}
 
 const isSimulating = ref(false)
 const simulateStep = ref(0) // 0: idle, 1: transferring, 2: saved
@@ -62,7 +67,7 @@ const runSimulation = () => {
 
       <!-- Primary Actions -->
       <div class="cta-actions">
-        <a :href="release.downloadUrl" download class="btn-primary">
+        <a :href="release.downloadUrl" download @click="handleDownload" class="btn-primary">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
@@ -303,7 +308,7 @@ const runSimulation = () => {
             点击下方按钮直接下载最新版离线压缩包（{{ release.size }}），解压到一个你常用的文件夹（解压后请保留该文件夹，不要删除）。
           </p>
           <div class="step-action">
-            <a :href="release.downloadUrl" download class="step-btn">
+            <a :href="release.downloadUrl" download @click="handleDownload" class="step-btn">
               <span>⬇️ 下载离线包 ({{ release.version }} · {{ release.size }})</span>
             </a>
           </div>
@@ -372,7 +377,7 @@ const runSimulation = () => {
         <h2 class="cta-heading">少一次机械复制，多一点时间写下一篇。</h2>
         <p class="cta-lead">完全免费，代码开源。装好之后，发文顺手勾一下就好。</p>
         <div class="cta-btns">
-          <a :href="release.downloadUrl" download class="btn-primary">
+          <a :href="release.downloadUrl" download @click="handleDownload" class="btn-primary">
             <span>⬇️ 一键下载离线包 ({{ release.version }} · {{ release.size }})</span>
           </a>
           <a :href="withBase('/guide/quick-start')" class="btn-secondary">

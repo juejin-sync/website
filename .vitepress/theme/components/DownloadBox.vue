@@ -1,7 +1,12 @@
 <script setup>
 import { useRelease } from '../useRelease'
+import { trackDownload } from '../tracker'
 
 const { release } = useRelease()
+
+const handleDownload = () => {
+  trackDownload(release.value.version ? `article-ferry-${release.value.version}.zip` : 'article-ferry-latest.zip')
+}
 </script>
 
 <template>
@@ -18,7 +23,7 @@ const { release } = useRelease()
         </p>
 
         <div class="download-btn-group">
-          <a :href="release.downloadUrl" download class="ferry-primary-btn">
+          <a :href="release.downloadUrl" download @click="handleDownload" class="ferry-primary-btn">
             <svg class="btn-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
               <polyline points="7 10 12 15 17 10"></polyline>
