@@ -1,12 +1,12 @@
 {
   "name": "artferry",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "文章摆渡 (Article Ferry) 官方网站与文档中心",
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build && cp -r .vitepress/dist dist",
+    "build": "vitepress build && rm -rf dist && cp -r .vitepress/dist dist",
     "preview": "vitepress preview"
   },
   "devDependencies": {

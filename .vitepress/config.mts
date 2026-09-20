@@ -103,7 +103,8 @@ export default defineConfig({
         {
           text: '更新日志',
           items: [
-            { text: 'v1.0.0 (最新)', link: '/changelog/#v1-0-0' },
+            { text: 'v1.1.0 (最新)', link: '/changelog/#v1-1-0' },
+            { text: 'v1.0.0', link: '/changelog/#v1-0-0' },
             { text: 'v0.6.1', link: '/changelog/#v0-6-1' },
             { text: 'v0.6.0', link: '/changelog/#v0-6-0' },
             { text: 'v0.5.3', link: '/changelog/#v0-5-3' },

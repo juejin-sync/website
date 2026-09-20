@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useData } from 'vitepress'
 
 const { theme } = useData()
@@ -24,6 +24,24 @@ const CACHE_TTL_MS = 15 * 60 * 1000 // 15 分钟缓存
 
 // 预置兜底数据（保障弱网、离线、SSG 阶段 0 延时渲染）
 const fallbackReleases: ReleaseItem[] = [
+  {
+    tagName: 'v1.1.0',
+    name: '🚀 v1.1.0 发布后同步流程与契约时序测试',
+    date: '2026-09-20',
+    body: `### 📦 发布后同步流程
+- **多平台选择嵌入发布表单**：移除新文章编辑器顶部的立即同步按钮，将多平台选择无缝嵌入掘金“发布文章”弹层表单。
+- **发布成功后智能消费**：勾选阶段仅记录本次平台选择；只有在发布接口返回业务成功且包含文章标识后才创建同步任务。
+- **防止误触发与幂等保护**：发布失败、取消发布、草稿身份不一致或缺少文章标识时不触发同步；同一次发布响应只消费一次。
+- **多入口协同**：创作者中心和个人文章列表继续保留手动立即同步入口。
+- **快照冻结机制**：发布请求发出时冻结正文、平台选择和公众号身份，关闭面板或修改编辑器不影响已提交请求；发布失败时释放快照并保留选择供重试。
+- **全量自动化测试扩充**：新增掘金发布请求、成功响应契约及异步时序回归测试，全量自动化测试增至 100 项。`,
+    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v1.1.0',
+    asset: {
+      name: 'article-ferry-v1.1.0.zip',
+      size: '约 103 KB',
+      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/download/v1.1.0/article-ferry-v1.1.0.zip'
+    }
+  },
   {
     tagName: 'v1.0.0',
     name: '🚀 v1.0.0 微信公众号完整同步与多平台架构',
@@ -374,7 +392,10 @@ onMounted(async () => {
           // ignore
         }
 
-        setTimeout(scrollToCurrentHash, 60)
+        setTimeout(() => {
+          scrollToCurrentHash()
+          setupScrollSpy()
+        }, 60)
       }
     }
   } catch (e) {
@@ -383,15 +404,33 @@ onMounted(async () => {
     isLoading.value = false
   }
 
-  // 挂载后定位已存在的锚点
-  setTimeout(scrollToCurrentHash, 100)
+  // 挂载后定位已存在的锚点与启动滚动联动
+  setTimeout(() => {
+    scrollToCurrentHash()
+    setupScrollSpy()
+  }, 100)
 
   if (typeof window !== 'undefined') {
-    window.addEventListener('hashchange', () => {
-      setTimeout(scrollToCurrentHash, 20)
-    })
+    window.addEventListener('hashchange', onHash)
   }
 })
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('hashchange', onHash)
+  }
+  if (scrollSpyObserver) {
+    scrollSpyObserver.disconnect()
+    scrollSpyObserver = null
+  }
+})
+
+function onHash() {
+  setTimeout(() => {
+    scrollToCurrentHash()
+    updateActiveSidebarLink()
+  }, 20)
+}
 
 function scrollToCurrentHash() {
   if (typeof window === 'undefined') return
@@ -403,27 +442,151 @@ function scrollToCurrentHash() {
   }
 }
 
+let scrollSpyObserver: IntersectionObserver | null = null
+
+function updateActiveSidebarLink(currentHash?: string) {
+  if (typeof window === 'undefined') return
+  const rawHash = currentHash || window.location.hash
+  if (!rawHash) return
+
+  const cleanHash = rawHash.startsWith('#') ? rawHash : `#${rawHash}`
+  const sidebarNavs = document.querySelectorAll('#VPSidebarNav, .VPSidebar .nav')
+  sidebarNavs.forEach((navEl) => {
+    const items = navEl.querySelectorAll('.VPSidebarItem.level-1')
+    items.forEach((item) => {
+      const link = item.querySelector('a')
+      if (link) {
+        const href = link.getAttribute('href') || ''
+        const dataHash = link.getAttribute('data-target-hash') || ''
+        if (href.endsWith(cleanHash) || dataHash === cleanHash) {
+          item.classList.add('is-active', 'has-active')
+        } else {
+          item.classList.remove('is-active', 'has-active')
+        }
+      }
+    })
+  })
+}
+
+function setupScrollSpy() {
+  if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') return
+  if (scrollSpyObserver) {
+    scrollSpyObserver.disconnect()
+  }
+
+  scrollSpyObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting && entry.target.id) {
+          updateActiveSidebarLink('#' + entry.target.id)
+          break
+        }
+      }
+    },
+    {
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: 0
+    }
+  )
+
+  const cards = document.querySelectorAll('.cl-card')
+  cards.forEach((c) => scrollSpyObserver?.observe(c))
+}
+
 function syncSidebar(items: ReleaseItem[]) {
   if (typeof window === 'undefined' || !items?.length) return
-  if (!theme.value || !theme.value.sidebar) return
 
-  const versionLinks = items.map((rel, index) => ({
-    text: index === 0 ? `${rel.tagName} (最新)` : rel.tagName,
-    link: `/changelog/#${toAnchorId(rel.tagName)}`
-  }))
-
-  theme.value = {
-    ...theme.value,
-    sidebar: {
-      ...theme.value.sidebar,
-      '/changelog/': [
+  // 1. 尝试内存层更新主题配置（以防上层组件读取）
+  try {
+    if (theme.value && theme.value.sidebar) {
+      theme.value.sidebar['/changelog/'] = [
         {
           text: '更新日志',
-          items: versionLinks
+          items: items.map((rel, index) => ({
+            text: index === 0 ? `${rel.tagName} (最新)` : rel.tagName,
+            link: `/changelog/#${toAnchorId(rel.tagName)}`
+          }))
         }
       ]
     }
+  } catch {
+    // ignore
   }
+
+  // 2. 真实 DOM 响应式同步（彻底解决发布新版后左侧静态侧边栏不刷新的问题）
+  const doDomSync = () => {
+    const sidebarNavs = document.querySelectorAll('#VPSidebarNav, .VPSidebar .nav')
+    if (!sidebarNavs.length) return
+
+    sidebarNavs.forEach((navEl) => {
+      const itemsContainer = navEl.querySelector('.VPSidebarItem.level-0 .items')
+      if (!itemsContainer) return
+
+      const existingItems = Array.from(itemsContainer.querySelectorAll('.VPSidebarItem.level-1'))
+      const templateNode = (existingItems[0] || navEl.querySelector('.VPSidebarItem.level-1')) as HTMLElement | null
+      if (!templateNode) return
+
+      const topTag = items[0].tagName
+      const firstTextEl = templateNode.querySelector('.text')
+      const firstText = firstTextEl?.textContent?.trim() || ''
+
+      // 如果第一项已经匹配最新版本并且带有 (最新)，且条目数量一致，说明已经同步完毕
+      if (firstText.includes(topTag) && firstText.includes('(最新)') && existingItems.length === items.length) {
+        updateActiveSidebarLink()
+        return
+      }
+
+      // 获取干净模板节点进行克隆
+      const cloneSource = templateNode.cloneNode(true) as HTMLElement
+      cloneSource.classList.remove('is-active', 'has-active')
+
+      // 清空现有节点并按当前 items 实时重建
+      itemsContainer.innerHTML = ''
+
+      items.forEach((rel, index) => {
+        const node = cloneSource.cloneNode(true) as HTMLElement
+        const isLatest = index === 0
+        const anchorId = toAnchorId(rel.tagName)
+        const targetHash = `#${anchorId}`
+        const targetHref = `/changelog/${targetHash}`
+
+        const linkEl = node.querySelector('a') as HTMLAnchorElement | null
+        const textEl = node.querySelector('.text') as HTMLElement | null
+
+        if (linkEl) {
+          linkEl.href = targetHref
+          linkEl.setAttribute('data-target-hash', targetHash)
+          linkEl.onclick = (e) => {
+            e.preventDefault()
+            history.pushState(null, '', targetHref)
+            const target = document.getElementById(anchorId) || document.getElementById(rel.tagName)
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth' })
+            }
+            updateActiveSidebarLink(targetHash)
+          }
+        }
+
+        if (textEl) {
+          textEl.textContent = isLatest ? `${rel.tagName} (最新)` : rel.tagName
+        }
+
+        const currentHash = window.location.hash
+        if (currentHash === targetHash || (index === 0 && (!currentHash || currentHash === '#'))) {
+          node.classList.add('is-active', 'has-active')
+        }
+
+        itemsContainer.appendChild(node)
+      })
+    })
+
+    setupScrollSpy()
+  }
+
+  // 立即执行并配合延迟重试，确保任何渲染时序下都精准挂载
+  doDomSync()
+  setTimeout(doDomSync, 50)
+  setTimeout(doDomSync, 250)
 }
 </script>
 
