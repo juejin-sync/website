@@ -146,10 +146,9 @@ export default async function handler(req: Request) {
     commands.push(['PFCOUNT', `artferry:uv_hll:${date}`])
   }
 
-  // 查询渠道、浏览器、页面热度、活动事件流
+  // 查询渠道、浏览器、活动事件流
   commands.push(['HGETALL', 'artferry:channels'])
   commands.push(['HGETALL', 'artferry:browsers'])
-  commands.push(['HGETALL', 'artferry:pages'])
   commands.push(['LRANGE', 'artferry:events', 0, 29])
 
   const results = await runRedisPipeline(commands)
@@ -187,7 +186,6 @@ export default async function handler(req: Request) {
   // 5. 解析扩展受众数据
   const rawChannels = parseHashResult(results[offset++])
   const rawBrowsers = parseHashResult(results[offset++])
-  const rawPages = parseHashResult(results[offset++])
   const rawEventsList = results[offset] || []
   const parsedEvents = Array.isArray(rawEventsList)
     ? rawEventsList
@@ -219,7 +217,6 @@ export default async function handler(req: Request) {
       assets: rawAssets,
       channels: rawChannels,
       browsers: rawBrowsers,
-      pages: rawPages,
       events: parsedEvents
     }),
     {

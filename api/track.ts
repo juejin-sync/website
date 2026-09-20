@@ -120,8 +120,6 @@ export default async function handler(req: Request) {
       commands.push(['HINCRBY', 'artferry:channels', channel, 1])
       // 5. 浏览器分布
       commands.push(['HINCRBY', 'artferry:browsers', browser, 1])
-      // 6. 受访页面热度
-      commands.push(['HINCRBY', 'artferry:pages', path, 1])
     } else if (event === 'download') {
       // 1. 累计官网离线包总下载次数与今日下载量
       commands.push(['HINCRBY', 'artferry:stats', 'download_total', 1])
