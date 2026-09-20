@@ -53,11 +53,25 @@ async function sendBeaconSignal(payload: Record<string, any>): Promise<void> {
   }
 }
 
+const AUTH_KEY_NAME = 'artferry_stats_auth_key'
+
+// 检查当前浏览器是否已登录管理员 Dashboard（已鉴权则视为站长本人）
+export function isAdminUser(): boolean {
+  if (typeof window === 'undefined') return false
+  try {
+    return Boolean(localStorage.getItem(AUTH_KEY_NAME))
+  } catch {
+    return false
+  }
+}
+
 /**
  * 上报 PV (页面浏览)
  */
 export function trackPageView(path?: string): void {
   if (typeof window === 'undefined') return
+  if (isAdminUser()) return // 站长本人访问，自动排除，保证生产统计数据真实纯净
+
   const currentPath = path || window.location.pathname
 
   // 10秒内重复访问同一路径不重复记 PV，防止频繁刷新刷量
@@ -89,6 +103,7 @@ export function trackPageView(path?: string): void {
  */
 export function trackDownload(assetName?: string): void {
   if (typeof window === 'undefined') return
+  if (isAdminUser()) return // 站长本人测试下载，自动排除
 
   sendBeaconSignal({
     event: 'download',

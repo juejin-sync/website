@@ -233,14 +233,6 @@
       transform: translateY(-1px);
       box-shadow: 0 8px 25px rgba(29, 125, 250, 0.5);
     }
-    .lock-hint {
-      font-size: 0.78rem;
-      color: var(--text-dark);
-      margin-top: 14px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .lock-hint:hover { color: var(--brand-blue); }
 
     /* 顶部导航与遥测标头 */
     .top-header {
@@ -681,11 +673,6 @@
           </svg>
         </button>
       </div>
-
-      <div class="lock-hint" id="hint-toggle">🔑 点击查看默认开发测试口令</div>
-      <div id="hint-text" style="display:none; font-size:0.75rem; color:var(--brand-blue); margin-top:6px; font-family:'JetBrains Mono', monospace;">
-        默认初始口令: REMOVED_LEGACY_SECRET
-      </div>
     </div>
   </div>
 
@@ -959,8 +946,6 @@
     const lockScreen = document.getElementById('lock-screen');
     const passInput = document.getElementById('pass-input');
     const unlockBtn = document.getElementById('unlock-btn');
-    const hintToggle = document.getElementById('hint-toggle');
-    const hintText = document.getElementById('hint-text');
     const liveClock = document.getElementById('live-clock');
     const refreshBtn = document.getElementById('refresh-btn');
     const exportBtn = document.getElementById('export-btn');
@@ -1038,11 +1023,6 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
-
-    // 提示口令切换
-    hintToggle.addEventListener('click', () => {
-      hintText.style.display = hintText.style.display === 'none' ? 'block' : 'none';
-    });
 
     // 门禁逻辑
     function tryUnlock() {
