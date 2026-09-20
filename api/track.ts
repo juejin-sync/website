@@ -8,6 +8,10 @@ export const config = {
   runtime: 'edge' // Edge Runtime，全球极速响应
 }
 
+declare const process: {
+  env: Record<string, string | undefined>
+}
+
 function getTodayString(): string {
   const d = new Date()
   const bjTime = new Date(d.getTime() + (8 * 60 + d.getTimezoneOffset()) * 60000)

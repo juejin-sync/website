@@ -8,6 +8,10 @@ export const config = {
   runtime: 'edge'
 }
 
+declare const process: {
+  env: Record<string, string | undefined>
+}
+
 function getRecentDates(days = 14): string[] {
   const dates: string[] = []
   const now = new Date()
