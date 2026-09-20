@@ -20,10 +20,7 @@ export default {
     app.component('ChangelogList', ChangelogList)
 
     if (typeof window !== 'undefined' && router) {
-      // 首屏加载上报
-      trackPageView()
-
-      // 路由切换上报
+      // 路由切换统一上报（包含首屏与后续路由跳转）
       const originalOnAfterRouteChanged = router.onAfterRouteChanged
       router.onAfterRouteChanged = (to: string) => {
         if (typeof originalOnAfterRouteChanged === 'function') {

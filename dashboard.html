@@ -1481,6 +1481,21 @@
     }
 
     // 渲染实时终端日志
+    function formatFriendlyPath(path) {
+      if (!path || path === '/' || path === '/index.html') return '网站首页';
+      const clean = path.replace(/\.html$/, '');
+      if (clean.endsWith('/guide/installation')) return '安装指南';
+      if (clean.endsWith('/guide/quick-start')) return '快速开始';
+      if (clean.endsWith('/guide/dry-run')) return '试跑排查';
+      if (clean.endsWith('/guide/faq')) return '常见问题 FAQ';
+      if (clean.endsWith('/features/sync-engine')) return '同步引擎';
+      if (clean.endsWith('/features/image-pipeline')) return '图片管道';
+      if (clean.endsWith('/features/idempotence')) return '草稿幂等覆盖';
+      if (clean.endsWith('/features/ui-craftsmanship')) return '界面设计';
+      if (clean.endsWith('/changelog')) return '版本发布日志';
+      return path;
+    }
+
     function renderTerminalLogs(events) {
       const terminal = document.getElementById('terminal-logs');
       if (!terminal) return;
@@ -1493,15 +1508,21 @@
       let html = '';
       events.slice(0, 15).forEach(evt => {
         const timeStr = new Date(evt.time || Date.now()).toLocaleTimeString('zh-CN', { hour12: false });
-        const tag = evt.type === 'download' 
-          ? '<span class="log-tag-dl">DOWNLOAD</span>' 
-          : '<span class="log-tag-pv">PAGE_VIEW</span>';
+        const isDl = evt.type === 'download';
+        const tag = isDl 
+          ? '<span class="log-tag-dl">📥 插件下载</span>' 
+          : '<span class="log-tag-pv">👀 浏览页面</span>';
         
         let detail = '';
-        if (evt.type === 'download') {
-          detail = `触发离线包下载: <strong style="color:#34d399;">${evt.asset || 'article-ferry.zip'}</strong> <span class="log-dim">(${evt.browser || 'Chromium'})</span>`;
+        if (isDl) {
+          detail = `下载了安装包: <strong style="color:#34d399;">${evt.asset || 'article-ferry.zip'}</strong> <span class="log-dim">(${evt.browser || 'Chromium'})</span>`;
         } else {
-          detail = `来自 <span style="color:#38bdf8;">${evt.channel || '直接访问'}</span> 访问了 <strong>${evt.path || '/'}</strong> <span class="log-dim">(${evt.browser || 'Web'})</span>`;
+          const pageName = formatFriendlyPath(evt.path);
+          let channelName = evt.channel || '直接输入网址 / 微信分享';
+          if (channelName === '直接访问 / 外链收藏') {
+            channelName = '输入网址 / 微信分享 / 收藏夹';
+          }
+          detail = `通过 <span style="color:#38bdf8;">${channelName}</span> 访问了 <strong style="color:#f8fafc;">${pageName}</strong> <span class="log-dim">(${evt.browser || 'Web'})</span>`;
         }
 
         html += `

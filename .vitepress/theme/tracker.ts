@@ -65,6 +65,9 @@ export function isAdminUser(): boolean {
   }
 }
 
+let lastTrackedPath = ''
+let lastTrackedTime = 0
+
 /**
  * 上报 PV (页面浏览)
  */
@@ -73,13 +76,21 @@ export function trackPageView(path?: string): void {
   if (isAdminUser()) return // 站长本人访问，自动排除，保证生产统计数据真实纯净
 
   const currentPath = path || window.location.pathname
+  const now = Date.now()
+
+  // 内存级防抖：同一路径 3 秒内坚决不重复上报，彻底解决框架初始化与路由挂载双重触发
+  if (lastTrackedPath === currentPath && now - lastTrackedTime < 3000) {
+    return
+  }
+  lastTrackedPath = currentPath
+  lastTrackedTime = now
 
   // 10秒内重复访问同一路径不重复记 PV，防止频繁刷新刷量
   try {
     const lastRecord = sessionStorage.getItem(LAST_PV_KEY)
     if (lastRecord) {
       const { path: lastPath, time } = JSON.parse(lastRecord)
-      if (lastPath === currentPath && Date.now() - time < 10000) {
+      if (lastPath === currentPath && now - time < 10000) {
         return
       }
     }

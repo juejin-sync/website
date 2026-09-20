@@ -18,7 +18,7 @@ function getTodayString(): string {
 }
 
 function classifyReferrer(referrer: string): string {
-  if (!referrer) return '直接访问 / 外链收藏'
+  if (!referrer) return '直接输入网址 / 微信分享 / 收藏夹'
   try {
     const url = new URL(referrer)
     const host = url.hostname.toLowerCase()
@@ -30,7 +30,7 @@ function classifyReferrer(referrer: string): string {
     if (host.includes('zhihu.com')) return '知乎'
     if (host.includes('bing.com')) return '必应搜索'
     if (host.includes('v2ex.com')) return 'V2EX'
-    if (host.includes('artferry') || host === 'localhost' || host === '127.0.0.1') return '直接访问 / 外链收藏'
+    if (host.includes('artferry') || host === 'localhost' || host === '127.0.0.1') return '直接输入网址 / 站内浏览'
     return host.replace(/^www\./, '')
   } catch {
     return '其他外链'
