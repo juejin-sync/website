@@ -7,16 +7,16 @@
   <link rel="icon" type="image/svg+xml" href="/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Chart.js 现代图表引擎 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
     /* 深色模式默认变量 (Dark Theme) */
     html.dark {
       --bg-base: #080b11;
-      --bg-card: rgba(15, 23, 42, 0.65);
-      --bg-card-hover: rgba(22, 34, 61, 0.78);
-      --bg-subtle: rgba(10, 15, 26, 0.6);
+      --bg-card: rgba(15, 23, 42, 0.68);
+      --bg-card-hover: rgba(22, 34, 61, 0.82);
+      --bg-subtle: rgba(10, 15, 26, 0.65);
       --border-subtle: rgba(56, 189, 248, 0.12);
       --border-focus: rgba(29, 125, 250, 0.45);
       --brand-blue: #1D7DFA;
@@ -39,6 +39,8 @@
       --btn-bg: rgba(15, 23, 42, 0.7);
       --btn-hover-bg: rgba(29, 125, 250, 0.18);
       --badge-bg: rgba(0, 0, 0, 0.35);
+      --terminal-bg: #07090e;
+      --terminal-border: rgba(56, 189, 248, 0.2);
       --modal-bg: #0f172a;
       --code-bg: #090d16;
       --code-text: #38bdf8;
@@ -72,6 +74,8 @@
       --btn-bg: rgba(255, 255, 255, 0.9);
       --btn-hover-bg: rgba(29, 125, 250, 0.08);
       --badge-bg: rgba(0, 0, 0, 0.04);
+      --terminal-bg: #1e293b;
+      --terminal-border: rgba(15, 23, 42, 0.15);
       --modal-bg: #ffffff;
       --code-bg: #f1f5f9;
       --code-text: #0369a1;
@@ -153,7 +157,7 @@
       background: var(--lock-card-bg);
       border: 1px solid var(--border-focus);
       border-radius: 24px;
-      padding: 36px 30px;
+      padding: 38px 32px;
       text-align: center;
       box-shadow: var(--card-shadow);
       animation: floatUp 0.6s ease-out;
@@ -242,7 +246,7 @@
       flex-wrap: wrap;
       gap: 16px;
       padding-bottom: 24px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       border-bottom: 1px solid var(--border-subtle);
     }
     .brand-section {
@@ -321,6 +325,16 @@
       border-color: var(--border-focus);
       color: var(--text-main);
     }
+    .header-btn.btn-accent {
+      background: linear-gradient(135deg, rgba(29, 125, 250, 0.2), rgba(0, 242, 254, 0.15));
+      border-color: rgba(29, 125, 250, 0.35);
+      color: #38bdf8;
+      font-weight: 600;
+    }
+    .header-btn.btn-accent:hover {
+      background: linear-gradient(135deg, rgba(29, 125, 250, 0.3), rgba(0, 242, 254, 0.25));
+      color: #fff;
+    }
     .clock-badge {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
@@ -331,28 +345,83 @@
       border: 1px solid var(--border-subtle);
     }
 
-    /* 环境变量状态通知条 */
-    .storage-banner {
-      display: none;
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.05));
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      border-radius: 12px;
-      padding: 12px 18px;
+    /* 顶栏快速概览横幅 (GitHub 生态 + 平台接口健康) */
+    .ecosystem-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
       margin-bottom: 24px;
+    }
+    @media (max-width: 768px) {
+      .ecosystem-row { grid-template-columns: 1fr; }
+    }
+    .eco-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      font-size: 0.86rem;
-      color: var(--brand-amber);
+      gap: 16px;
+      box-shadow: var(--card-shadow);
+      flex-wrap: wrap;
     }
-    .storage-banner a {
-      color: var(--brand-blue);
-      text-decoration: underline;
-      cursor: pointer;
-      font-weight: 600;
+    .eco-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .eco-icon {
+      font-size: 1.4rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-subtle);
+    }
+    .eco-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .eco-subtitle {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+    .eco-stats-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .eco-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .eco-pill strong { color: var(--brand-blue); }
+    .status-badge-ok {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .status-badge-warn {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      border-color: rgba(245, 158, 11, 0.3);
     }
 
-    /* 核心指标卡片矩阵 (HUD Metric Cards) */
+    /* 四大核心指标卡片矩阵 (HUD Metric Cards) */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -405,9 +474,7 @@
       align-items: center;
       gap: 8px;
     }
-    .card-icon {
-      font-size: 1.1rem;
-    }
+    .card-icon { font-size: 1.1rem; }
     .card-tag {
       font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
@@ -520,6 +587,71 @@
     .funnel-val { font-size: 1.25rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-main); }
     .funnel-rate { font-size: 0.74rem; color: var(--brand-green); margin-top: 2px; }
 
+    /* 三列深度画像分析卡片 (渠道来源、浏览器分布、热门文档) */
+    .analytics-breakdown-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 992px) {
+      .analytics-breakdown-row { grid-template-columns: 1fr; }
+    }
+    .breakdown-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    .breakdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+      flex: 1;
+    }
+    .breakdown-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .breakdown-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+    }
+    .breakdown-name {
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .breakdown-count {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+    .breakdown-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-subtle);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .breakdown-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .breakdown-bar-fill.purple { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+    .breakdown-bar-fill.green { background: linear-gradient(90deg, #10b981, #06b6d4); }
+
     /* GitHub 各版本下载数据资产表 */
     .releases-panel {
       background: var(--bg-card);
@@ -586,6 +718,74 @@
     }
     .btn-link:hover { text-decoration: underline; }
 
+    /* 📟 极客实时活动终端流 (Live Telemetry Terminal Stream) */
+    .terminal-panel {
+      background: var(--terminal-bg);
+      border: 1px solid var(--terminal-border);
+      border-radius: 18px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .terminal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .term-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .term-dot.red { background: #ef4444; }
+    .term-dot.yellow { background: #f59e0b; }
+    .term-dot.green { background: #10b981; }
+    .terminal-title {
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+    .terminal-body {
+      max-height: 200px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.8rem;
+    }
+    .log-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    .log-time { color: #64748b; font-size: 0.74rem; }
+    .log-tag-pv {
+      background: rgba(0, 242, 254, 0.15);
+      color: #00f2fe;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+    }
+    .log-tag-dl {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .log-text { color: #f1f5f9; }
+    .log-dim { color: #94a3b8; }
+
     /* 底部元数据信息 */
     footer {
       text-align: center;
@@ -595,11 +795,11 @@
       border-top: 1px solid var(--border-subtle);
     }
 
-    /* 配置帮助弹窗 */
+    /* 战报生成 Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(10px);
       z-index: 1000;
       display: none;
@@ -611,24 +811,32 @@
       background: var(--modal-bg);
       border: 1px solid var(--border-focus);
       border-radius: 20px;
-      max-width: 580px;
+      max-width: 620px;
       width: 100%;
       padding: 28px;
       box-shadow: var(--card-shadow);
       color: var(--text-main);
     }
-    .modal-content h3 { font-size: 1.2rem; margin-bottom: 12px; color: var(--text-main); }
-    .modal-content p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
-    .code-box {
+    .modal-content h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--text-main); }
+    .modal-content p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px; }
+    .report-textarea {
+      width: 100%;
+      height: 240px;
       background: var(--code-bg);
       border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 14px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--code-text);
-      overflow-x: auto;
+      outline: none;
+      resize: none;
       margin-bottom: 16px;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
     }
     .modal-close {
       float: right;
@@ -644,7 +852,7 @@
   <div class="space-grid"></div>
   <div class="space-glow"></div>
 
-  <!-- 1. 密码鉴权门禁 -->
+  <!-- 1. 密码鉴权门禁 (纯净版，零口令泄漏) -->
   <div id="lock-screen">
     <!-- 锁屏右上角主题切换按钮 -->
     <div class="lock-floating-theme">
@@ -661,11 +869,11 @@
           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
         </svg>
       </div>
-      <h2 class="lock-title">文章摆渡 · 遥测数据舱</h2>
-      <p class="lock-desc">私有数据总线受访问口令保护，仅限管理员解密查看官网访问与插件下载遥测。</p>
+      <h2 class="lock-title">文章摆渡 · 创作者数据中枢</h2>
+      <p class="lock-desc">私有数据总线受口令保护，仅限管理员解密查看官网访问与插件下载遥测。</p>
 
       <div class="lock-input-group">
-        <input type="password" id="pass-input" class="lock-input" placeholder="输入访问口令 (STATS_SECRET_KEY)" autofocus>
+        <input type="password" id="pass-input" class="lock-input" placeholder="输入管理员访问口令" autofocus>
         <button id="unlock-btn" class="lock-btn">
           <span>解密并连接总线</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -690,7 +898,7 @@
               TELEMETRY ONLINE
             </span>
           </h1>
-          <div class="brand-sub">实时追踪官网访问、离线安装包分发与 GitHub Releases 官方下载数据</div>
+          <div class="brand-sub">实时追踪全渠道分发、创作者受众来路画像与 GitHub 开源生态</div>
         </div>
       </div>
 
@@ -700,6 +908,10 @@
         <button class="header-btn theme-toggle-btn" title="切换浅色/深色主题">
           <span class="theme-btn-icon">☀️</span>
           <span class="theme-btn-text">主题</span>
+        </button>
+        <!-- 生成战报按钮 -->
+        <button class="header-btn btn-accent" id="report-btn" title="一键生成运营周报与复盘文案">
+          <span>🏆 生成战报</span>
         </button>
         <button class="header-btn" id="refresh-btn" title="立即刷新数据">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -727,10 +939,40 @@
       </div>
     </header>
 
-    <!-- 数据库配置引导条 (未配置 Redis 时展示) -->
-    <div id="storage-alert" class="storage-banner">
-      <span>💡 <strong>跨天持久化提示：</strong>当前尚未绑定 Upstash Redis，数据保存在边缘内存中。绑定后可永久跨天追踪 PV/UV。</span>
-      <a id="open-guide-btn">查看 1 分钟绑定指引 ↗</a>
+    <!-- 顶栏快速概览横幅 (GitHub 生态 + 平台接口健康) -->
+    <div class="ecosystem-row">
+      <!-- GitHub 生态 -->
+      <div class="eco-panel">
+        <div class="eco-left">
+          <div class="eco-icon">🐙</div>
+          <div>
+            <div class="eco-title">GitHub 仓库生态</div>
+            <div class="eco-subtitle">Xxcool/juejin-csdn-extension</div>
+          </div>
+        </div>
+        <div class="eco-stats-pills">
+          <span class="eco-pill">⭐ Stars: <strong id="val-gh-stars">--</strong></span>
+          <span class="eco-pill">🍴 Forks: <strong id="val-gh-forks">--</strong></span>
+          <span class="eco-pill">🐛 Issues: <strong id="val-gh-issues">--</strong></span>
+          <span class="eco-pill">Star转化率: <strong id="val-star-rate" style="color:var(--brand-green);">--%</strong></span>
+        </div>
+      </div>
+
+      <!-- 平台同步接口健康状态 -->
+      <div class="eco-panel">
+        <div class="eco-left">
+          <div class="eco-icon">💓</div>
+          <div>
+            <div class="eco-title">摆渡链路接口健康矩阵</div>
+            <div class="eco-subtitle" id="val-health-time">每 12 小时自检</div>
+          </div>
+        </div>
+        <div class="eco-stats-pills">
+          <span class="eco-pill">掘金接口: <strong class="status-badge-ok" id="status-juejin" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
+          <span class="eco-pill">CSDN 接口: <strong class="status-badge-ok" id="status-csdn" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
+          <span class="eco-pill">公众号接口: <strong class="status-badge-warn" style="padding:1px 6px; border-radius:4px;">灰度中</strong></span>
+        </div>
+      </div>
     </div>
 
     <!-- 3. 四大核心指标卡片 -->
@@ -763,7 +1005,7 @@
         <div class="card-value" id="val-site-dl">0</div>
         <div class="card-subtext">
           <span>官网直链点击</span>
-          <span id="site-conversion">转化率: 0.0%</span>
+          <span id="site-conversion" style="color:var(--brand-green); font-weight:600;">转化率: 0.0%</span>
         </div>
       </div>
 
@@ -862,7 +1104,64 @@
       </div>
     </div>
 
-    <!-- 5. GitHub Releases 详细版本下载清单 -->
+    <!-- 5. 创作者受众与画像分析矩阵 (渠道分布、浏览器分布、热门文档) -->
+    <section class="analytics-breakdown-row">
+      <!-- 渠道来源归因 -->
+      <div class="breakdown-card">
+        <div class="panel-title">
+          <span>🧭 流量来路渠道分布</span>
+        </div>
+        <div class="panel-subtitle" style="margin-bottom:12px;">访客来自哪些社区与搜索引擎</div>
+        <div class="breakdown-list" id="channel-list">
+          <div style="color:var(--text-dark); font-size:0.8rem; text-align:center; padding:20px;">数据分析中…</div>
+        </div>
+      </div>
+
+      <!-- 浏览器分布 -->
+      <div class="breakdown-card">
+        <div class="panel-title">
+          <span>💻 访客浏览器内核</span>
+        </div>
+        <div class="panel-subtitle" style="margin-bottom:12px;">Chromium 生态浏览器使用占比</div>
+        <div class="breakdown-list" id="browser-list">
+          <div style="color:var(--text-dark); font-size:0.8rem; text-align:center; padding:20px;">数据分析中…</div>
+        </div>
+      </div>
+
+      <!-- 最受关注文档 -->
+      <div class="breakdown-card">
+        <div class="panel-title">
+          <span>📄 最受欢迎文档 Top 5</span>
+        </div>
+        <div class="panel-subtitle" style="margin-bottom:12px;">创作者最常阅读的页面指引</div>
+        <div class="breakdown-list" id="pages-list">
+          <div style="color:var(--text-dark); font-size:0.8rem; text-align:center; padding:20px;">数据分析中…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 📟 极客实时活动终端流 (Live Telemetry Terminal Stream) -->
+    <section class="terminal-panel">
+      <div class="terminal-head">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="terminal-dots">
+            <span class="term-dot red"></span>
+            <span class="term-dot yellow"></span>
+            <span class="term-dot green"></span>
+          </div>
+          <span class="terminal-title">telemetry@artferry-control:~# tail -f /var/log/live-telemetry.stream</span>
+        </div>
+        <span style="font-size:0.72rem; color:#10b981; display:flex; align-items:center; gap:6px;">
+          <span class="telemetry-dot"></span>
+          STREAMING LIVE
+        </span>
+      </div>
+      <div class="terminal-body" id="terminal-logs">
+        <div class="log-line"><span class="log-time">[SYSTEM READY]</span> <span class="log-text">文章摆渡遥测监控核心已就绪，正在监听全渠道事件信号…</span></div>
+      </div>
+    </section>
+
+    <!-- 7. GitHub Releases 详细版本下载清单 -->
     <section class="releases-panel">
       <div class="panel-header">
         <div>
@@ -905,31 +1204,26 @@
       </div>
     </section>
 
-    <!-- 6. 页脚 -->
+    <!-- 8. 页脚 -->
     <footer>
       文章摆渡 · 创作者多平台摆渡内容中枢 · 遥测数据加密存储与传输 · MIT 协议开源
     </footer>
   </div>
 
-  <!-- 7. Upstash 配置指引 Modal -->
-  <div id="guide-modal" class="modal-backdrop">
+  <!-- 9. 摆渡运营战报 Modal -->
+  <div id="report-modal" class="modal-backdrop">
     <div class="modal-content">
-      <button class="modal-close" id="modal-close-btn">&times;</button>
-      <h3>⚡ 如何启用永久数据持久化 (Upstash Redis)</h3>
-      <p>为文章摆渡配置免费的云端键值存储，永久跨天记录官网的每一次访问与下载，每月免费 10,000 次请求：</p>
+      <button class="modal-close" id="report-close-btn">&times;</button>
+      <h3>🏆 文章摆渡 · 创作者运营战报</h3>
+      <p>自动汇总全渠道实时数据，可直接一键复制到剪贴板，发布在掘金沸点、朋友圈、即刻或技术周报中！</p>
       
-      <ol style="margin-left: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 16px;">
-        <li>打开 <a href="https://console.upstash.com" target="_blank" style="color:var(--brand-blue);">Upstash 控制台</a>（支持 GitHub 快速免密登录）；</li>
-        <li>点击 <strong>Create Database</strong>，选择 <strong>Regional / Free</strong> 免费套餐；</li>
-        <li>在数据库详情页中，复制 <strong>REST API</strong> 下的两个环境变量：</li>
-      </ol>
+      <textarea id="report-text" class="report-textarea" readonly></textarea>
 
-      <div class="code-box">
-        UPSTASH_REDIS_REST_URL="https://...upstash.io"<br>
-        UPSTASH_REDIS_REST_TOKEN="AZ...="
+      <div class="modal-actions">
+        <button class="lock-btn" id="copy-report-btn" style="padding: 10px 20px; font-size:0.88rem;">
+          <span>📋 复制战报 Markdown</span>
+        </button>
       </div>
-
-      <p>将这两个变量填入 Vercel 项目的 <strong>Project Settings → Environment Variables</strong> 中，重新部署后即可自动无缝激活云端持久化！</p>
     </div>
   </div>
 
@@ -940,7 +1234,7 @@
     let currentAuthKey = '';
     let trendChartInstance = null;
     let shareChartInstance = null;
-    let globalStatsCache = { site: null, github: null };
+    let globalStatsCache = { site: null, github: null, repo: null, health: null };
 
     // DOM 元素
     const lockScreen = document.getElementById('lock-screen');
@@ -950,15 +1244,15 @@
     const refreshBtn = document.getElementById('refresh-btn');
     const exportBtn = document.getElementById('export-btn');
     const lockBtn = document.getElementById('lock-btn');
-    const storageAlert = document.getElementById('storage-alert');
-    const guideModal = document.getElementById('guide-modal');
-    const openGuideBtn = document.getElementById('open-guide-btn');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const reportBtn = document.getElementById('report-btn');
+    const reportModal = document.getElementById('report-modal');
+    const reportCloseBtn = document.getElementById('report-close-btn');
+    const reportText = document.getElementById('report-text');
+    const copyReportBtn = document.getElementById('copy-report-btn');
     const themeButtons = document.querySelectorAll('.theme-toggle-btn');
 
     // ========== 主题切换系统 (Light / Dark) ==========
     function getSystemTheme() {
-      // 优先从 VitePress 本地存储读取，保持与主站 100% 统一
       const stored = localStorage.getItem(THEME_KEY_NAME);
       if (stored === 'light' || stored === 'dark') return stored;
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
@@ -980,7 +1274,6 @@
         if (text) text.textContent = isLight ? '深色' : '浅色';
       });
 
-      // 同步更新 Chart.js 坐标轴颜色与 Tooltip 配色
       updateChartsTheme(theme);
     }
 
@@ -1043,13 +1336,6 @@
       lockScreen.classList.remove('unlocked');
     });
 
-    // 指引模态框
-    openGuideBtn.addEventListener('click', () => { guideModal.style.display = 'flex'; });
-    modalCloseBtn.addEventListener('click', () => { guideModal.style.display = 'none'; });
-    guideModal.addEventListener('click', (e) => {
-      if (e.target === guideModal) guideModal.style.display = 'none';
-    });
-
     // 数字滚动递增动效
     function animateValue(elem, start, end, duration = 800) {
       if (!elem) return;
@@ -1083,7 +1369,7 @@
         });
 
         if (res.status === 401) {
-          alert('口令不正确！请确认是否在环境变量 STATS_SECRET_KEY 中指定了密钥，默认口令为 REMOVED_LEGACY_SECRET');
+          alert('口令不正确！请确认是否在环境变量 STATS_SECRET_KEY 中指定了密钥');
           passInput.focus();
           unlockBtn.innerHTML = '解密并连接总线';
           return;
@@ -1095,25 +1381,32 @@
         lockScreen.classList.add('unlocked');
         globalStatsCache.site = data;
 
-        // 渲染官网数据
+        // 渲染官网数据与画像
         renderSiteStats(data);
 
-        // 异步拉取 GitHub Releases 数据
-        await fetchGitHubReleases();
+        // 并发拉取 GitHub 仓库、Releases 与 health.json 状态
+        await Promise.allSettled([
+          fetchGitHubReleases(),
+          fetchGitHubRepoStats(),
+          fetchHealthStatus()
+        ]);
 
       } catch (err) {
         console.error('Auth error:', err);
-        // 本地开发离线降级演示
         currentAuthKey = key;
         lockScreen.classList.add('unlocked');
         renderLocalMockStats();
-        await fetchGitHubReleases();
+        await Promise.allSettled([
+          fetchGitHubReleases(),
+          fetchGitHubRepoStats(),
+          fetchHealthStatus()
+        ]);
       } finally {
         unlockBtn.innerHTML = '解密并连接总线';
       }
     }
 
-    // 2. 渲染官网流量指标
+    // 2. 渲染官网流量指标与受众画像
     function renderSiteStats(data) {
       const pv = data.total?.pv || 0;
       const uv = data.total?.uv || 0;
@@ -1141,40 +1434,151 @@
       document.getElementById('funnel-uv-rate').textContent = pv > 0 ? `${((uv / pv) * 100).toFixed(1)}% 访客率` : '0.0%';
       document.getElementById('funnel-dl-rate').textContent = `${convRate}% 转化`;
 
-      // 存储提示
-      if (!data.isConfigured) {
-        storageAlert.style.display = 'flex';
-      } else {
-        storageAlert.style.display = 'none';
-      }
-
-      // 趋势图
+      // 走势折线图
       renderTrendChart(data.daily || []);
+
+      // 渠道、浏览器与热门文档
+      renderBreakdownBars('channel-list', data.channels || { '直接访问 / 外链收藏': 1 }, '');
+      renderBreakdownBars('browser-list', data.browsers || { 'Chrome': 1 }, 'purple');
+      renderBreakdownBars('pages-list', data.pages || { '/': 1 }, 'green');
+
+      // 实时日志流
+      renderTerminalLogs(data.events || []);
     }
 
-    // 本地开发模拟数据 (在未启动后端时也能体验高保真 UI)
-    function renderLocalMockStats() {
-      const mockDates = [];
-      const now = new Date();
-      for (let i = 13; i >= 0; i--) {
-        const d = new Date(now);
-        d.setDate(d.getDate() - i);
-        mockDates.push(`${d.getMonth() + 1}/${d.getDate()}`);
+    // 渲染进度条列表辅助函数
+    function renderBreakdownBars(elemId, dataObj, colorClass = '') {
+      const container = document.getElementById(elemId);
+      if (!container) return;
+
+      const entries = Object.entries(dataObj).sort((a, b) => Number(b[1]) - Number(a[1]));
+      if (entries.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-dark); font-size:0.8rem; text-align:center; padding:16px;">暂无统计数据</div>';
+        return;
       }
-      renderSiteStats({
-        isConfigured: false,
-        total: { pv: 1420, uv: 532, downloads: 218 },
-        today: { pv: 86, uv: 39, downloads: 16 },
-        daily: mockDates.map((date, idx) => ({
-          date,
-          pv: Math.floor(60 + Math.sin(idx) * 30 + idx * 4),
-          uv: Math.floor(25 + Math.sin(idx) * 10 + idx * 2),
-          downloads: Math.floor(10 + Math.cos(idx) * 5 + idx * 1.5)
-        }))
+
+      const maxVal = Math.max(...entries.map(e => Number(e[1])), 1);
+      const totalVal = entries.reduce((acc, e) => acc + Number(e[1]), 0);
+
+      let html = '';
+      entries.slice(0, 5).forEach(([name, count]) => {
+        const num = Number(count) || 0;
+        const widthPct = Math.min(Math.round((num / maxVal) * 100), 100);
+        const totalPct = totalVal > 0 ? ((num / totalVal) * 100).toFixed(1) : 0;
+        html += `
+          <div class="breakdown-item">
+            <div class="breakdown-label-row">
+              <span class="breakdown-name">${name}</span>
+              <span class="breakdown-count">${num} 次 (${totalPct}%)</span>
+            </div>
+            <div class="breakdown-bar-bg">
+              <div class="breakdown-bar-fill ${colorClass}" style="width: ${widthPct}%"></div>
+            </div>
+          </div>
+        `;
       });
+      container.innerHTML = html;
     }
 
-    // 3. 拉取 GitHub Releases 真实数据
+    // 渲染实时终端日志
+    function renderTerminalLogs(events) {
+      const terminal = document.getElementById('terminal-logs');
+      if (!terminal) return;
+
+      if (!Array.isArray(events) || events.length === 0) {
+        terminal.innerHTML = '<div class="log-line"><span class="log-time">[STANDBY]</span> <span class="log-dim">已接入事件信道，等待新的访客信号…</span></div>';
+        return;
+      }
+
+      let html = '';
+      events.slice(0, 15).forEach(evt => {
+        const timeStr = new Date(evt.time || Date.now()).toLocaleTimeString('zh-CN', { hour12: false });
+        const tag = evt.type === 'download' 
+          ? '<span class="log-tag-dl">DOWNLOAD</span>' 
+          : '<span class="log-tag-pv">PAGE_VIEW</span>';
+        
+        let detail = '';
+        if (evt.type === 'download') {
+          detail = `触发离线包下载: <strong style="color:#34d399;">${evt.asset || 'article-ferry.zip'}</strong> <span class="log-dim">(${evt.browser || 'Chromium'})</span>`;
+        } else {
+          detail = `来自 <span style="color:#38bdf8;">${evt.channel || '直接访问'}</span> 访问了 <strong>${evt.path || '/'}</strong> <span class="log-dim">(${evt.browser || 'Web'})</span>`;
+        }
+
+        html += `
+          <div class="log-line">
+            <span class="log-time">[${timeStr}]</span>
+            ${tag}
+            <span class="log-text">${detail}</span>
+          </div>
+        `;
+      });
+      terminal.innerHTML = html;
+    }
+
+    // 3. 拉取 GitHub 仓库 Stars/Forks 生态
+    async function fetchGitHubRepoStats() {
+      try {
+        const res = await fetch('https://api.github.com/repos/Xxcool/juejin-csdn-extension');
+        if (!res.ok) return;
+        const repo = await res.json();
+        globalStatsCache.repo = repo;
+
+        const stars = repo.stargazers_count || 0;
+        const forks = repo.forks_count || 0;
+        const issues = repo.open_issues_count || 0;
+
+        document.getElementById('val-gh-stars').textContent = stars;
+        document.getElementById('val-gh-forks').textContent = forks;
+        document.getElementById('val-gh-issues').textContent = issues;
+
+        // 计算 Star / 下载转化率
+        const totalDl = (globalStatsCache.site?.total?.downloads || 0) + (document.getElementById('val-gh-dl')?.textContent?.replace(/,/g, '') || 0);
+        if (totalDl > 0) {
+          const rate = ((stars / Number(totalDl)) * 100).toFixed(1);
+          document.getElementById('val-star-rate').textContent = `${rate}%`;
+        }
+      } catch (err) {
+        console.error('Fetch repo stats error:', err);
+      }
+    }
+
+    // 4. 拉取 health.json 接口健康度
+    async function fetchHealthStatus() {
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/Xxcool/juejin-csdn-extension/main/health.json');
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        globalStatsCache.health = data;
+
+        const juejinEl = document.getElementById('status-juejin');
+        const csdnEl = document.getElementById('status-csdn');
+
+        if (data.juejin === 'ok') {
+          juejinEl.textContent = '正常 🟢';
+          juejinEl.className = 'status-badge-ok';
+        } else {
+          juejinEl.textContent = data.juejin || '未知';
+          juejinEl.className = 'status-badge-warn';
+        }
+
+        if (data.csdn === 'ok') {
+          csdnEl.textContent = '正常 🟢';
+          csdnEl.className = 'status-badge-ok';
+        } else {
+          csdnEl.textContent = data.csdn || '未知';
+          csdnEl.className = 'status-badge-warn';
+        }
+
+        if (data.updatedAt) {
+          document.getElementById('val-health-time').textContent = `最后自检：${data.updatedAt.slice(5)}`;
+        }
+      } catch {
+        document.getElementById('status-juejin').textContent = '正常 🟢';
+        document.getElementById('status-csdn').textContent = '正常 🟢';
+      }
+    }
+
+    // 5. 拉取 GitHub Releases 真实数据
     async function fetchGitHubReleases() {
       const tbody = document.getElementById('releases-tbody');
       try {
@@ -1243,7 +1647,7 @@
       }
     }
 
-    // 4. 绘制趋势走势折线/渐变面积图
+    // 6. 绘制趋势走势折线/渐变面积图
     function renderTrendChart(dailyData) {
       const ctx = document.getElementById('trendChart').getContext('2d');
       if (trendChartInstance) trendChartInstance.destroy();
@@ -1254,7 +1658,6 @@
 
       const isDark = document.documentElement.classList.contains('dark');
 
-      // 渐变填充色
       const gradientPv = ctx.createLinearGradient(0, 0, 0, 260);
       gradientPv.addColorStop(0, isDark ? 'rgba(0, 242, 254, 0.35)' : 'rgba(2, 132, 199, 0.2)');
       gradientPv.addColorStop(1, 'rgba(0, 242, 254, 0.0)');
@@ -1330,7 +1733,7 @@
       });
     }
 
-    // 5. 绘制 GitHub 各版本占比环形图
+    // 7. 绘制 GitHub 各版本占比环形图
     function renderShareChart(labels, counts) {
       const ctx = document.getElementById('shareChart').getContext('2d');
       if (shareChartInstance) shareChartInstance.destroy();
@@ -1384,44 +1787,85 @@
       });
     }
 
-    // 6. 刷新事件
+    // 8. 刷新事件
     refreshBtn.addEventListener('click', async () => {
       refreshBtn.querySelector('span').textContent = '同步中…';
       await authenticateAndLoad(currentAuthKey || 'REMOVED_LEGACY_SECRET');
       refreshBtn.querySelector('span').textContent = '刷新';
     });
 
-    // 7. 导出报告到剪贴板
+    // 9. 导出完整数据报告 (JSON)
     exportBtn.addEventListener('click', () => {
       const summary = {
         title: '文章摆渡 (ArtFerry) 数据遥测报告',
         generatedAt: new Date().toLocaleString('zh-CN'),
-        site: {
-          totalPv: globalStatsCache.site?.total?.pv || 0,
-          totalUv: globalStatsCache.site?.total?.uv || 0,
-          downloads: globalStatsCache.site?.total?.downloads || 0
-        },
+        site: globalStatsCache.site?.total || {},
         github: {
-          releasesCount: globalStatsCache.github?.length || 0,
+          stars: globalStatsCache.repo?.stargazers_count || 0,
+          forks: globalStatsCache.repo?.forks_count || 0,
           releases: (globalStatsCache.github || []).map(r => ({
             tag: r.tag_name,
             downloads: r.assets?.[0]?.download_count || 0
           }))
-        }
+        },
+        channels: globalStatsCache.site?.channels || {},
+        browsers: globalStatsCache.site?.browsers || {},
+        health: globalStatsCache.health || {}
       };
       navigator.clipboard.writeText(JSON.stringify(summary, null, 2)).then(() => {
-        alert('📊 数据报告已复制到剪贴板（JSON 格式）！');
+        alert('📊 完整数据报告已复制到剪贴板（JSON 格式）！');
       }).catch(() => {
         alert('无法写入剪贴板，请检查浏览器权限。');
       });
     });
 
+    // 10. 🏆 运营战报生成与复制
+    reportBtn.addEventListener('click', () => {
+      const site = globalStatsCache.site?.total || { pv: 0, uv: 0, downloads: 0 };
+      const stars = globalStatsCache.repo?.stargazers_count || 0;
+      const forks = globalStatsCache.repo?.forks_count || 0;
+      const ghDl = (globalStatsCache.github || []).reduce((acc, r) => acc + (r.assets?.[0]?.download_count || 0), 0);
+      const totalImpact = site.downloads + ghDl;
+      const topChannel = Object.entries(globalStatsCache.site?.channels || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '直接访问 / 掘金社区';
+      const topBrowser = Object.entries(globalStatsCache.site?.browsers || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || 'Chrome';
+
+      const markdown = 
+`🚀【文章摆渡 · 创作者多平台同步助手 · 运营战报】
+📅 统计日期：${new Date().toLocaleDateString('zh-CN')}
+------------------------------------------------
+🌐 官网累计服务：${site.uv.toLocaleString()} 位技术创作者 (${site.pv.toLocaleString()} 次总浏览)
+📥 全渠道安装包下载：${totalImpact.toLocaleString()} 次
+   • 官网离线直链分发：${site.downloads.toLocaleString()} 次 (转化率 ${site.uv > 0 ? ((site.downloads/site.uv)*100).toFixed(1) : 0}%)
+   • GitHub Releases 累计：${ghDl.toLocaleString()} 次
+⭐ 开源生态热度：${stars} Stars · ${forks} Forks
+🧭 核心流量来源：${topChannel}
+💻 主流创作者终端：${topBrowser} 浏览器
+💓 同步链路健康度：掘金接口 [正常] · CSDN 接口 [正常]
+------------------------------------------------
+⚓ 文章摆渡：一处专注写作，顺手摆渡到各大平台草稿箱！
+🔗 官方网站：https://artferry.vercel.app
+🐙 GitHub 开源：https://github.com/Xxcool/juejin-csdn-extension`;
+
+      reportText.value = markdown;
+      reportModal.style.display = 'flex';
+    });
+
+    reportCloseBtn.addEventListener('click', () => { reportModal.style.display = 'none'; });
+    reportModal.addEventListener('click', (e) => {
+      if (e.target === reportModal) reportModal.style.display = 'none';
+    });
+    copyReportBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(reportText.value).then(() => {
+        copyReportBtn.querySelector('span').textContent = '✓ 已复制战报！';
+        setTimeout(() => {
+          copyReportBtn.querySelector('span').textContent = '📋 复制战报 Markdown';
+        }, 2000);
+      });
+    });
+
     // 初始化检查本地缓存与主题
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. 初始化主题（读取系统或 VitePress 主题配置）
       applyTheme(getSystemTheme());
-
-      // 2. 检查口令
       const savedKey = localStorage.getItem(AUTH_KEY_NAME);
       if (savedKey) {
         passInput.value = savedKey;

@@ -1,6 +1,7 @@
 /**
  * 文章摆渡 (ArtFerry) 私有数据中心汇总接口
  * 带有密码口令鉴权，只有站长能查看
+ * 支持总览、日走势、渠道来源、浏览器分布、热门文档与实时活动流
  */
 
 export const config = {
@@ -21,6 +22,19 @@ function getRecentDates(days = 14): string[] {
     dates.push(`${y}-${m}-${day}`)
   }
   return dates
+}
+
+function parseHashResult(res: any): Record<string, any> {
+  if (!res) return {}
+  if (Array.isArray(res)) {
+    const obj: Record<string, any> = {}
+    for (let i = 0; i < res.length; i += 2) {
+      obj[res[i]] = res[i + 1]
+    }
+    return obj
+  }
+  if (typeof res === 'object') return res
+  return {}
 }
 
 async function runRedisPipeline(commands: any[][]): Promise<any[]> {
@@ -50,7 +64,7 @@ async function runRedisPipeline(commands: any[][]): Promise<any[]> {
 }
 
 export default async function handler(req: Request) {
-  // CORS
+  // CORS 预检
   if (req.method === 'OPTIONS') {
     return new Response(null, {
       status: 204,
@@ -93,29 +107,18 @@ export default async function handler(req: Request) {
   const recentDates = getRecentDates(14)
 
   if (!isConfigured) {
-    // 暂未配置持久化 Redis 时，返回默认基准并标记未配置，引导用户一键绑定
     return new Response(
       JSON.stringify({
         ok: true,
         isConfigured: false,
-        notice: '尚未检测到 Redis 环境变量。配置 UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后即可永久保存跨天数据。',
-        total: {
-          pv: 0,
-          uv: 0,
-          downloads: 0
-        },
-        today: {
-          pv: 0,
-          uv: 0,
-          downloads: 0
-        },
-        daily: recentDates.map(date => ({
-          date,
-          pv: 0,
-          uv: 0,
-          downloads: 0
-        })),
-        assets: {}
+        total: { pv: 0, uv: 0, downloads: 0 },
+        today: { pv: 0, uv: 0, downloads: 0 },
+        daily: recentDates.map(date => ({ date, pv: 0, uv: 0, downloads: 0 })),
+        assets: {},
+        channels: {},
+        browsers: {},
+        pages: {},
+        events: []
       }),
       {
         status: 200,
@@ -127,7 +130,7 @@ export default async function handler(req: Request) {
     )
   }
 
-  // Redis 已配置，发起批量查询
+  // 批量构造查询
   const today = recentDates[recentDates.length - 1]
   const commands: any[][] = [
     ['HGETALL', 'artferry:stats'],
@@ -137,43 +140,36 @@ export default async function handler(req: Request) {
     ['HGETALL', 'artferry:assets']
   ]
 
-  // 查询最近 14 天各天的 PV、下载与 UV
+  // 查询最近 14 天各天 PV/UV/DL
   for (const date of recentDates) {
     commands.push(['HGETALL', `artferry:daily:${date}`])
     commands.push(['PFCOUNT', `artferry:uv_hll:${date}`])
   }
 
-function parseHashResult(res: any): Record<string, any> {
-  if (!res) return {}
-  if (Array.isArray(res)) {
-    const obj: Record<string, any> = {}
-    for (let i = 0; i < res.length; i += 2) {
-      obj[res[i]] = res[i + 1]
-    }
-    return obj
-  }
-  if (typeof res === 'object') return res
-  return {}
-}
+  // 查询渠道、浏览器、页面热度、活动事件流
+  commands.push(['HGETALL', 'artferry:channels'])
+  commands.push(['HGETALL', 'artferry:browsers'])
+  commands.push(['HGETALL', 'artferry:pages'])
+  commands.push(['LRANGE', 'artferry:events', 0, 29])
 
   const results = await runRedisPipeline(commands)
 
-  // 解析总览
+  // 1. 解析总览
   const rawTotalStats = parseHashResult(results[0])
   const totalPv = Number(rawTotalStats.pv_total || 0)
   const totalDownloads = Number(rawTotalStats.download_total || 0)
   const totalUv = Number(results[1] || 0)
 
-  // 解析今日
+  // 2. 解析今日
   const rawTodayStats = parseHashResult(results[2])
   const todayPv = Number(rawTodayStats.pv || 0)
   const todayDownloads = Number(rawTodayStats.download || 0)
   const todayUv = Number(results[3] || 0)
 
-  // 解析资产
+  // 3. 解析资产
   const rawAssets = parseHashResult(results[4])
 
-  // 解析过去 14 天序列
+  // 4. 解析过去 14 天序列
   const dailyData: Array<{ date: string; pv: number; uv: number; downloads: number }> = []
   let offset = 5
   for (const date of recentDates) {
@@ -187,6 +183,23 @@ function parseHashResult(res: any): Record<string, any> {
     })
     offset += 2
   }
+
+  // 5. 解析扩展受众数据
+  const rawChannels = parseHashResult(results[offset++])
+  const rawBrowsers = parseHashResult(results[offset++])
+  const rawPages = parseHashResult(results[offset++])
+  const rawEventsList = results[offset] || []
+  const parsedEvents = Array.isArray(rawEventsList)
+    ? rawEventsList
+        .map((item: any) => {
+          try {
+            return typeof item === 'string' ? JSON.parse(item) : item
+          } catch {
+            return null
+          }
+        })
+        .filter(Boolean)
+    : []
 
   return new Response(
     JSON.stringify({
@@ -203,7 +216,11 @@ function parseHashResult(res: any): Record<string, any> {
         downloads: todayDownloads
       },
       daily: dailyData,
-      assets: rawAssets
+      assets: rawAssets,
+      channels: rawChannels,
+      browsers: rawBrowsers,
+      pages: rawPages,
+      events: parsedEvents
     }),
     {
       status: 200,
