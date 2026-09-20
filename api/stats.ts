@@ -143,28 +143,41 @@ export default async function handler(req: Request) {
     commands.push(['PFCOUNT', `artferry:uv_hll:${date}`])
   }
 
+function parseHashResult(res: any): Record<string, any> {
+  if (!res) return {}
+  if (Array.isArray(res)) {
+    const obj: Record<string, any> = {}
+    for (let i = 0; i < res.length; i += 2) {
+      obj[res[i]] = res[i + 1]
+    }
+    return obj
+  }
+  if (typeof res === 'object') return res
+  return {}
+}
+
   const results = await runRedisPipeline(commands)
 
   // 解析总览
-  const rawTotalStats = results[0] || {}
+  const rawTotalStats = parseHashResult(results[0])
   const totalPv = Number(rawTotalStats.pv_total || 0)
   const totalDownloads = Number(rawTotalStats.download_total || 0)
   const totalUv = Number(results[1] || 0)
 
   // 解析今日
-  const rawTodayStats = results[2] || {}
+  const rawTodayStats = parseHashResult(results[2])
   const todayPv = Number(rawTodayStats.pv || 0)
   const todayDownloads = Number(rawTodayStats.download || 0)
   const todayUv = Number(results[3] || 0)
 
   // 解析资产
-  const rawAssets = results[4] || {}
+  const rawAssets = parseHashResult(results[4])
 
   // 解析过去 14 天序列
   const dailyData: Array<{ date: string; pv: number; uv: number; downloads: number }> = []
   let offset = 5
   for (const date of recentDates) {
-    const dayStats = results[offset] || {}
+    const dayStats = parseHashResult(results[offset])
     const dayUv = Number(results[offset + 1] || 0)
     dailyData.push({
       date,
