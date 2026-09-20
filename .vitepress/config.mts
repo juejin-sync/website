@@ -34,7 +34,6 @@ export default defineConfig({
       { text: '使用指南', link: '/guide/' },
       { text: '核心特性', link: '/features/sync-engine' },
       { text: '架构与安全', link: '/deep-dive/pipeline' },
-      { text: '产品规划', link: '/roadmap/' },
       { text: '更新日志', link: '/changelog/' }
     ],
     sidebar: {
@@ -86,16 +85,7 @@ export default defineConfig({
         {
           text: '产品演进',
           items: [
-            { text: '全景路线图', link: '/roadmap/' },
             { text: '版本更新日志', link: '/changelog/' }
-          ]
-        }
-      ],
-      '/roadmap/': [
-        {
-          text: '规划与演进',
-          items: [
-            { text: '产品全景路线图', link: '/roadmap/' }
           ]
         }
       ],
