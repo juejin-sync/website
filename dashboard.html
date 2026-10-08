@@ -971,6 +971,7 @@
           <span class="eco-pill">掘金接口: <strong class="status-badge-ok" id="status-juejin" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
           <span class="eco-pill">CSDN 接口: <strong class="status-badge-ok" id="status-csdn" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
           <span class="eco-pill">公众号接口: <strong class="status-badge-ok" id="status-wechat" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
+          <span class="eco-pill">博客园接口: <strong class="status-badge-ok" id="status-cnblogs" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
         </div>
       </div>
     </div>
@@ -1563,6 +1564,7 @@
         const juejinEl = document.getElementById('status-juejin');
         const csdnEl = document.getElementById('status-csdn');
         const wechatEl = document.getElementById('status-wechat');
+        const cnblogsEl = document.getElementById('status-cnblogs');
 
         const updateStatusEl = (el, val) => {
           if (!el) return;
@@ -1584,6 +1586,7 @@
         updateStatusEl(juejinEl, data.juejin || 'ok');
         updateStatusEl(csdnEl, data.csdn || 'ok');
         updateStatusEl(wechatEl, data.wechat || 'ok');
+        updateStatusEl(cnblogsEl, data.cnblogs || 'ok');
 
         if (data.updatedAt) {
           document.getElementById('val-health-time').textContent = `最后自检：${data.updatedAt.slice(5)}`;
@@ -1592,6 +1595,7 @@
         document.getElementById('status-juejin').textContent = '正常 🟢';
         document.getElementById('status-csdn').textContent = '正常 🟢';
         document.getElementById('status-wechat').textContent = '正常 🟢';
+        document.getElementById('status-cnblogs').textContent = '正常 🟢';
       }
     }
 
@@ -1857,7 +1861,7 @@
 ⭐ 开源生态热度：${stars} Stars · ${forks} Forks
 🧭 核心流量来源：${topChannel}
 💻 主流创作者终端：${topBrowser} 浏览器
-💓 同步链路健康度：掘金接口 [正常] · CSDN 接口 [正常]
+💓 同步链路健康度：掘金接口 [正常] · CSDN 接口 [正常] · 微信公众号 [正常] · 博客园接口 [正常]
 ------------------------------------------------
 ⚓ 文章摆渡：一处专注写作，顺手摆渡到各大平台草稿箱！
 🔗 官方网站：https://artferry.vercel.app

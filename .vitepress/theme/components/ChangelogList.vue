@@ -25,6 +25,36 @@ const CACHE_TTL_MS = 15 * 60 * 1000 // 15 分钟缓存
 // 预置兜底数据（保障弱网、离线、SSG 阶段 0 延时渲染）
 const fallbackReleases: ReleaseItem[] = [
   {
+    tagName: 'v1.3.0',
+    name: '🚀 v1.3.0 博客园随笔草稿同步与多平台生态',
+    date: '2026-10-08',
+    body: `### 📌 博客园随笔草稿同步
+- **新增博客园草稿同步**：沿用当前 Chrome 浏览器已有登录态，分别校验登录状态、博客开通状态与稳定账号标识。
+- **正文图片无损转存**：支持博客园正文图片无损转存、新建与更新草稿、已发布内容覆盖保护、中断恢复与账号隔离。
+- **三平台协同调度**：CSDN、微信公众号与博客园三航道并行，支持按需勾选自由组合。`,
+    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v1.3.0',
+    asset: {
+      name: 'article-ferry-latest.zip',
+      size: '约 108 KB',
+      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/latest/download/article-ferry-latest.zip'
+    }
+  },
+  {
+    tagName: 'v1.2.0',
+    name: '🚀 v1.2.0 Mermaid 图表离屏渲染与正文图片保真',
+    date: '2026-09-24',
+    body: `### ✨ 图表保真与性能优化
+- **Mermaid 图表离屏渲染**：微信同步支持将流程图、时序图等 Mermaid 语法在离屏文档中渲染为高清 PNG 图片并转存为正文配图。
+- **渲染容器排队与图表隔离**：多图串行渲染，防止方向不同或多图场景串图。
+- **支持 Data URL 转存**：扩展正式构建启用体积压缩与权限优化。`,
+    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v1.2.0',
+    asset: {
+      name: 'article-ferry-v1.2.0.zip',
+      size: '约 105 KB',
+      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/download/v1.2.0/article-ferry-v1.2.0.zip'
+    }
+  },
+  {
     tagName: 'v1.1.0',
     name: '🚀 v1.1.0 发布后同步流程与契约时序测试',
     date: '2026-09-20',

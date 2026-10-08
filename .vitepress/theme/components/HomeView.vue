@@ -1,6 +1,6 @@
 <script setup>
 import { withBase } from 'vitepress'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRelease } from '../useRelease'
 import { trackDownload } from '../tracker'
 
@@ -15,6 +15,76 @@ const simulateStep = ref(0) // 0: idle, 1: transferring, 2: saved
 const copied = ref(false)
 const activeDraftTab = ref('csdn')
 
+// 目标平台定义
+const platformList = [
+  {
+    id: 'csdn',
+    name: 'CSDN 草稿箱',
+    shortName: 'CSDN',
+    badge: '分类自动匹配',
+    badgeClass: '',
+    tabLabel: 'CSDN 草稿',
+    tabClass: '',
+    successBadge: '✓ CSDN 草稿已保存',
+    successBadgeClass: '',
+    stats: ['3 张原图无损转存', '专栏分类已对齐']
+  },
+  {
+    id: 'wechat',
+    name: '微信公众号',
+    shortName: '微信公众号',
+    badge: 'v1.0.0 航道',
+    badgeClass: 'badge-green',
+    tabLabel: '微信公众号 🌟',
+    tabClass: 'wechat-tab-btn',
+    successBadge: '✓ 微信图文草稿就绪',
+    successBadgeClass: 'badge-green-fill',
+    stats: ['16:9/1:1/3:4 封面生成', '代码内联样式']
+  },
+  {
+    id: 'cnblogs',
+    name: '博客园随笔',
+    shortName: '博客园',
+    badge: 'v1.3.0 航道',
+    badgeClass: 'badge-blue',
+    tabLabel: '博客园草稿 🍃',
+    tabClass: 'cnblogs-tab-btn',
+    successBadge: '✓ 博客园随笔草稿已保存',
+    successBadgeClass: 'badge-blue-fill',
+    stats: ['正文图片无损转存', 'Markdown 原生排版']
+  }
+]
+
+// 选中的目标平台（默认全选演示）
+const selectedPlatforms = ref(['csdn', 'wechat', 'cnblogs'])
+
+const togglePlatform = (id) => {
+  if (isSimulating.value) return
+  const index = selectedPlatforms.value.indexOf(id)
+  if (index > -1) {
+    selectedPlatforms.value.splice(index, 1)
+  } else {
+    selectedPlatforms.value.push(id)
+  }
+
+  // 保证激活的草稿 Tab 属于当前选中的平台
+  if (!selectedPlatforms.value.includes(activeDraftTab.value) && selectedPlatforms.value.length > 0) {
+    activeDraftTab.value = selectedPlatforms.value[0]
+  }
+}
+
+const activePlatformDetails = computed(() => {
+  return platformList.filter(p => selectedPlatforms.value.includes(p.id))
+})
+
+const currentPlatformDetail = computed(() => {
+  return platformList.find(p => p.id === activeDraftTab.value) || activePlatformDetails.value[0]
+})
+
+const transferringNames = computed(() => {
+  return activePlatformDetails.value.map(p => p.shortName).join(' & ')
+})
+
 const copyExtensionUrl = async () => {
   try {
     await navigator.clipboard.writeText('chrome://extensions')
@@ -28,9 +98,14 @@ const copyExtensionUrl = async () => {
 }
 
 const runSimulation = () => {
-  if (isSimulating.value) return
+  if (isSimulating.value || selectedPlatforms.value.length === 0) return
   isSimulating.value = true
   simulateStep.value = 1
+
+  // 保证当前激活的 tab 在选中列表中
+  if (!selectedPlatforms.value.includes(activeDraftTab.value) && selectedPlatforms.value.length > 0) {
+    activeDraftTab.value = selectedPlatforms.value[0]
+  }
 
   setTimeout(() => {
     simulateStep.value = 2
@@ -62,7 +137,7 @@ const runSimulation = () => {
 
       <p class="hero-subtitle">
         在掘金写完文章，点击「同步多平台」一键勾选同步。<br>
-        已支持 CSDN 与微信公众号草稿箱，无损原图、内联排版与封面自动对齐。
+        已支持 CSDN、微信公众号与博客园草稿箱，无损原图、内联排版与封面自动对齐。
       </p>
 
       <!-- Primary Actions -->
@@ -117,8 +192,8 @@ const runSimulation = () => {
           <!-- Simulation Board Inside Browser -->
           <div class="mockup-inner">
             <div class="mockup-header-tip">
-              <span>💡 实际使用场景演示：在掘金写完文章点击「同步多平台」，勾选 CSDN & 微信公众号一键摆渡</span>
-              <span class="status-tip">{{ simulateStep === 0 ? '等待点击模拟' : simulateStep === 1 ? '正在并行搬运多平台...' : '✓ 双平台草稿已安全入库' }}</span>
+              <span>💡 实际使用场景演示：在掘金写完文章点击「同步多平台」，自由勾选目标平台一键摆渡</span>
+              <span class="status-tip">{{ simulateStep === 0 ? '等待点击模拟' : simulateStep === 1 ? '正在并行搬运多平台...' : `✓ 已勾选的 ${selectedPlatforms.length} 处草稿已安全入库` }}</span>
             </div>
 
             <div class="pipeline-grid">
@@ -139,26 +214,37 @@ const runSimulation = () => {
 
                 <!-- The Actual Checkbox Injected by Extension -->
                 <div class="injected-checkbox-box">
-                  <div class="checkbox-header">勾选同步目标平台：</div>
+                  <div class="checkbox-header">
+                    <span>勾选同步目标平台：</span>
+                    <span class="hint-clickable">（支持点击勾选）</span>
+                  </div>
                   <div class="platform-checks">
-                    <label class="check-item">
-                      <input type="checkbox" checked disabled class="checkbox-ui" />
-                      <span class="check-name">CSDN 草稿箱</span>
-                      <span class="check-badge">分类自动匹配</span>
-                    </label>
-                    <label class="check-item wechat-check">
-                      <input type="checkbox" checked disabled class="checkbox-ui" />
-                      <span class="check-name">微信公众号</span>
-                      <span class="check-badge badge-green">v1.0.0 航道</span>
+                    <label
+                      v-for="platform in platformList"
+                      :key="platform.id"
+                      class="check-item"
+                      :class="{ 'is-checked': selectedPlatforms.includes(platform.id), 'is-disabled': isSimulating }"
+                    >
+                      <input
+                        type="checkbox"
+                        :checked="selectedPlatforms.includes(platform.id)"
+                        :disabled="isSimulating"
+                        @change="togglePlatform(platform.id)"
+                        class="checkbox-ui"
+                      />
+                      <span class="check-name">{{ platform.name }}</span>
+                      <span class="check-badge" :class="platform.badgeClass">{{ platform.badge }}</span>
                     </label>
                   </div>
                 </div>
 
                 <div class="action-row">
-                  <span class="column-match">已就绪 2 个发布渠道</span>
+                  <span class="column-match">
+                    {{ selectedPlatforms.length > 0 ? `已就绪 ${selectedPlatforms.length} 个发布渠道` : '请至少勾选 1 个渠道' }}
+                  </span>
                   <button
                     class="btn-simulate-publish"
-                    :disabled="isSimulating"
+                    :disabled="isSimulating || selectedPlatforms.length === 0"
                     @click="runSimulation"
                   >
                     {{ isSimulating ? '正在并行搬运...' : simulateStep === 2 ? '↻ 重新模拟' : '🚀 模拟点击「同步多平台」' }}
@@ -185,55 +271,46 @@ const runSimulation = () => {
                 </div>
                 <div class="lane-text">
                   <span v-if="simulateStep === 0">写完点同步，小船多航道并行摆渡</span>
-                  <span v-else-if="simulateStep === 1" class="text-transit">并发转存 CSDN 与微信素材库...</span>
-                  <span v-else class="text-success">两岸草稿已入库，微信三套封面就绪</span>
+                  <span v-else-if="simulateStep === 1" class="text-transit">并发转存 {{ transferringNames }}...</span>
+                  <span v-else class="text-success">{{ selectedPlatforms.length }} 处草稿已入库，排版与封面就绪</span>
                 </div>
               </div>
 
               <!-- Right Shore: 目标草稿箱 -->
-              <div class="pipeline-card card-target" :class="{ 'is-ready': simulateStep === 2 }">
+              <div class="pipeline-card card-target" :class="{ 'is-ready': simulateStep === 2 && selectedPlatforms.length > 0 }">
                 <div class="card-tag tag-multi">
                   <span class="tag-circle"></span>
-                  <span>② 目标平台草稿箱 (已同步 2 处)</span>
+                  <span>② 目标平台草稿箱 (已同步 {{ selectedPlatforms.length }} 处)</span>
                 </div>
 
                 <div class="target-draft-box">
-                  <div v-if="simulateStep === 2" class="draft-content">
+                  <div v-if="simulateStep === 2 && selectedPlatforms.length > 0" class="draft-content">
                     <div class="draft-target-tabs">
                       <button
+                        v-for="platform in activePlatformDetails"
+                        :key="platform.id"
                         type="button"
                         class="target-tab-btn"
-                        :class="{ active: activeDraftTab === 'csdn' }"
-                        @click="activeDraftTab = 'csdn'"
+                        :class="[platform.tabClass, { active: activeDraftTab === platform.id }]"
+                        @click="activeDraftTab = platform.id"
                       >
-                        CSDN 草稿
-                      </button>
-                      <button
-                        type="button"
-                        class="target-tab-btn wechat-tab-btn"
-                        :class="{ active: activeDraftTab === 'wechat' }"
-                        @click="activeDraftTab = 'wechat'"
-                      >
-                        微信公众号 🌟
+                        {{ platform.tabLabel }}
                       </button>
                     </div>
 
-                    <div v-if="activeDraftTab === 'csdn'" class="tab-result-pane">
+                    <div v-if="currentPlatformDetail" class="tab-result-pane" :key="currentPlatformDetail.id">
                       <div class="draft-title">深入剖析 Chrome Extension MV3 架构实战</div>
                       <div class="draft-stats">
-                        <span class="badge-success">✓ CSDN 草稿已保存</span>
-                        <span>3 张原图无损转存</span>
-                        <span>专栏分类已对齐</span>
+                        <span class="badge-success" :class="currentPlatformDetail.successBadgeClass">
+                          {{ currentPlatformDetail.successBadge }}
+                        </span>
+                        <span v-for="stat in currentPlatformDetail.stats" :key="stat">{{ stat }}</span>
                       </div>
                     </div>
-                    <div v-else class="tab-result-pane">
-                      <div class="draft-title">深入剖析 Chrome Extension MV3 架构实战</div>
-                      <div class="draft-stats">
-                        <span class="badge-success badge-green-fill">✓ 微信图文草稿就绪</span>
-                        <span>16:9/1:1/3:4 封面生成</span>
-                        <span>代码内联样式</span>
-                      </div>
-                    </div>
+                  </div>
+                  <div v-else-if="selectedPlatforms.length === 0" class="draft-waiting">
+                    <span class="waiting-icon">⚠️</span>
+                    <span>请在左侧勾选至少 1 个目标平台</span>
                   </div>
                   <div v-else class="draft-waiting">
                     <span class="waiting-icon">⏳</span>
@@ -242,7 +319,7 @@ const runSimulation = () => {
                 </div>
 
                 <div class="safe-note">
-                  <strong>安心保证：</strong>双平台均只停在草稿箱，排版检查确认后，由你亲自点击发布。
+                  <strong>安心保证：</strong>各平台均只停在草稿箱，排版检查确认后，由你亲自点击发布。
                 </div>
               </div>
             </div>
@@ -285,7 +362,7 @@ const runSimulation = () => {
           <div class="relief-icon">⚡</div>
           <h3 class="relief-title">改了错别字重新同步，自动覆盖原草稿</h3>
           <p class="relief-desc">
-            修改了错别字或调整了代码？在源站重新点击同步，插件会自动更新覆盖对应平台的旧草稿，双平台任务独立隔离，绝不会在草稿箱堆出一堆同名的垃圾废稿。
+            修改了错别字或调整了代码？在源站重新点击同步，插件会自动更新覆盖对应平台的旧草稿，多平台任务独立隔离，绝不会在草稿箱堆出一堆同名的垃圾废稿。
           </p>
           <div class="relief-tag">即使删了旧草稿也能自愈重建，多平台互不干扰</div>
         </div>
@@ -349,7 +426,7 @@ const runSimulation = () => {
           <div class="trust-icon">🔒</div>
           <div class="trust-content">
             <h4>0 Cookie 权限申请</h4>
-            <p>直接复用浏览器中已有的掘金和 CSDN 登录标签页，插件坚决不申请敏感 Cookie 权限，绝不读取你的账号密码。</p>
+            <p>直接复用浏览器中已有的平台登录会话（掘金、CSDN、微信公众号、博客园），插件坚决不申请敏感 Cookie 权限，绝不读取你的账号密码。</p>
           </div>
         </div>
 
@@ -787,6 +864,13 @@ const runSimulation = () => {
   color: var(--vp-c-brand-1);
 }
 
+.hint-clickable {
+  font-size: 10px;
+  color: var(--vp-c-brand-1);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
 .platform-checks {
   display: flex;
   flex-direction: column;
@@ -804,7 +888,23 @@ const runSimulation = () => {
   padding: 5px 8px;
   border-radius: 6px;
   border: 1px solid var(--vp-c-divider);
-  cursor: default;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.check-item:hover {
+  background: var(--vp-c-bg-soft);
+  border-color: var(--vp-c-brand-1);
+}
+
+.check-item.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.check-item.is-checked {
+  border-color: rgba(29, 125, 250, 0.4);
 }
 
 .checkbox-ui {
@@ -831,6 +931,17 @@ const runSimulation = () => {
   background: rgba(16, 185, 129, 0.15);
   color: #10b981;
   font-weight: 600;
+}
+
+.check-badge.badge-blue {
+  background: rgba(46, 122, 204, 0.15);
+  color: #2e7acc;
+  font-weight: 600;
+}
+
+.dark .check-badge.badge-blue {
+  background: rgba(56, 139, 253, 0.2);
+  color: #58a6ff;
 }
 
 .action-row {
@@ -934,6 +1045,7 @@ const runSimulation = () => {
 
 .draft-target-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 8px;
   padding-bottom: 6px;
@@ -968,6 +1080,18 @@ const runSimulation = () => {
   background: rgba(16, 185, 129, 0.12);
   border-color: #10b981;
   color: #10b981;
+}
+
+.cnblogs-tab-btn.active {
+  background: rgba(46, 122, 204, 0.12);
+  border-color: #2e7acc;
+  color: #2e7acc;
+}
+
+.dark .cnblogs-tab-btn.active {
+  background: rgba(56, 139, 253, 0.18);
+  border-color: #58a6ff;
+  color: #58a6ff;
 }
 
 .tab-result-pane {
@@ -1005,6 +1129,16 @@ const runSimulation = () => {
 .badge-green-fill {
   background: rgba(16, 185, 129, 0.2) !important;
   color: #10b981 !important;
+}
+
+.badge-blue-fill {
+  background: rgba(46, 122, 204, 0.2) !important;
+  color: #2e7acc !important;
+}
+
+.dark .badge-blue-fill {
+  background: rgba(56, 139, 253, 0.25) !important;
+  color: #58a6ff !important;
 }
 
 .draft-waiting {

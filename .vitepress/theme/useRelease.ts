@@ -14,8 +14,8 @@ const CACHE_TTL_MS = 10 * 60 * 1000 // 10 分钟缓存
 
 // 模块级单例响应式对象，跨页面跳转无需重复请求 GitHub API
 const releaseState = ref<ReleaseInfo>({
-  version: 'v1.1.0',
-  size: '约 103 KB',
+  version: 'v1.3.0',
+  size: '约 108 KB',
   downloadUrl: '',
   githubUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/latest',
   isLatest: false
