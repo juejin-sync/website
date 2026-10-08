@@ -5,7 +5,7 @@ const base = process.env.VITEPRESS_BASE || (process.env.GITHUB_ACTIONS ? '/jueji
 export default defineConfig({
   title: '文章摆渡 | 掘金同步助手',
   titleTemplate: ':title · 文章摆渡',
-  description: '一款轻量开源的 Chrome 浏览器扩展：把时间留给写作，把搬运交给轻舟。支持掘金发文一键同步至各大平台草稿箱，原图不裂、排版不乱、无需翻墙。',
+  description: '一款轻量开源的 Chrome 浏览器扩展：把时间留给写作，把搬运交给轻舟。支持掘金发文一键同步至各大平台草稿箱，原图无损，自动排版，一键直达。',
   base,
   cleanUrls: true,
   ignoreDeadLinks: true,
@@ -23,7 +23,7 @@ export default defineConfig({
     ['meta', { name: 'keywords', content: '掘金, CSDN, 微信公众号, 博客园, 文章同步, 掘金同步助手, 文章摆渡, Chrome扩展, Markdown, 图床转存, 草稿幂等, Manifest V3' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: '文章摆渡 · 创作者多平台内容摆渡助手' }],
-    ['meta', { property: 'og:description', content: '一款轻量开源的 Chrome 浏览器扩展：把时间留给写作，把搬运交给轻舟。支持掘金发文一键同步至各大平台草稿箱，原图不裂、排版不乱、无需翻墙。' }],
+    ['meta', { property: 'og:description', content: '一款轻量开源的 Chrome 浏览器扩展：把时间留给写作，把搬运交给轻舟。支持掘金发文一键同步至各大平台草稿箱，原图无损，自动排版，一键直达。' }],
     ['meta', { property: 'og:image', content: `${base}logo-128.png` }]
   ],
   themeConfig: {

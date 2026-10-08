@@ -128,7 +128,7 @@ const runSimulation = () => {
 
       <p class="hero-subtitle">
         在掘金写完文章，一键勾选同步多平台。<br>
-        支持 CSDN、微信公众号与博客园草稿箱，原图不裂、排版不乱、无需翻墙。
+        支持 CSDN、微信公众号与博客园草稿箱，原图无损，自动排版，一键直达。
       </p>
 
       <!-- Primary Actions -->
