@@ -121,15 +121,6 @@ const runSimulation = () => {
 
     <!-- 1. HERO SECTION -->
     <section class="hero-wrap">
-      <!-- Chrome Extension Badge -->
-      <div class="badge-row">
-        <span class="extension-pill">
-          <span class="pill-dot"></span>
-          Chrome 浏览器扩展 · {{ release.size }} · 开源免费
-        </span>
-        <span class="version-pill">{{ release.version }} 已就绪</span>
-      </div>
-
       <!-- Main Headline -->
       <h1 class="hero-title">
         把时间留给写作，<span class="hero-highlight">把搬运交给轻舟。</span>
