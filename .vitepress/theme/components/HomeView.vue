@@ -130,14 +130,14 @@ const runSimulation = () => {
         <span class="version-pill">{{ release.version }} 已就绪</span>
       </div>
 
-      <!-- Main Headline (单行完整，不锁死单一平台) -->
+      <!-- Main Headline -->
       <h1 class="hero-title">
-        一处专注写作，<span class="hero-highlight">顺手摆渡到各大平台草稿箱。</span>
+        把时间留给写作，<span class="hero-highlight">把搬运交给轻舟。</span>
       </h1>
 
       <p class="hero-subtitle">
-        在掘金写完文章，点击「同步多平台」一键勾选同步。<br>
-        已支持 CSDN、微信公众号与博客园草稿箱，无损原图、内联排版与封面自动对齐。
+        在掘金写完文章，一键勾选同步多平台。<br>
+        支持 CSDN、微信公众号与博客园草稿箱，原图不裂、排版不乱、无需翻墙。
       </p>
 
       <!-- Primary Actions -->
