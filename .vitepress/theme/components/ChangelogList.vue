@@ -19,11 +19,43 @@ interface ReleaseItem {
   asset: ReleaseAsset | null
 }
 
-const CACHE_KEY = 'artferry_changelog_releases'
+const CACHE_KEY = 'juejin_sync_changelog_releases'
 const CACHE_TTL_MS = 15 * 60 * 1000 // 15 分钟缓存
 
 // 预置兜底数据（保障弱网、离线、SSG 阶段 0 延时渲染）
 const fallbackReleases: ReleaseItem[] = [
+  {
+    tagName: 'v1.4.0',
+    name: '🚀 v1.4.0 知乎专栏草稿同步与品牌全面升级',
+    date: '2026-10-09',
+    body: `### 📌 知乎专栏草稿箱同步
+- **新增知乎专栏同步**：全新支持知乎专栏草稿箱同步，支持掘金新文章发布联动同步与历史文章批量/单篇同步。
+- **免敏感权限同源 Bridge 架构**：通过注入 zhuanlan.zhihu.com 的同源 Bridge 获取非 HttpOnly 的 _xsrf 凭证与发起安全 API 交互，完全不申请 Chrome 敏感 cookies 权限。
+- **Draft.js 高保真排版**：转换适配知乎专栏 Draft.js 编辑器结构，支持行内/块级字面量保护、表格属性保留、公式块支持以及离屏 Mermaid 渲染 PNG 嵌入。
+- **图片双轨上传与 Abort 策略**：外链优先通过知乎服务端转存，失败时自动降级为本地二进制上传；正文图片转存失败严格执行 abort 策略，缺图立即终止草稿写入。
+- **品牌全面统一**：扩展更名为「掘金同步助手」（juejin-sync），官网全新接入 juejinsync.vercel.app。`,
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v1.4.0',
+    asset: {
+      name: 'juejin-sync-latest.zip',
+      size: '约 1.05 MB',
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/latest/download/juejin-sync-latest.zip'
+    }
+  },
+  {
+    tagName: 'v1.3.1',
+    name: '🚀 v1.3.1 博客园题图与摘要同步修复',
+    date: '2026-10-09',
+    body: `### 🛠️ 博客园随笔修复与体验提升
+- **封面题图转存修复**：修复博客园随笔题图不接受 WebP 导致草稿保存报错的问题，自动使用 OffscreenCanvas 转为 PNG 后转存。
+- **摘要提取与首发声明隔离**：修复无源摘要时自动摘要误混入文末首发声明的问题，在追加声明前提取纯文本摘要。
+- **转存去重优化**：封面与正文包含相同图片时优先复用转存结果，避免重复上传。`,
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v1.3.1',
+    asset: {
+      name: 'juejin-sync-v1.3.1.zip',
+      size: '约 1.05 MB',
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/download/v1.3.1/juejin-sync-v1.3.1.zip'
+    }
+  },
   {
     tagName: 'v1.3.0',
     name: '🚀 v1.3.0 博客园随笔草稿同步与多平台生态',
@@ -32,11 +64,11 @@ const fallbackReleases: ReleaseItem[] = [
 - **新增博客园草稿同步**：沿用当前 Chrome 浏览器已有登录态，分别校验登录状态、博客开通状态与稳定账号标识。
 - **正文图片无损转存**：支持博客园正文图片无损转存、新建与更新草稿、已发布内容覆盖保护、中断恢复与账号隔离。
 - **三平台协同调度**：CSDN、微信公众号与博客园三航道并行，支持按需勾选自由组合。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v1.3.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v1.3.0',
     asset: {
-      name: 'article-ferry-latest.zip',
-      size: '约 108 KB',
-      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/latest/download/article-ferry-latest.zip'
+      name: 'juejin-sync-v1.3.0.zip',
+      size: '约 1.05 MB',
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/download/v1.3.0/juejin-sync-v1.3.0.zip'
     }
   },
   {
@@ -47,11 +79,11 @@ const fallbackReleases: ReleaseItem[] = [
 - **Mermaid 图表离屏渲染**：微信同步支持将流程图、时序图等 Mermaid 语法在离屏文档中渲染为高清 PNG 图片并转存为正文配图。
 - **渲染容器排队与图表隔离**：多图串行渲染，防止方向不同或多图场景串图。
 - **支持 Data URL 转存**：扩展正式构建启用体积压缩与权限优化。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v1.2.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v1.2.0',
     asset: {
       name: 'article-ferry-v1.2.0.zip',
       size: '约 105 KB',
-      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/download/v1.2.0/article-ferry-v1.2.0.zip'
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/download/v1.2.0/article-ferry-v1.2.0.zip'
     }
   },
   {
@@ -65,11 +97,11 @@ const fallbackReleases: ReleaseItem[] = [
 - **多入口协同**：创作者中心和个人文章列表继续保留手动立即同步入口。
 - **快照冻结机制**：发布请求发出时冻结正文、平台选择和公众号身份，关闭面板或修改编辑器不影响已提交请求；发布失败时释放快照并保留选择供重试。
 - **全量自动化测试扩充**：新增掘金发布请求、成功响应契约及异步时序回归测试，全量自动化测试增至 100 项。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v1.1.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v1.1.0',
     asset: {
       name: 'article-ferry-v1.1.0.zip',
       size: '约 103 KB',
-      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/download/v1.1.0/article-ferry-v1.1.0.zip'
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/download/v1.1.0/article-ferry-v1.1.0.zip'
     }
   },
   {
@@ -87,11 +119,11 @@ const fallbackReleases: ReleaseItem[] = [
 - 微信任务与草稿映射绑定公众号账号，开始和最终写入前校验账号；未绑定账号的旧草稿不自动覆盖。
 - 代码块按微信“插入代码”结构逐行输出，保留空行、缩进与特殊字符，语言使用 Markdown 标注。
 - 草稿封面与摘要缓存按草稿隔离；无源封面文章允许同步草稿，发布所需封面由用户在微信后台补充。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v1.0.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v1.0.0',
     asset: {
       name: 'article-ferry-v1.0.0.zip',
       size: '约 100 KB',
-      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/download/v1.0.0/article-ferry-v1.0.0.zip'
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/download/v1.0.0/article-ferry-v1.0.0.zip'
     }
   },
   {
@@ -99,17 +131,17 @@ const fallbackReleases: ReleaseItem[] = [
     name: '🚀 v0.6.1 品牌升级与官网解耦',
     date: '2026-09-17',
     body: `### ✨ 体验与品牌升级
-- **全量统一「文章摆渡」官方品牌标识**：采用工业级 1024x1024 超采样与 Lanczos 抗锯齿渲染，Chrome 扩展管理页、工具栏图标、视网膜 SVG 及 Favicon 全面升级为「一叶轻舟破浪 ⛵」专属舰徽。
-- **接入独立官方网站与文档中心**：关于卡片、README 与官网统一接入极简生产域名 [artferry.vercel.app](https://artferry.vercel.app)，支持站内离线包免梯一键直下。
+- **全量统一「掘金同步助手」官方品牌标识**：采用工业级 1024x1024 超采样与 Lanczos 抗锯齿渲染，Chrome 扩展管理页、工具栏图标、视网膜 SVG 及 Favicon 全面升级为专属舰徽。
+- **接入独立官方网站与文档中心**：关于卡片、README 与官网统一接入生产域名 [juejinsync.vercel.app](https://juejinsync.vercel.app)，支持站内离线包免梯一键直下。
 
 ### 🛠️ 工程与解耦优化
-- **架构纯粹化解耦**：官方网站独立上线至专用仓库 [Xxcool/artferry](https://github.com/Xxcool/artferry)，扩展主仓库取消 \`docs/\` 索引跟踪并通过 \`.gitignore\` 忽略草稿。
+- **架构纯粹化解耦**：官方网站独立上线至专用仓库 [juejin-sync/juejin-sync](https://github.com/juejin-sync/juejin-sync)，扩展主仓库取消 \`docs/\` 索引跟踪并通过 \`.gitignore\` 忽略草稿。
 - **README 缓存彻底治理**：图片引用调整为相对路径，杜绝 GitHub Camo CDN 代理对历史图片的历史陈旧缓存。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.6.1',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.6.1',
     asset: {
       name: 'article-ferry-v0.6.1.zip',
       size: '约 68 KB',
-      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/download/v0.6.1/article-ferry-v0.6.1.zip'
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/download/v0.6.1/article-ferry-v0.6.1.zip'
     }
   },
   {
@@ -127,11 +159,11 @@ const fallbackReleases: ReleaseItem[] = [
 ### 🛠️ 缺陷修复与自愈
 - **修复 CSDN 侧草稿被删除后任务永久卡死**：遇到 400「该文章不存在」时自动降级为新建草稿并更新映射。
 - **修复成功系统通知永不触发**：任务保存成功后构建通知对象时显式标记 saved 状态。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.6.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.6.0',
     asset: {
       name: 'article-ferry-v0.6.0.zip',
       size: '约 67 KB',
-      downloadUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/download/v0.6.0/article-ferry-v0.6.0.zip'
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/download/v0.6.0/article-ferry-v0.6.0.zip'
     }
   },
   {
@@ -146,7 +178,7 @@ const fallbackReleases: ReleaseItem[] = [
 ### 🛠️ 修复
 - 修复双 Tab 滑块位移多出 2px 偏移的问题，实现两端 1:1 绝对物理对称。
 - 修复 CSDN 在线绿点呼吸光晕扩散范围，动效更加轻盈克制。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.5.3',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.5.3',
     asset: null
   },
   {
@@ -154,13 +186,13 @@ const fallbackReleases: ReleaseItem[] = [
     name: '🎨 v0.5.2 旗舰工艺与渡口夜灯',
     date: '2026-09-17',
     body: `### ✨ 新增
-- 新增专属「一叶轻舟破浪」摆渡舰徽、CSDN 在线状态呼吸光晕。
+- 新增专属「一叶轻舟破浪」专属品牌舰徽、CSDN 在线状态呼吸光晕。
 - 新增「渡口夜灯」空状态温感插画与清晰实用的 3 步实操指南。
 
 ### 🛠️ 修复
 - 任务运行态完整展示实时百分比与具体转存进度。
 - 扩展版本号通过 chrome.runtime.getManifest() 动态注入，杜绝硬编码漂移。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.5.2',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.5.2',
     asset: null
   },
   {
@@ -172,7 +204,7 @@ const fallbackReleases: ReleaseItem[] = [
 - 任务历史 Storage 瘦身，持久化剥离 Markdown 全量正文，根除 10MB 配额风险。
 - 后台任务执行引入全局并发闸门（Semaphore 上限 2），杜绝触发平台限流。
 - 新增掘金容器语法清洗：:::tip 等容器语法自动转换为标准 Markdown 引用块。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.5.1',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.5.1',
     asset: null
   },
   {
@@ -184,7 +216,7 @@ const fallbackReleases: ReleaseItem[] = [
 - 新建文章在点击“确定并发布”时立即创建 CSDN 同步任务，不阻塞掘金发文。
 - 历史文章同步支持双身份草稿映射，避免重复生成草稿。
 - 支持默认 CSDN 分类，以及“掘金标签 → CSDN 分类”映射。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.5.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.5.0',
     asset: null
   },
   {
@@ -194,7 +226,7 @@ const fallbackReleases: ReleaseItem[] = [
     body: `### ✨ 优化
 - 优化文章排版与分类映射稳定性。
 - 完善图片转存异常捕获与重试机制。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.4.1',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.4.1',
     asset: null
   },
   {
@@ -204,7 +236,7 @@ const fallbackReleases: ReleaseItem[] = [
     body: `### ✨ 核心发布
 - 实现掘金发文自动同步至 CSDN 草稿箱核心链路。
 - 本地无感图床转存，杜绝外链裂图。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.4.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.4.0',
     asset: null
   },
   {
@@ -214,7 +246,7 @@ const fallbackReleases: ReleaseItem[] = [
     body: `### ✨ 架构升级
 - 引入任务队列调度与自适应重试。
 - 优化长文大图后台搬运性能。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.3.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.3.0',
     asset: null
   },
   {
@@ -223,7 +255,7 @@ const fallbackReleases: ReleaseItem[] = [
     date: '2026-09-01',
     body: `### 🛠️ 修复
 - 修复部分特殊 Markdown 符号与代码高亮解析。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.2.1',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.2.1',
     asset: null
   },
   {
@@ -232,7 +264,7 @@ const fallbackReleases: ReleaseItem[] = [
     date: '2026-09-01',
     body: `### ✨ 特性
 - 独立端侧图片流水线，自动剔除平台水印。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.2.0',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.2.0',
     asset: null
   },
   {
@@ -241,7 +273,7 @@ const fallbackReleases: ReleaseItem[] = [
     date: '2026-09-01',
     body: `### 🛠️ 修复
 - 修复未登录或登录态过期提示。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.1.1',
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.1.1',
     asset: null
   },
   {
@@ -249,8 +281,8 @@ const fallbackReleases: ReleaseItem[] = [
     name: '🎉 v0.1.0 首个公开发行版本',
     date: '2026-08-31',
     body: `### 🎉 首发
-- 文章摆渡 Chrome 扩展基础原型诞生。`,
-    htmlUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/tag/v0.1.0',
+- 掘金同步助手 Chrome 扩展基础原型诞生。`,
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v0.1.0',
     asset: null
   }
 ]
@@ -379,7 +411,7 @@ onMounted(async () => {
   // 2. 异步向 GitHub API 请求最新全量 Releases
   isLoading.value = true
   try {
-    const res = await fetch('https://api.github.com/repos/Xxcool/juejin-csdn-extension/releases', {
+    const res = await fetch('https://api.github.com/repos/juejin-sync/juejin-sync/releases', {
       headers: { Accept: 'application/vnd.github.v3+json' }
     })
 
@@ -404,7 +436,7 @@ onMounted(async () => {
             name: item.name || item.tag_name || '',
             date: item.published_at ? item.published_at.slice(0, 10) : '',
             body: item.body || '',
-            htmlUrl: item.html_url || `https://github.com/Xxcool/juejin-csdn-extension/releases/tag/${item.tag_name}`,
+            htmlUrl: item.html_url || `https://github.com/juejin-sync/juejin-sync/releases/tag/${item.tag_name}`,
             asset
           }
         })

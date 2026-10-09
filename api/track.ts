@@ -1,5 +1,5 @@
 /**
- * 文章摆渡 (ArtFerry) 数据遥测上报 Serverless 接口
+ * 掘金同步助手 (Juejin Sync) 数据遥测上报 Serverless 接口
  * 接收来自官网的 PV (访问) 与 Download (离线包下载) 信号
  * 包含渠道归因、浏览器识别、页面热度与活动流记录
  */
@@ -34,7 +34,7 @@ function classifyReferrer(referrer: string): string {
     if (host.includes('zhihu.com')) return '知乎'
     if (host.includes('bing.com')) return '必应搜索'
     if (host.includes('v2ex.com')) return 'V2EX'
-    if (host.includes('artferry') || host === 'localhost' || host === '127.0.0.1') return '直接输入网址 / 站内浏览'
+    if (host.includes('juejinsync') || host.includes('artferry') || host === 'localhost' || host === '127.0.0.1') return '直接输入网址 / 站内浏览'
     return host.replace(/^www\./, '')
   } catch {
     return '其他外链'
@@ -130,7 +130,7 @@ export default async function handler(req: Request) {
       commands.push(['HINCRBY', `artferry:daily:${today}`, 'download', 1])
       commands.push(['SADD', 'artferry:active_dates', today])
       // 2. 按资源名记录下载数
-      const asset = body.asset || 'article-ferry-latest.zip'
+      const asset = body.asset || 'juejin-sync-latest.zip'
       commands.push(['HINCRBY', 'artferry:assets', asset, 1])
       // 3. 浏览器与渠道记录
       commands.push(['HINCRBY', 'artferry:browsers', browser, 1])

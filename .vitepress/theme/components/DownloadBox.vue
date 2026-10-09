@@ -5,7 +5,7 @@ import { trackDownload } from '../tracker'
 const { release } = useRelease()
 
 const handleDownload = () => {
-  trackDownload(release.value.version ? `article-ferry-${release.value.version}.zip` : 'article-ferry-latest.zip')
+  trackDownload(release.value.version ? `juejin-sync-${release.value.version}.zip` : 'juejin-sync-latest.zip')
 }
 </script>
 

@@ -1,18 +1,18 @@
 /**
- * 文章摆渡 (ArtFerry) 前端无感埋点探针
- * - 自动记录匿名访客标识 (localStorage: artferry_vid)
+ * 掘金同步助手 (Juejin Sync) 前端无感埋点探针
+ * - 自动记录匿名访客标识 (localStorage: juejin_sync_vid)
  * - 支持 PV (页面浏览) 与 Download (离线包下载) 上报
  * - 智能防抖防刷，静默失败不影响用户任何使用体验
  */
 
-const STORAGE_KEY_VID = 'artferry_vid'
-const LAST_PV_KEY = 'artferry_last_pv'
+const STORAGE_KEY_VID = 'juejin_sync_vid'
+const LAST_PV_KEY = 'juejin_sync_last_pv'
 
 // 获取或生成匿名访客指纹
 export function getVisitorId(): string {
   if (typeof window === 'undefined') return ''
   try {
-    let vid = localStorage.getItem(STORAGE_KEY_VID)
+    let vid = localStorage.getItem(STORAGE_KEY_VID) || localStorage.getItem('artferry_vid')
     if (!vid) {
       vid = 'v_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36)
       localStorage.setItem(STORAGE_KEY_VID, vid)
@@ -53,13 +53,13 @@ async function sendBeaconSignal(payload: Record<string, any>): Promise<void> {
   }
 }
 
-const AUTH_KEY_NAME = 'artferry_stats_auth_key'
+const AUTH_KEY_NAME = 'juejin_sync_stats_auth_key'
 
 // 检查当前浏览器是否已登录管理员 Dashboard（已鉴权则视为站长本人）
 export function isAdminUser(): boolean {
   if (typeof window === 'undefined') return false
   try {
-    return Boolean(localStorage.getItem(AUTH_KEY_NAME))
+    return Boolean(localStorage.getItem(AUTH_KEY_NAME) || localStorage.getItem('artferry_stats_auth_key'))
   } catch {
     return false
   }
@@ -118,7 +118,7 @@ export function trackDownload(assetName?: string): void {
 
   sendBeaconSignal({
     event: 'download',
-    asset: assetName || 'article-ferry-latest.zip',
+    asset: assetName || 'juejin-sync-latest.zip',
     path: window.location.pathname,
     vid: getVisitorId()
   })

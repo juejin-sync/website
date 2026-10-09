@@ -75,7 +75,7 @@
           <div class="scenario-step-item">
             <span class="num-circle num-circle-blue">2</span>
             <div class="step-desc">
-              找到需要迁移的文章，点击右侧专属的<strong>「摆渡到 CSDN」</strong>按钮
+              找到需要迁移的文章，点击右侧专属的<strong>「同步多平台」</strong>按钮
             </div>
           </div>
           <div class="scenario-step-item">

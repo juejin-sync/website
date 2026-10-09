@@ -7,7 +7,7 @@ import { trackDownload } from '../tracker'
 const { release } = useRelease()
 
 const handleDownload = () => {
-  trackDownload(release.value.version ? `article-ferry-${release.value.version}.zip` : 'article-ferry-latest.zip')
+  trackDownload(release.value.version ? `juejin-sync-${release.value.version}.zip` : 'juejin-sync-latest.zip')
 }
 
 const isSimulating = ref(false)
@@ -52,11 +52,23 @@ const platformList = [
     successBadge: '✓ 博客园随笔草稿已保存',
     successBadgeClass: 'badge-blue-fill',
     stats: ['正文图片无损转存', 'Markdown 原生排版']
+  },
+  {
+    id: 'zhihu',
+    name: '知乎专栏',
+    shortName: '知乎',
+    badge: 'v1.4.0 航道',
+    badgeClass: 'badge-blue',
+    tabLabel: '知乎专栏 🔷',
+    tabClass: 'zhihu-tab-btn',
+    successBadge: '✓ 知乎专栏草稿已就绪',
+    successBadgeClass: 'badge-blue-fill',
+    stats: ['Draft.js 高保真排版', '图片双轨上传与保护']
   }
 ]
 
 // 选中的目标平台（默认全选演示）
-const selectedPlatforms = ref(['csdn', 'wechat', 'cnblogs'])
+const selectedPlatforms = ref(['csdn', 'wechat', 'cnblogs', 'zhihu'])
 
 const togglePlatform = (id) => {
   if (isSimulating.value) return
@@ -128,7 +140,7 @@ const runSimulation = () => {
 
       <p class="hero-subtitle">
         在掘金写完文章，一键勾选同步多平台。<br>
-        支持 CSDN、微信公众号与博客园草稿箱，原图无损，自动排版，一键直达。
+        支持 CSDN、微信公众号、博客园与知乎专栏草稿箱，原图无损，自动排版，一键直达。
       </p>
 
       <!-- Primary Actions -->
@@ -175,15 +187,15 @@ const runSimulation = () => {
               <span class="lock-icon">🔒</span>
               <span class="url-text">https://juejin.cn/editor/drafts/741892...</span>
             </div>
-            <div class="extension-icon-badge" title="文章摆渡 Chrome 扩展已就绪">
-              <img :src="withBase('/logo.svg')" width="18" height="18" alt="Ferry logo" />
+            <div class="extension-icon-badge" title="掘金同步助手 Chrome 扩展已就绪">
+              <img :src="withBase('/logo.svg')" width="18" height="18" alt="掘金同步助手 logo" />
             </div>
           </div>
 
           <!-- Simulation Board Inside Browser -->
           <div class="mockup-inner">
             <div class="mockup-header-tip">
-              <span>💡 实际使用场景演示：在掘金写完文章点击「同步多平台」，自由勾选目标平台一键摆渡</span>
+              <span>💡 实际使用场景演示：在掘金写完文章点击「同步多平台」，自由勾选目标平台一键同步</span>
               <span class="status-tip">{{ simulateStep === 0 ? '等待点击模拟' : simulateStep === 1 ? '正在并行搬运多平台...' : `✓ 已勾选的 ${selectedPlatforms.length} 处草稿已安全入库` }}</span>
             </div>
 
@@ -261,7 +273,7 @@ const runSimulation = () => {
                   </div>
                 </div>
                 <div class="lane-text">
-                  <span v-if="simulateStep === 0">写完点同步，小船多航道并行摆渡</span>
+                  <span v-if="simulateStep === 0">写完点同步，多平台多航道并行同步</span>
                   <span v-else-if="simulateStep === 1" class="text-transit">并发转存 {{ transferringNames }}...</span>
                   <span v-else class="text-success">{{ selectedPlatforms.length }} 处草稿已入库，排版与封面就绪</span>
                 </div>
@@ -417,7 +429,7 @@ const runSimulation = () => {
           <div class="trust-icon">🔒</div>
           <div class="trust-content">
             <h4>0 Cookie 权限申请</h4>
-            <p>直接复用浏览器中已有的平台登录会话（掘金、CSDN、微信公众号、博客园），插件坚决不申请敏感 Cookie 权限，绝不读取你的账号密码。</p>
+            <p>直接复用浏览器中已有的平台登录会话（掘金、CSDN、微信公众号、博客园、知乎），插件坚决不申请敏感 Cookie 权限，绝不读取你的账号密码。</p>
           </div>
         </div>
 
@@ -453,7 +465,7 @@ const runSimulation = () => {
           </a>
         </div>
         <div class="cta-meta">
-          <span>文章摆渡 · Chrome 浏览器扩展 · MIT 开源协议</span>
+          <span>掘金同步助手 · Chrome 浏览器扩展 · MIT 开源协议</span>
         </div>
       </div>
     </section>

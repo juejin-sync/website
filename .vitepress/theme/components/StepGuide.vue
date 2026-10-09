@@ -51,12 +51,12 @@
       <!-- Step 3 -->
       <div class="step-card step-card-green">
         <div class="step-badge step-badge-green">3</div>
-        <h3 class="step-title">一键同步摆渡</h3>
+        <h3 class="step-title">一键同步草稿</h3>
         <p class="step-text">
-          在掘金写完文章后，发文抽屉中已默认勾选<strong>「同步到 CSDN 草稿」</strong>，点击发文即可后台秒级摆渡；也可在历史文章列表中一键批量摆渡。文章以草稿安全落地，确认无误后手动发布。
+          在掘金写完文章后，发文抽屉中支持自由勾选目标平台，点击发文即可后台秒级同步；也可在历史文章列表中一键批量同步。文章以草稿安全落地，确认无误后手动发布。
         </p>
         <div class="step-tip">
-          <span>⛵ 尊重原创，坚决不替创作者直接公开发布</span>
+          <span>🔒 尊重原创，坚决不替创作者直接公开发布</span>
         </div>
       </div>
     </div>

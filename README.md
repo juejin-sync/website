@@ -1,9 +1,9 @@
-# ⛵ 文章摆渡 · 官方网站 (Article Ferry Site)
+# 🚀 掘金同步助手 · 官方网站 (Juejin Sync Site)
 
-面向技术创作者的端侧安全内容摆渡中枢 · 官方展示与文档站点。
+面向技术创作者的端侧安全内容同步中枢 · 官方展示与文档站点。
 
-- 🌐 **官方网址**：[https://artferry.vercel.app](https://artferry.vercel.app)
-- 🐙 **扩展核心源码**：[Xxcool/juejin-csdn-extension](https://github.com/Xxcool/juejin-csdn-extension)
+- 🌐 **官方网址**：[https://juejinsync.vercel.app](https://juejinsync.vercel.app)
+- 🐙 **扩展核心源码**：[juejin-sync/juejin-sync](https://github.com/juejin-sync/juejin-sync)
 
 ## 🛠️ 本地运行
 

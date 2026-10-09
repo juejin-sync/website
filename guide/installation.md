@@ -1,6 +1,6 @@
 # 安装与加载指南
 
-本文档介绍如何在 Chromium 内核浏览器（Google Chrome、Microsoft Edge、Brave、Arc 等）中安装和启用「文章摆渡」扩展。
+本文档介绍如何在 Chromium 内核浏览器（Google Chrome、Microsoft Edge、Brave、Arc 等）中安装和启用「掘金同步助手」扩展。
 
 <DownloadBox />
 
@@ -11,9 +11,9 @@
 这是最快捷、最适合普通创作者的安装方式，无需配置开发环境。
 
 ### 第一步：下载最新发行包
-1. 前往 GitHub 发行版页面：[GitHub Releases](https://github.com/Xxcool/juejin-csdn-extension/releases)；
-2. 在最新版本（如 `v0.6.1`）的 **Assets** 列表中，下载名为 `article-ferry-v*.zip` 的压缩包；
-3. 将下载的 ZIP 压缩包解压到本地固定目录（例如 `~/Documents/article-ferry`，**请勿放在临时下载目录以防误删**）。
+1. 前往 GitHub 发行版页面：[GitHub Releases](https://github.com/juejin-sync/juejin-sync/releases)；
+2. 在最新版本（如 `v1.4.0`）的 **Assets** 列表中，下载名为 `juejin-sync-v*.zip` 的压缩包；
+3. 将下载的 ZIP 压缩包解压到本地固定目录（例如 `~/Documents/juejin-sync`，**请勿放在临时下载目录以防误删**）。
 
 ### 第二步：在浏览器中加载已解压扩展
 1. 打开 Chrome 浏览器，在地址栏输入并回车：
@@ -25,11 +25,11 @@
 2. 在扩展页面右上角，找到并开启 **“开发者模式” (Developer mode)** 开关；
 3. 开启后，页面左上方将出现新按钮，点击 **“加载已解压的扩展程序” (Load unpacked)**；
 4. 在弹出的文件选择器中，选中刚才解压后的文件夹（确保选中的目录下包含 `manifest.json` 文件）；
-5. 点击确认，页面列表中将立即出现 **「文章摆渡｜掘金同步到 CSDN」** 图标。
+5. 点击确认，页面列表中将立即出现 **「掘金同步助手」** 图标。
 
 ### 第三步：固定扩展图标到工具栏
 1. 点击浏览器右上角的“拼图”扩展管理图标；
-2. 找到「文章摆渡」，点击旁边的 **“图钉”** 图标，将其固定在浏览器地址栏右侧，方便随时查看同步状态。
+2. 找到「掘金同步助手」，点击旁边的 **“图钉”** 图标，将其固定在浏览器地址栏右侧，方便随时查看同步状态。
 
 ## 方式二：从源码构建安装（开发者推荐）
 
@@ -44,8 +44,8 @@
 
 ```bash
 # 1. 克隆代码仓库
-git clone https://github.com/Xxcool/juejin-csdn-extension.git
-cd juejin-csdn-extension
+git clone https://github.com/juejin-sync/juejin-sync.git
+cd juejin-sync
 
 # 2. 安装依赖项
 npm install
@@ -73,7 +73,7 @@ npm run build:release
 ## 关键权限声明清单
 
 
-为了保障透明度，文章摆渡在 `manifest.json` 中声明的权限如下：
+为了保障透明度，掘金同步助手在 `manifest.json` 中声明的权限如下：
 
 | 权限声明 | 核心用途 | 安全定性 |
 | :--- | :--- | :--- |

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>文章摆渡 · 接口状态</title>
+<title>掘金同步助手 · 接口状态</title>
 <style>
   :root { color-scheme: light dark; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,24 +76,26 @@
 </head>
 <body>
   <main class="card">
-    <h1>文章摆渡 · 平台接口状态</h1>
-    <p class="sub">掘金 → CSDN 同步扩展依赖的平台接口健康状态</p>
+    <h1>掘金同步助手 · 平台接口状态</h1>
+    <p class="sub">掘金同步助手依赖的平台接口健康状态</p>
     <div id="message" class="message"></div>
     <div class="status-row"><b>掘金接口</b><span id="juejin" class="badge unknown">检测中…</span></div>
     <div class="status-row"><b>CSDN 接口</b><span id="csdn" class="badge unknown">检测中…</span></div>
     <div class="status-row"><b>微信公众号接口</b><span id="wechat" class="badge unknown">检测中…</span></div>
+    <div class="status-row"><b>博客园接口</b><span id="cnblogs" class="badge unknown">检测中…</span></div>
+    <div class="status-row"><b>知乎专栏接口</b><span id="zhihu" class="badge unknown">检测中…</span></div>
     <footer>
       <div id="updated">状态加载中…</div>
-      <div>状态文件：<a href="https://github.com/Xxcool/juejin-csdn-extension/blob/master/health.json" target="_blank" rel="noopener">health.json</a> · 扩展每 12 小时自动检查一次</div>
+      <div>状态文件：<a href="https://github.com/juejin-sync/juejin-sync/blob/master/health.json" target="_blank" rel="noopener">health.json</a> · 扩展每 12 小时自动检查一次</div>
     </footer>
   </main>
   <script>
     const LABELS = { ok: '正常', degraded: '部分降级', broken: '异常', unknown: '未知' };
-    fetch('https://raw.githubusercontent.com/Xxcool/juejin-csdn-extension/master/health.json')
+    fetch('https://raw.githubusercontent.com/juejin-sync/juejin-sync/master/health.json')
       .then(r => r.ok ? r.json() : fetch('/health.json').then(r2 => r2.json()))
       .catch(() => fetch('/health.json').then(r2 => r2.json()))
       .then(data => {
-        for (const key of ['csdn', 'juejin', 'wechat']) {
+        for (const key of ['csdn', 'juejin', 'wechat', 'cnblogs', 'zhihu']) {
           const el = document.getElementById(key);
           if (!el) continue;
           const level = ['ok', 'degraded', 'broken'].includes(data[key]) ? data[key] : 'unknown';

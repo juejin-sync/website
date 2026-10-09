@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>文章摆渡 · 创作者数据中枢 Dashboard</title>
+  <title>掘金同步助手 · 创作者数据中枢 Dashboard</title>
   <link rel="icon" type="image/svg+xml" href="/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -869,7 +869,7 @@
           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
         </svg>
       </div>
-      <h2 class="lock-title">文章摆渡 · 创作者数据中枢</h2>
+      <h2 class="lock-title">掘金同步助手 · 创作者数据中枢</h2>
       <p class="lock-desc">私有数据总线受口令保护，仅限管理员解密查看官网访问与插件下载遥测。</p>
 
       <div class="lock-input-group">
@@ -889,10 +889,10 @@
     <!-- 标头 -->
     <header class="top-header">
       <div class="brand-section">
-        <img src="/logo.svg" alt="ArtFerry Logo" class="logo-img">
+        <img src="/logo.svg" alt="Juejin Sync Logo" class="logo-img">
         <div class="brand-titles">
           <h1>
-            文章摆渡 · 创作者数据中枢
+            掘金同步助手 · 创作者数据中枢
             <span class="telemetry-pill">
               <span class="telemetry-dot"></span>
               TELEMETRY ONLINE
@@ -947,7 +947,7 @@
           <div class="eco-icon">🐙</div>
           <div>
             <div class="eco-title">GitHub 仓库生态</div>
-            <div class="eco-subtitle">Xxcool/juejin-csdn-extension</div>
+            <div class="eco-subtitle">juejin-sync/juejin-sync</div>
           </div>
         </div>
         <div class="eco-stats-pills">
@@ -963,7 +963,7 @@
         <div class="eco-left">
           <div class="eco-icon">💓</div>
           <div>
-            <div class="eco-title">摆渡链路接口健康矩阵</div>
+            <div class="eco-title">同步链路接口健康矩阵</div>
             <div class="eco-subtitle" id="val-health-time">每 12 小时自检</div>
           </div>
         </div>
@@ -972,6 +972,7 @@
           <span class="eco-pill">CSDN 接口: <strong class="status-badge-ok" id="status-csdn" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
           <span class="eco-pill">公众号接口: <strong class="status-badge-ok" id="status-wechat" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
           <span class="eco-pill">博客园接口: <strong class="status-badge-ok" id="status-cnblogs" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
+          <span class="eco-pill">知乎接口: <strong class="status-badge-ok" id="status-zhihu" style="padding:1px 6px; border-radius:4px;">检测中…</strong></span>
         </div>
       </div>
     </div>
@@ -1026,7 +1027,7 @@
         </div>
       </div>
 
-      <!-- 综合摆渡总效能 -->
+      <!-- 综合同步总效能 -->
       <div class="metric-card card-funnel">
         <div class="card-head">
           <span class="card-label">
@@ -1038,7 +1039,7 @@
         <div class="card-value" id="val-total-impact">0</div>
         <div class="card-subtext">
           <span>官网下载 + GitHub 下载</span>
-          <span style="color:var(--brand-amber);">已摆渡创作者</span>
+          <span style="color:var(--brand-amber);">已同步创作者</span>
         </div>
       </div>
     </section>
@@ -1062,7 +1063,7 @@
           <canvas id="trendChart"></canvas>
         </div>
 
-        <!-- 摆渡漏斗条 -->
+        <!-- 同步漏斗条 -->
         <div class="funnel-row">
           <div class="funnel-step">
             <div class="funnel-label">① 官网访问曝光</div>
@@ -1139,7 +1140,7 @@
             <span class="term-dot yellow"></span>
             <span class="term-dot green"></span>
           </div>
-          <span class="terminal-title">telemetry@artferry-control:~# tail -f /var/log/live-telemetry.stream</span>
+          <span class="terminal-title">telemetry@juejin-sync-control:~# tail -f /var/log/live-telemetry.stream</span>
         </div>
         <span style="font-size:0.72rem; color:#10b981; display:flex; align-items:center; gap:6px;">
           <span class="telemetry-dot"></span>
@@ -1147,7 +1148,7 @@
         </span>
       </div>
       <div class="terminal-body" id="terminal-logs">
-        <div class="log-line"><span class="log-time">[SYSTEM READY]</span> <span class="log-text">文章摆渡遥测监控核心已就绪，正在监听全渠道事件信号…</span></div>
+        <div class="log-line"><span class="log-time">[SYSTEM READY]</span> <span class="log-text">掘金同步助手遥测监控核心已就绪，正在监听全渠道事件信号…</span></div>
       </div>
     </section>
 
@@ -1165,7 +1166,7 @@
             GitHub Releases 仓库资产下载明细
           </div>
           <div class="panel-subtitle">
-            直连仓库：<a href="https://github.com/Xxcool/juejin-csdn-extension" target="_blank" rel="noopener" class="btn-link">Xxcool/juejin-csdn-extension ↗</a>
+            直连仓库：<a href="https://github.com/juejin-sync/juejin-sync" target="_blank" rel="noopener" class="btn-link">juejin-sync/juejin-sync ↗</a>
           </div>
         </div>
       </div>
@@ -1196,15 +1197,15 @@
 
     <!-- 8. 页脚 -->
     <footer>
-      文章摆渡 · 创作者多平台摆渡内容中枢 · 遥测数据加密存储与传输 · MIT 协议开源
+      掘金同步助手 · 创作者多平台同步内容中枢 · 遥测数据加密存储与传输 · MIT 协议开源
     </footer>
   </div>
 
-  <!-- 9. 摆渡运营战报 Modal -->
+  <!-- 9. 同步运营战报 Modal -->
   <div id="report-modal" class="modal-backdrop">
     <div class="modal-content">
       <button class="modal-close" id="report-close-btn">&times;</button>
-      <h3>🏆 文章摆渡 · 创作者运营战报</h3>
+      <h3>🏆 掘金同步助手 · 创作者运营战报</h3>
       <p>自动汇总全渠道实时数据，可直接一键复制到剪贴板，发布在掘金沸点、朋友圈、即刻或技术周报中！</p>
       
       <textarea id="report-text" class="report-textarea" readonly></textarea>
@@ -1219,7 +1220,7 @@
 
   <script>
     // 状态与全局引用
-    const AUTH_KEY_NAME = 'artferry_stats_auth_key';
+    const AUTH_KEY_NAME = 'juejin_sync_stats_auth_key';
     const THEME_KEY_NAME = 'vitepress-theme-appearance';
     let currentAuthKey = '';
     let trendChartInstance = null;
@@ -1504,7 +1505,7 @@
         
         let detail = '';
         if (isDl) {
-          detail = `下载了安装包: <strong style="color:#34d399;">${evt.asset || 'article-ferry.zip'}</strong> <span class="log-dim">(${evt.browser || 'Chromium'})</span>`;
+          detail = `下载了安装包: <strong style="color:#34d399;">${evt.asset || 'juejin-sync.zip'}</strong> <span class="log-dim">(${evt.browser || 'Chromium'})</span>`;
         } else {
           const pageName = formatFriendlyPath(evt.path);
           let channelName = evt.channel || '直接输入网址 / 微信分享';
@@ -1528,7 +1529,7 @@
     // 3. 拉取 GitHub 仓库 Stars/Forks 生态
     async function fetchGitHubRepoStats() {
       try {
-        const res = await fetch('https://api.github.com/repos/Xxcool/juejin-csdn-extension');
+        const res = await fetch('https://api.github.com/repos/juejin-sync/juejin-sync');
         if (!res.ok) return;
         const repo = await res.json();
         globalStatsCache.repo = repo;
@@ -1555,7 +1556,7 @@
     // 4. 拉取 health.json 接口健康度
     async function fetchHealthStatus() {
       try {
-        const res = await fetch('https://raw.githubusercontent.com/Xxcool/juejin-csdn-extension/master/health.json')
+        const res = await fetch('https://raw.githubusercontent.com/juejin-sync/juejin-sync/master/health.json')
           .then(r => r.ok ? r.json() : fetch('/health.json').then(r2 => r2.json()))
           .catch(() => fetch('/health.json').then(r2 => r2.json()));
         const data = res || {};
@@ -1565,6 +1566,7 @@
         const csdnEl = document.getElementById('status-csdn');
         const wechatEl = document.getElementById('status-wechat');
         const cnblogsEl = document.getElementById('status-cnblogs');
+        const zhihuEl = document.getElementById('status-zhihu');
 
         const updateStatusEl = (el, val) => {
           if (!el) return;
@@ -1587,6 +1589,7 @@
         updateStatusEl(csdnEl, data.csdn || 'ok');
         updateStatusEl(wechatEl, data.wechat || 'ok');
         updateStatusEl(cnblogsEl, data.cnblogs || 'ok');
+        updateStatusEl(zhihuEl, data.zhihu || 'ok');
 
         if (data.updatedAt) {
           document.getElementById('val-health-time').textContent = `最后自检：${data.updatedAt.slice(5)}`;
@@ -1596,6 +1599,8 @@
         document.getElementById('status-csdn').textContent = '正常 🟢';
         document.getElementById('status-wechat').textContent = '正常 🟢';
         document.getElementById('status-cnblogs').textContent = '正常 🟢';
+        const zhihuEl = document.getElementById('status-zhihu');
+        if (zhihuEl) zhihuEl.textContent = '正常 🟢';
       }
     }
 
@@ -1603,7 +1608,7 @@
     async function fetchGitHubReleases() {
       const tbody = document.getElementById('releases-tbody');
       try {
-        const res = await fetch('https://api.github.com/repos/Xxcool/juejin-csdn-extension/releases');
+        const res = await fetch('https://api.github.com/repos/juejin-sync/juejin-sync/releases');
         if (!res.ok) throw new Error('GitHub API 限流或无网络');
         const releases = await res.json();
         globalStatsCache.github = releases;
@@ -1818,7 +1823,7 @@
     // 9. 导出完整数据报告 (JSON)
     exportBtn.addEventListener('click', () => {
       const summary = {
-        title: '文章摆渡 (ArtFerry) 数据遥测报告',
+        title: '掘金同步助手 (Juejin Sync) 数据遥测报告',
         generatedAt: new Date().toLocaleString('zh-CN'),
         site: globalStatsCache.site?.total || {},
         github: {
@@ -1851,7 +1856,7 @@
       const topBrowser = Object.entries(globalStatsCache.site?.browsers || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || 'Chrome';
 
       const markdown = 
-`🚀【文章摆渡 · 创作者多平台同步助手 · 运营战报】
+`🚀【掘金同步助手 · 创作者多平台同步助手 · 运营战报】
 📅 统计日期：${new Date().toLocaleDateString('zh-CN')}
 ------------------------------------------------
 🌐 官网累计服务：${site.uv.toLocaleString()} 位技术创作者 (${site.pv.toLocaleString()} 次总浏览)
@@ -1861,11 +1866,11 @@
 ⭐ 开源生态热度：${stars} Stars · ${forks} Forks
 🧭 核心流量来源：${topChannel}
 💻 主流创作者终端：${topBrowser} 浏览器
-💓 同步链路健康度：掘金接口 [正常] · CSDN 接口 [正常] · 微信公众号 [正常] · 博客园接口 [正常]
+💓 同步链路健康度：掘金接口 [正常] · CSDN 接口 [正常] · 微信公众号 [正常] · 博客园接口 [正常] · 知乎接口 [正常]
 ------------------------------------------------
-⚓ 文章摆渡：把时间留给写作，把搬运交给轻舟！
-🔗 官方网站：https://artferry.vercel.app
-🐙 GitHub 开源：https://github.com/Xxcool/juejin-csdn-extension`;
+⚓ 掘金同步助手：把时间留给写作，把搬运交给轻舟！
+🔗 官方网站：https://juejinsync.vercel.app
+🐙 GitHub 开源：https://github.com/juejin-sync/juejin-sync`;
 
       reportText.value = markdown;
       reportModal.style.display = 'flex';
@@ -1887,7 +1892,7 @@
     // 初始化检查本地缓存与主题
     window.addEventListener('DOMContentLoaded', () => {
       applyTheme(getSystemTheme());
-      const savedKey = localStorage.getItem(AUTH_KEY_NAME);
+      const savedKey = localStorage.getItem(AUTH_KEY_NAME) || localStorage.getItem('artferry_stats_auth_key');
       if (savedKey) {
         passInput.value = savedKey;
         authenticateAndLoad(savedKey);

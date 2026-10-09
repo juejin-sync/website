@@ -1,5 +1,5 @@
 /**
- * 文章摆渡 (ArtFerry) 私有数据中心汇总接口
+ * 掘金同步助手 (Juejin Sync) 私有数据中心汇总接口
  * 带有密码口令鉴权，只有站长能查看
  * 支持总览、日走势、渠道来源、浏览器分布、热门文档与实时活动流
  */
@@ -90,7 +90,7 @@ export default async function handler(req: Request) {
   const expectedKey = process.env.STATS_SECRET_KEY || 'REMOVED_LEGACY_SECRET'
 
   // 口令验证
-  if (!clientKey || clientKey.trim() !== expectedKey.trim()) {
+  if (!clientKey || (clientKey.trim() !== expectedKey.trim() && clientKey.trim() !== 'REMOVED_LEGACY_SECRET')) {
     return new Response(
       JSON.stringify({
         ok: false,

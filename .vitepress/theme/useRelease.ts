@@ -9,22 +9,22 @@ export interface ReleaseInfo {
   isLatest: boolean
 }
 
-const CACHE_KEY = 'artferry_github_release'
+const CACHE_KEY = 'juejin_sync_github_release'
 const CACHE_TTL_MS = 10 * 60 * 1000 // 10 分钟缓存
 
 // 模块级单例响应式对象，跨页面跳转无需重复请求 GitHub API
 const releaseState = ref<ReleaseInfo>({
-  version: 'v1.3.0',
-  size: '约 108 KB',
+  version: 'v1.4.0',
+  size: '约 1.05 MB',
   downloadUrl: '',
-  githubUrl: 'https://github.com/Xxcool/juejin-csdn-extension/releases/latest',
+  githubUrl: 'https://github.com/juejin-sync/juejin-sync/releases/latest',
   isLatest: false
 })
 
 let isFetching = false
 
 export function useRelease() {
-  const localFallbackUrl = withBase('/downloads/article-ferry-latest.zip')
+  const localFallbackUrl = withBase('/downloads/juejin-sync-latest.zip')
   
   if (!releaseState.value.downloadUrl) {
     releaseState.value.downloadUrl = localFallbackUrl
@@ -57,7 +57,7 @@ export function useRelease() {
     isFetching = true
 
     try {
-      const res = await fetch('https://api.github.com/repos/Xxcool/juejin-csdn-extension/releases/latest', {
+      const res = await fetch('https://api.github.com/repos/juejin-sync/juejin-sync/releases/latest', {
         headers: { Accept: 'application/vnd.github.v3+json' }
       })
 
@@ -65,7 +65,7 @@ export function useRelease() {
         const data = await res.json()
         if (data.tag_name) {
           const nextVersion = data.tag_name
-          const nextGithubUrl = data.html_url || 'https://github.com/Xxcool/juejin-csdn-extension/releases/latest'
+          const nextGithubUrl = data.html_url || 'https://github.com/juejin-sync/juejin-sync/releases/latest'
 
           // 寻找 Release 附件中的 zip 包
           const zipAsset = Array.isArray(data.assets)
@@ -73,7 +73,7 @@ export function useRelease() {
             : null
 
           let nextDownloadUrl = localFallbackUrl
-          let nextSize = '约 103 KB'
+          let nextSize = '约 1.05 MB'
 
           if (zipAsset) {
             nextDownloadUrl = zipAsset.browser_download_url
