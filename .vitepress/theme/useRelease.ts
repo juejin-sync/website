@@ -6,6 +6,7 @@ export interface ReleaseInfo {
   size: string
   downloadUrl: string
   githubUrl: string
+  repoUrl: string
   isLatest: boolean
 }
 
@@ -18,6 +19,7 @@ const releaseState = ref<ReleaseInfo>({
   size: '约 1.05 MB',
   downloadUrl: '',
   githubUrl: 'https://github.com/juejin-sync/juejin-sync/releases/latest',
+  repoUrl: 'https://github.com/juejin-sync/juejin-sync',
   isLatest: false
 })
 
@@ -88,6 +90,7 @@ export function useRelease() {
             size: nextSize,
             downloadUrl: nextDownloadUrl,
             githubUrl: nextGithubUrl,
+            repoUrl: 'https://github.com/juejin-sync/juejin-sync',
             isLatest: true
           }
 
