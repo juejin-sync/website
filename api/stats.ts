@@ -87,10 +87,26 @@ export default async function handler(req: Request) {
     url.searchParams.get('key') ||
     ''
 
-  const expectedKey = process.env.STATS_SECRET_KEY || 'REMOVED_LEGACY_SECRET'
+  const expectedKey = process.env.STATS_SECRET_KEY?.trim()
+
+  if (!expectedKey) {
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        error: '统计服务尚未配置管理员口令。'
+      }),
+      {
+        status: 503,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      }
+    )
+  }
 
   // 口令验证
-  if (!clientKey || (clientKey.trim() !== expectedKey.trim() && clientKey.trim() !== 'REMOVED_LEGACY_SECRET')) {
+  if (!clientKey || clientKey.trim() !== expectedKey) {
     return new Response(
       JSON.stringify({
         ok: false,

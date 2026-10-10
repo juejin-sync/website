@@ -1815,8 +1815,13 @@
 
     // 8. 刷新事件
     refreshBtn.addEventListener('click', async () => {
+      if (!currentAuthKey) {
+        lockScreen.classList.remove('unlocked');
+        passInput.focus();
+        return;
+      }
       refreshBtn.querySelector('span').textContent = '同步中…';
-      await authenticateAndLoad(currentAuthKey || 'REMOVED_LEGACY_SECRET');
+      await authenticateAndLoad(currentAuthKey);
       refreshBtn.querySelector('span').textContent = '刷新';
     });
 
