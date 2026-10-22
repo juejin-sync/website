@@ -14,45 +14,46 @@ import { withBase } from 'vitepress'
             <span class="brand-title">掘金同步助手</span>
           </div>
           <p class="brand-mission">
-            面向掘金博主与开源作者的 Chrome 扩展。打通全域技术社区草稿箱，原图无损转存，自动排版适配，100% 端侧隐私安全。
+            面向掘金博主与技术作者的 Chrome 开源扩展。一键流转多平台草稿箱，原图无损转存，自动排版适配，100% 端侧隐私安全。
           </p>
           <div class="brand-meta-pills">
             <span class="meta-pill">Manifest V3</span>
             <span class="meta-pill">TypeScript</span>
             <span class="meta-pill">MIT License</span>
+            <span class="meta-pill">v1.4.0</span>
           </div>
         </div>
 
-        <!-- Links Column 1: Core Channels -->
+        <!-- Links Column 1: Supported Platforms -->
         <div class="footer-links-col">
-          <h4 class="links-title">同步生态</h4>
+          <h4 class="links-title">支持平台</h4>
           <ul class="links-list">
-            <li><a href="/features/ui-craftsmanship" class="footer-link">微信公众号图文草稿</a></li>
-            <li><a href="/features/sync-engine" class="footer-link">知乎专栏高保真草稿</a></li>
-            <li><a href="/features/image-pipeline" class="footer-link">CSDN 博客草稿箱</a></li>
-            <li><a href="/features/idempotence" class="footer-link">博客园随笔草稿</a></li>
+            <li><a href="/#features" class="footer-link">微信公众号 (图文与封面)</a></li>
+            <li><a href="/#features" class="footer-link">知乎专栏 (Draft.js 保真)</a></li>
+            <li><a href="/#features" class="footer-link">CSDN 博客 (专栏分类匹配)</a></li>
+            <li><a href="/#features" class="footer-link">博客园随笔 (原生 Markdown)</a></li>
           </ul>
         </div>
 
-        <!-- Links Column 2: Architecture & Docs -->
+        <!-- Links Column 2: Documentation -->
         <div class="footer-links-col">
-          <h4 class="links-title">文档与深剖</h4>
+          <h4 class="links-title">使用文档</h4>
           <ul class="links-list">
-            <li><a href="/guide/" class="footer-link">3 分钟快速上手</a></li>
+            <li><a href="/guide/quick-start" class="footer-link">3 分钟快速上手</a></li>
+            <li><a href="/guide/installation" class="footer-link">离线包两步安装</a></li>
             <li><a href="/guide/dry-run" class="footer-link">排版预演机制 (Dry-run)</a></li>
-            <li><a href="/deep-dive/pipeline" class="footer-link">底层同步管道与状态机</a></li>
-            <li><a href="/deep-dive/security-privacy" class="footer-link">零信任端侧安全底座</a></li>
+            <li><a href="/guide/faq" class="footer-link">常见问题与排错指南</a></li>
           </ul>
         </div>
 
-        <!-- Links Column 3: Community & Source -->
+        <!-- Links Column 3: Open Source & Community -->
         <div class="footer-links-col">
-          <h4 class="links-title">开源与支持</h4>
+          <h4 class="links-title">开源与社区</h4>
           <ul class="links-list">
             <li><a href="https://github.com/juejin-sync/juejin-sync" target="_blank" rel="noopener" class="footer-link">GitHub 源码仓库 ↗</a></li>
-            <li><a href="https://github.com/juejin-sync/juejin-sync/releases" target="_blank" rel="noopener" class="footer-link">Releases 发行历史 ↗</a></li>
-            <li><a href="/changelog/" class="footer-link">版本更新日志</a></li>
-            <li><a href="https://github.com/juejin-sync/juejin-sync/issues" target="_blank" rel="noopener" class="footer-link">提交反馈与建议 ↗</a></li>
+            <li><a href="/changelog/" class="footer-link">版本更新日志 (Changelog)</a></li>
+            <li><a href="https://github.com/juejin-sync/juejin-sync/releases" target="_blank" rel="noopener" class="footer-link">Releases 历史发行包 ↗</a></li>
+            <li><a href="https://github.com/juejin-sync/juejin-sync/issues" target="_blank" rel="noopener" class="footer-link">提交问题与功能建议 ↗</a></li>
           </ul>
         </div>
       </div>
@@ -64,7 +65,7 @@ import { withBase } from 'vitepress'
         </div>
         <div class="security-declaration">
           <span class="safe-dot"></span>
-          <span>100% 浏览器本地沙箱执行 · 零外部中转 · 零凭据上传</span>
+          <span>100% 浏览器本地沙箱执行 · 零外部中转 · 零凭据收集</span>
         </div>
       </div>
     </div>

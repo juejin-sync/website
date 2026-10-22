@@ -46,46 +46,6 @@ export default defineConfig({
             { text: '排版预演 (Dry-run)', link: '/guide/dry-run' },
             { text: '常见问题与排错', link: '/guide/faq' }
           ]
-        },
-        {
-          text: '更多了解',
-          items: [
-            { text: '核心特性深剖', link: '/features/sync-engine' },
-            { text: '底层架构与安全', link: '/deep-dive/pipeline' }
-          ]
-        }
-      ],
-      '/features/': [
-        {
-          text: '核心特性',
-          items: [
-            { text: '智能同步引擎', link: '/features/sync-engine' },
-            { text: '原图转存与清洗', link: '/features/image-pipeline' },
-            { text: '草稿幂等与自愈', link: '/features/idempotence' },
-            { text: '旗舰工艺 UI 2.0', link: '/features/ui-craftsmanship' }
-          ]
-        },
-        {
-          text: '相关文档',
-          items: [
-            { text: '使用指南', link: '/guide/' },
-            { text: '架构与安全', link: '/deep-dive/pipeline' }
-          ]
-        }
-      ],
-      '/deep-dive/': [
-        {
-          text: '架构与安全',
-          items: [
-            { text: '同步链路与状态机', link: '/deep-dive/pipeline' },
-            { text: '零信任隐私底座', link: '/deep-dive/security-privacy' }
-          ]
-        },
-        {
-          text: '产品演进',
-          items: [
-            { text: '版本更新日志', link: '/changelog/' }
-          ]
         }
       ],
       '/changelog/': [
