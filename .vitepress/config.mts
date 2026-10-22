@@ -30,24 +30,10 @@ export default defineConfig({
     logo: '/logo.svg',
     siteTitle: '掘金同步助手',
     nav: [
-      { text: '使用指南', link: '/guide/' },
-      {
-        text: '核心特性',
-        items: [
-          { text: '智能同步引擎', link: '/features/sync-engine' },
-          { text: '原图无损转存与清洗', link: '/features/image-pipeline' },
-          { text: '草稿幂等防重与自愈', link: '/features/idempotence' },
-          { text: '微信高保真排版', link: '/features/ui-craftsmanship' }
-        ]
-      },
-      {
-        text: '架构与安全',
-        items: [
-          { text: '同步链路与状态机', link: '/deep-dive/pipeline' },
-          { text: '零信任端侧隐私底座', link: '/deep-dive/security-privacy' }
-        ]
-      },
-      { text: '更新日志', link: '/changelog/' }
+      { text: '功能特性', link: '/#features' },
+      { text: '使用文档', link: '/guide/' },
+      { text: '更新日志', link: '/changelog/' },
+      { text: '常见排错', link: '/guide/faq' }
     ],
     sidebar: {
       '/guide/': [

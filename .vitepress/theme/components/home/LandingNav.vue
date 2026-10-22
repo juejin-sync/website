@@ -46,10 +46,10 @@ const handleDownload = () => {
 
       <!-- Navigation Links (与全站内页完全对齐) -->
       <div class="nav-links">
-        <a href="/guide/" class="nav-link">使用指南</a>
-        <a href="/features/sync-engine" class="nav-link">核心特性</a>
-        <a href="/deep-dive/pipeline" class="nav-link">架构与安全</a>
+        <a href="#features" class="nav-link">功能特性</a>
+        <a href="/guide/" class="nav-link">使用文档</a>
         <a href="/changelog/" class="nav-link">更新日志</a>
+        <a href="/guide/faq" class="nav-link">常见排错</a>
       </div>
 
       <!-- Right Action Controls -->
