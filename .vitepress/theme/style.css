@@ -214,6 +214,28 @@ body::after {
   color: var(--vp-c-brand-1) !important;
 }
 
+/* ==========================================================================
+   Full-Bleed Canvas for Landing Page under Unified Layout
+   ========================================================================== */
+.VPContent:has(.landing-page-root) {
+  padding: 0 !important;
+}
+
+.VPDoc:has(.landing-page-root) .container {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.VPDoc:has(.landing-page-root) .content {
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+.VPDoc:has(.landing-page-root) .aside {
+  display: none !important;
+}
+
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
   font-family: inherit;
