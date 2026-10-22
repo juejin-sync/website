@@ -3,6 +3,7 @@ import { withBase } from 'vitepress'
 
 export interface ReleaseInfo {
   version: string
+  headline: string
   size: string
   downloadUrl: string
   githubUrl: string
@@ -10,12 +11,13 @@ export interface ReleaseInfo {
   isLatest: boolean
 }
 
-const CACHE_KEY = 'juejin_sync_github_release'
+const CACHE_KEY = 'juejin_sync_github_release_v2'
 const CACHE_TTL_MS = 10 * 60 * 1000 // 10 分钟缓存
 
-// 模块级单例响应式对象，跨页面跳转无需重复请求 GitHub API
+// 模块级单例响应式对象，默认兜底最新 v1.5.0
 const releaseState = ref<ReleaseInfo>({
-  version: 'v1.4.0',
+  version: 'v1.5.0',
+  headline: '批量文章分发向导 · 纯本地沙箱执行',
   size: '约 1.05 MB',
   downloadUrl: '',
   githubUrl: 'https://github.com/juejin-sync/juejin-sync/releases/latest',
@@ -35,7 +37,7 @@ export function useRelease() {
   onMounted(async () => {
     if (typeof window === 'undefined' || !window.fetch) return
 
-    // 1. 尝试从 localStorage 读取缓存（加速首屏渲染，防止 GitHub API 限流）
+    // 1. 尝试从 localStorage 读取缓存
     try {
       const cachedRaw = localStorage.getItem(CACHE_KEY)
       if (cachedRaw) {
@@ -45,13 +47,13 @@ export function useRelease() {
           if (cached.data && cached.data.version) {
             Object.assign(releaseState.value, cached.data)
             if (isFresh) {
-              return // 缓存未过期，无需发起网络请求
+              return
             }
           }
         }
       }
     } catch {
-      // 忽略 localStorage 异常（如无痕模式禁存）
+      // 忽略缓存读取错误
     }
 
     // 2. 避免并发重复请求
@@ -68,6 +70,16 @@ export function useRelease() {
         if (data.tag_name) {
           const nextVersion = data.tag_name
           const nextGithubUrl = data.html_url || 'https://github.com/juejin-sync/juejin-sync/releases/latest'
+
+          // 提取 Release 亮点文字
+          let nextHeadline = '批量文章分发向导 · 纯本地沙箱执行'
+          if (typeof data.body === 'string') {
+            // 提取第一个特性高亮点
+            const matchFeature = data.body.match(/\*\*(.*?)\*\*/)
+            if (matchFeature && matchFeature[1]) {
+              nextHeadline = `现已支持${matchFeature[1]} · 纯本地沙箱执行`
+            }
+          }
 
           // 寻找 Release 附件中的 zip 包
           const zipAsset = Array.isArray(data.assets)
@@ -87,6 +99,7 @@ export function useRelease() {
 
           const freshData: ReleaseInfo = {
             version: nextVersion,
+            headline: nextHeadline,
             size: nextSize,
             downloadUrl: nextDownloadUrl,
             githubUrl: nextGithubUrl,
@@ -108,15 +121,13 @@ export function useRelease() {
         }
       }
     } catch (e) {
-      // 离线或 GitHub API 受限时静默回退，保持本地或已缓存的配置
+      // 离线或弱网静默降级
     } finally {
       isFetching = false
     }
   })
 
   return {
-    release: releaseState,
-    localDownloadUrl: localFallbackUrl
+    release: releaseState
   }
 }
-

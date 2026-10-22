@@ -1,6 +1,6 @@
 {
   "name": "juejin-sync-site",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "description": "掘金同步助手 (Juejin Sync) 官方网站与文档中心",
   "homepage": "https://juejinsync.vercel.app/",

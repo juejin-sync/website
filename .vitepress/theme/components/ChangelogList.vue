@@ -19,11 +19,31 @@ interface ReleaseItem {
   asset: ReleaseAsset | null
 }
 
-const CACHE_KEY = 'juejin_sync_changelog_releases'
+const CACHE_KEY = 'juejin_sync_changelog_releases_v2'
 const CACHE_TTL_MS = 15 * 60 * 1000 // 15 分钟缓存
 
 // 预置兜底数据（保障弱网、离线、SSG 阶段 0 延时渲染）
 const fallbackReleases: ReleaseItem[] = [
+  {
+    tagName: 'v1.5.0',
+    name: '🚀 v1.5.0 历史文章批量同步向导与微信排版引擎升级',
+    date: '2026-10-21',
+    body: `### ✨ 核心特性更新
+- **历史文章批量同步向导**：创作者中心文章列表支持多选、全选当前页与一键勾选未同步，提供批量分发向导与执行监控看板。
+- **微信公众号排版引擎**：代码块新增 Mac 原生三色控制装饰条，内置 GitHub、One Dark 等多款主流高亮主题。
+- **开发者工具链**：新增 Git 提交与 Issue/PR 变更日志草稿自动追踪提取工具。
+
+### 🛠️ 缺陷修复与自愈
+- **批量向导防风控限速**：后台引入单平台串行互斥锁（Semaphore(1)）与 3 秒发文冷却，精准识别频控并增加自适应退避自动重试。
+- **未登录平台状态隔离**：向导弹窗将未登录平台严格视作未勾选，杜绝未登录平台被误分发同步任务。
+- **深色模式深度适配**：批量操作通栏、底部浮动胶囊条与向导弹窗全面适配暗黑模式。`,
+    htmlUrl: 'https://github.com/juejin-sync/juejin-sync/releases/tag/v1.5.0',
+    asset: {
+      name: 'juejin-sync-v1.5.0.zip',
+      size: '约 1.05 MB',
+      downloadUrl: 'https://github.com/juejin-sync/juejin-sync/releases/download/v1.5.0/juejin-sync-v1.5.0.zip'
+    }
+  },
   {
     tagName: 'v1.4.0',
     name: '🚀 v1.4.0 知乎专栏草稿同步与品牌全面升级',

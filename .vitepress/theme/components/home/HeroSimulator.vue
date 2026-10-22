@@ -97,10 +97,10 @@ const resetSimulation = () => {
     <div class="hero-container">
       <!-- Left Column: Value Proposition -->
       <div class="hero-content">
-        <!-- Release Pill Badge -->
+        <!-- Release Pill Badge (全面动态响应 GitHub Releases 最新数据) -->
         <a href="/changelog/" class="release-pill">
-          <span class="pill-badge">v1.4.0</span>
-          <span class="pill-text">现已全面支持知乎专栏 · 纯本地沙箱执行</span>
+          <span class="pill-badge">{{ release.version || 'v1.5.0' }}</span>
+          <span class="pill-text">{{ release.headline || '批量文章分发向导 · 纯本地沙箱执行' }}</span>
           <svg class="pill-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="9 18 15 12 9 6" />
           </svg>
@@ -183,7 +183,7 @@ const resetSimulation = () => {
             </div>
             <div class="window-ext-badge">
               <span class="ext-pulse"></span>
-              <span>juejin-sync active</span>
+              <span>juejin-sync {{ release.version || 'v1.5.0' }}</span>
             </div>
           </div>
 

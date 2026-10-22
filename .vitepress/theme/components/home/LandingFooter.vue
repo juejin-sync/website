@@ -1,5 +1,8 @@
 <script setup>
 import { withBase } from 'vitepress'
+import { useRelease } from '../../useRelease'
+
+const { release } = useRelease()
 </script>
 
 <template>
@@ -20,7 +23,7 @@ import { withBase } from 'vitepress'
             <span class="meta-pill">Manifest V3</span>
             <span class="meta-pill">TypeScript</span>
             <span class="meta-pill">MIT License</span>
-            <span class="meta-pill">v1.4.0</span>
+            <span class="meta-pill">{{ release.version || 'v1.5.0' }}</span>
           </div>
         </div>
 

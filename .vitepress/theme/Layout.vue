@@ -15,7 +15,7 @@ const handleDownload = () => {
   <Layout>
     <!-- 统一品牌微胶囊版本标签 -->
     <template #nav-bar-title-after>
-      <span class="global-nav-badge">v1.4</span>
+      <span class="global-nav-badge">{{ release.version || 'v1.5.0' }}</span>
     </template>
 
     <!-- 统一顶部高光下载按钮 -->

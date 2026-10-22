@@ -41,7 +41,7 @@ const handleDownload = () => {
       <a href="/" class="nav-brand" title="掘金同步助手官网">
         <img :src="withBase('/logo.svg')" width="24" height="24" alt="Juejin Sync Logo" class="brand-logo" />
         <span class="brand-text">掘金同步助手</span>
-        <span class="brand-badge">v1.4</span>
+        <span class="brand-badge">{{ release.version || 'v1.5.0' }}</span>
       </a>
 
       <!-- Navigation Links (与全站内页完全对齐) -->
