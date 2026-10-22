@@ -44,12 +44,11 @@ const handleDownload = () => {
         <span class="brand-badge">v1.4</span>
       </a>
 
-      <!-- Navigation Links -->
+      <!-- Navigation Links (与全站内页完全对齐) -->
       <div class="nav-links">
-        <a href="#simulator" class="nav-link">工作台演练</a>
-        <a href="#features" class="nav-link">核心特性</a>
-        <a href="#install" class="nav-link">两步安装</a>
         <a href="/guide/" class="nav-link">使用指南</a>
+        <a href="/features/sync-engine" class="nav-link">核心特性</a>
+        <a href="/deep-dive/pipeline" class="nav-link">架构与安全</a>
         <a href="/changelog/" class="nav-link">更新日志</a>
       </div>
 

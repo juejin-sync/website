@@ -143,13 +143,75 @@ body::after {
 /* Header & Nav Modern Developer Tool Touches */
 .VPNav {
   border-bottom: 1px solid var(--bento-border) !important;
-  background: rgba(248, 250, 252, 0.85) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background: rgba(248, 250, 252, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
 }
 
 .dark .VPNav {
-  background: rgba(11, 13, 17, 0.85) !important;
+  background: rgba(11, 13, 17, 0.8) !important;
+}
+
+.VPNavBarTitle .title {
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: -0.01em !important;
+}
+
+.VPNavBarMenuLink {
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  color: var(--bento-text-body) !important;
+  transition: color 0.15s ease !important;
+}
+
+.VPNavBarMenuLink:hover,
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1) !important;
+}
+
+.VPNavBarMenuGroup .button {
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  color: var(--bento-text-body) !important;
+}
+
+.VPNavBarMenuGroup .button:hover {
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* Modern Bento Flyout Menu */
+.VPMenu {
+  background: var(--bento-card-bg) !important;
+  border: 1px solid var(--bento-border) !important;
+  border-radius: var(--bento-radius-sm) !important;
+  box-shadow: var(--bento-shadow-hover) !important;
+  padding: 6px !important;
+}
+
+.VPMenuLink {
+  border-radius: 6px !important;
+  font-size: 0.84rem !important;
+}
+
+.VPMenuLink:hover {
+  background: var(--vp-c-brand-soft) !important;
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* Modern Sidebar Refinements */
+.VPSidebar {
+  background: var(--bento-bg) !important;
+  border-right: 1px solid var(--bento-border) !important;
+}
+
+.VPSidebarItem.level-1.is-active > .item .link {
+  color: var(--vp-c-brand-1) !important;
+  font-weight: 600 !important;
+}
+
+.VPSidebarItem.level-1 > .item .link:hover {
+  color: var(--vp-c-brand-1) !important;
 }
 
 /* Headings */

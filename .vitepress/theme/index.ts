@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
+import Layout from './Layout.vue'
 
 import DownloadBox from './components/DownloadBox.vue'
 import StepGuide from './components/StepGuide.vue'
@@ -11,6 +12,7 @@ import { trackPageView } from './tracker'
 
 export default {
   extends: DefaultTheme,
+  Layout,
   enhanceApp({ app, router }) {
     app.component('DownloadBox', DownloadBox)
     app.component('StepGuide', StepGuide)
