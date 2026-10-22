@@ -218,7 +218,13 @@ body::after {
    Full-Bleed Canvas for Landing Page under Unified Layout
    ========================================================================== */
 .VPContent:has(.landing-page-root) {
-  padding: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.Layout:has(.landing-page-root) .VPFooter {
+  display: none !important;
 }
 
 .VPDoc:has(.landing-page-root) .container {

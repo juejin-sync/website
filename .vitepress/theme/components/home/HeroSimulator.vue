@@ -345,7 +345,12 @@ const resetSimulation = () => {
 <style scoped>
 .hero-section {
   position: relative;
-  padding: 56px 0 72px;
+  min-height: calc(100vh - var(--vp-nav-height, 64px));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 0 44px;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -362,21 +367,26 @@ const resetSimulation = () => {
 }
 
 .hero-container {
+  width: 100%;
   max-width: 1220px;
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
   grid-template-columns: 1.05fr 1.15fr;
-  gap: 48px;
+  gap: 44px;
   align-items: center;
   position: relative;
   z-index: 1;
 }
 
 @media (max-width: 1024px) {
+  .hero-section {
+    min-height: auto;
+    padding: 36px 0 48px;
+  }
   .hero-container {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
 }
 
@@ -391,15 +401,15 @@ const resetSimulation = () => {
   align-items: center;
   gap: 8px;
   width: fit-content;
-  padding: 4px 12px 4px 5px;
+  padding: 3px 10px 3px 5px;
   border-radius: 9999px;
   background: var(--bento-card-bg);
   border: 1px solid var(--bento-border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   text-decoration: none !important;
   color: var(--bento-text-title);
-  font-size: 0.82rem;
-  margin-bottom: 24px;
+  font-size: 0.8rem;
+  margin-bottom: 18px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -409,12 +419,12 @@ const resetSimulation = () => {
 }
 
 .pill-badge {
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 9999px;
   background: var(--vp-c-brand-1);
   color: #FFFFFF;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
 }
 
@@ -428,17 +438,17 @@ const resetSimulation = () => {
 }
 
 .hero-title {
-  font-size: 2.75rem;
+  font-size: 2.6rem;
   font-weight: 750;
   line-height: 1.18;
   letter-spacing: -0.03em;
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
   color: var(--bento-text-title);
 }
 
 @media (max-width: 640px) {
   .hero-title {
-    font-size: 2.15rem;
+    font-size: 2.1rem;
   }
 }
 
@@ -450,37 +460,37 @@ const resetSimulation = () => {
 }
 
 .hero-subtitle {
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-size: 1.02rem;
+  line-height: 1.6;
   color: var(--bento-text-body);
-  margin: 0 0 32px 0;
-  max-width: 540px;
+  margin: 0 0 26px 0;
+  max-width: 520px;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 36px;
+  gap: 12px;
+  margin-bottom: 26px;
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 24px;
+  gap: 10px;
+  padding: 10px 22px;
   border-radius: var(--bento-radius-sm);
   background: linear-gradient(135deg, #1E80FF 0%, #0056CC 100%);
   color: #FFFFFF !important;
   text-decoration: none !important;
-  box-shadow: 0 6px 20px rgba(30, 128, 255, 0.35);
+  box-shadow: 0 6px 18px rgba(30, 128, 255, 0.32);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 26px rgba(30, 128, 255, 0.45);
+  box-shadow: 0 8px 24px rgba(30, 128, 255, 0.42);
 }
 
 .btn-text {
@@ -490,12 +500,12 @@ const resetSimulation = () => {
 }
 
 .btn-text strong {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
 }
 
 .btn-text small {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   opacity: 0.88;
   font-family: var(--font-mono);
 }
@@ -504,12 +514,12 @@ const resetSimulation = () => {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 12px 20px;
+  padding: 10px 18px;
   border-radius: var(--bento-radius-sm);
   background: var(--bento-card-bg);
   border: 1px solid var(--bento-border);
   color: var(--bento-text-title) !important;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none !important;
   box-shadow: var(--bento-shadow);
@@ -525,11 +535,11 @@ const resetSimulation = () => {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 18px;
+  padding: 10px 16px;
   border-radius: var(--bento-radius-sm);
   background: transparent;
   color: var(--bento-text-body) !important;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 500;
   text-decoration: none !important;
   transition: all 0.2s ease;
@@ -543,16 +553,16 @@ const resetSimulation = () => {
 .hero-metrics {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  padding-top: 18px;
+  gap: 16px;
+  padding-top: 14px;
   border-top: 1px solid var(--bento-border);
 }
 
 .metric-item {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.82rem;
+  gap: 7px;
+  font-size: 0.8rem;
   color: var(--bento-text-muted);
   font-weight: 500;
 }
@@ -582,19 +592,19 @@ const resetSimulation = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
+  padding: 8px 14px;
   background: var(--bento-card-subtle);
   border-bottom: 1px solid var(--bento-inner-border);
 }
 
 .window-traffic-lights {
   display: flex;
-  gap: 6px;
+  gap: 5px;
 }
 
 .light {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
 }
 .light.red { background: #FF5F56; }
@@ -606,7 +616,7 @@ const resetSimulation = () => {
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.73rem;
   color: var(--bento-text-muted);
 }
 
@@ -615,30 +625,30 @@ const resetSimulation = () => {
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--vp-c-brand-1);
 }
 
 .ext-pulse {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--vp-c-brand-1);
   box-shadow: 0 0 6px var(--vp-c-brand-1);
 }
 
 .simulator-body {
-  padding: 18px;
+  padding: 13px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 .sim-block {
   border: 1px solid var(--bento-border);
   border-radius: var(--bento-radius-sm);
   background: var(--bento-card-subtle);
-  padding: 16px;
+  padding: 11px 13px;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -646,7 +656,7 @@ const resetSimulation = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 7px;
 }
 
 .header-tag {
@@ -657,22 +667,22 @@ const resetSimulation = () => {
 
 .tag-index {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: var(--vp-c-brand-1);
-  padding: 1px 6px;
+  padding: 1px 5px;
   background: var(--vp-c-brand-soft);
   border-radius: 4px;
 }
 
 .tag-label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--bento-text-title);
 }
 
 .header-status {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--bento-text-muted);
 }
 
@@ -680,36 +690,36 @@ const resetSimulation = () => {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #10B981;
 }
 
 .header-idle {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--bento-text-muted);
 }
 
 .article-meta-card {
   background: var(--bento-card-bg);
   border: 1px solid var(--bento-inner-border);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 14px;
+  border-radius: 6px;
+  padding: 7px 11px;
+  margin-bottom: 9px;
 }
 
 .meta-title {
-  font-size: 0.9rem;
+  font-size: 0.83rem;
   font-weight: 600;
   color: var(--bento-text-title);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .meta-details {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   color: var(--bento-text-muted);
 }
 
@@ -727,15 +737,15 @@ const resetSimulation = () => {
 }
 
 .channel-selector {
-  margin-bottom: 14px;
+  margin-bottom: 9px;
 }
 
 .selector-title {
   display: flex;
   justify-content: space-between;
-  font-size: 0.76rem;
+  font-size: 0.73rem;
   color: var(--bento-text-muted);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .selector-hint {
@@ -746,15 +756,15 @@ const resetSimulation = () => {
 .channel-chips {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 6px;
 }
 
 .channel-chip {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border-radius: 8px;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 6px;
   background: var(--bento-card-bg);
   border: 1px solid var(--bento-border);
   cursor: pointer;
@@ -772,9 +782,9 @@ const resetSimulation = () => {
 }
 
 .chip-checkbox {
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
   border: 1px solid var(--bento-border);
   display: flex;
   align-items: center;
@@ -790,14 +800,14 @@ const resetSimulation = () => {
 }
 
 .chip-name {
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 600;
   color: var(--bento-text-title);
   white-space: nowrap;
 }
 
 .chip-feature {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   color: var(--bento-text-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -810,16 +820,16 @@ const resetSimulation = () => {
 
 .btn-simulate {
   width: 100%;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
   background: var(--vp-c-brand-1);
   color: #FFFFFF;
   border: none;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(30, 128, 255, 0.25);
+  box-shadow: 0 3px 12px rgba(30, 128, 255, 0.25);
 }
 
 .btn-simulate:hover:not(:disabled) {
@@ -836,7 +846,7 @@ const resetSimulation = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 7px;
 }
 
 .spin-icon {
@@ -849,12 +859,12 @@ const resetSimulation = () => {
 
 .btn-reset {
   width: 100%;
-  padding: 9px 14px;
-  border-radius: 8px;
+  padding: 7px 12px;
+  border-radius: 6px;
   background: var(--bento-card-bg);
   border: 1px solid var(--bento-border);
   color: var(--bento-text-title);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   display: flex;
@@ -874,7 +884,7 @@ const resetSimulation = () => {
 }
 
 .target-panel {
-  min-height: 96px;
+  min-height: 102px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -882,17 +892,17 @@ const resetSimulation = () => {
 
 .target-tabs {
   display: flex;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: 5px;
+  margin-bottom: 7px;
   overflow-x: auto;
 }
 
 .target-tab {
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 5px;
   background: var(--bento-card-bg);
   border: 1px solid var(--bento-border);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   color: var(--bento-text-body);
   font-weight: 500;
   cursor: pointer;
@@ -908,39 +918,39 @@ const resetSimulation = () => {
 .target-card-preview {
   background: var(--bento-card-bg);
   border: 1px solid var(--bento-inner-border);
-  border-radius: 8px;
-  padding: 10px 14px;
+  border-radius: 6px;
+  padding: 8px 11px;
 }
 
 .preview-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .preview-badge {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #10B981;
 }
 
 .preview-secure {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--bento-text-muted);
 }
 
 .preview-body {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .preview-feature-item {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.76rem;
+  font-size: 0.73rem;
   color: var(--bento-text-body);
 }
 
@@ -951,15 +961,16 @@ const resetSimulation = () => {
 .target-empty {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  padding: 12px;
+  padding: 12px 10px;
   color: var(--bento-text-muted);
 }
 
 .empty-icon-wrap {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
   background: var(--bento-card-bg);
   border: 1px solid var(--bento-inner-border);
   display: flex;
@@ -969,7 +980,7 @@ const resetSimulation = () => {
 }
 
 .empty-text {
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   line-height: 1.4;
 }
 </style>
