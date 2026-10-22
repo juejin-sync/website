@@ -44,4 +44,5 @@
 
 - 了解如何 [安装与加载扩展](/guide/installation)
 - 快速体验 [3 分钟快速上手](/guide/quick-start)
-- 查看 [核心特性深剖](/features/sync-engine)
+- 了解 [排版预演机制 (Dry-run)](/guide/dry-run)
+- 查看 [常见问题与排错](/guide/faq)

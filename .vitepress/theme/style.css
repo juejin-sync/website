@@ -1,117 +1,253 @@
 /* ==========================================================================
-   Juejin Sync - Anti-Mainstream Craft Aesthetic Theme
-   Design Rules:
-   - NO Purple / Indigo / Lavender (#6366F1, #8B5CF6)
-   - NO flat plain backgrounds (must have organic SVG noise & fine grain)
-   - NO standard SaaS boilerplate & NO generic Tailwind palette
-   - Hard offset drop-shadows & distinct tactile physical edges
-   - Non-linear spring bezier curves (NO ease-in-out)
+   Juejin Sync - Modern Clean Developer Tool Theme
+   Style: Bento Box Grid + Linear / Raycast / Vercel Developer Aesthetic
+   Color: Juejin Blue (#1E80FF) + 4-Platform Native Accents + Dark/Light Adaptive
+   Typography: JetBrains Mono + Inter / Modern Sans-Serif
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 :root {
-  /* Brand palette: Molten Clay & Dark Forest (Craft Physical Palette) */
-  --vp-c-brand-1: #D64016;
-  --vp-c-brand-2: #E65100;
-  --vp-c-brand-3: #BF360C;
-  --vp-c-brand-soft: rgba(214, 64, 22, 0.12);
+  /* Juejin Brand Core */
+  --vp-c-brand-1: #1E80FF;
+  --vp-c-brand-2: #388EFF;
+  --vp-c-brand-3: #0066E5;
+  --vp-c-brand-soft: rgba(30, 128, 255, 0.12);
 
-  /* Anti-mainstream accent & canvas colors */
-  --craft-ink: #171719;
-  --craft-ink-muted: #52525B;
-  --craft-paper: #F6F4ED;
-  --craft-paper-card: #FFFFFF;
-  --craft-paper-border: #171719;
-  --craft-accent-acid: #D6F831;
-  --craft-accent-warm: #FFEDD5;
-  --craft-accent-green: #0E6245;
+  /* Platform Accent Colors */
+  --color-wechat: #07C160;
+  --color-wechat-soft: rgba(7, 193, 96, 0.12);
+  --color-zhihu: #0066FF;
+  --color-zhihu-soft: rgba(0, 102, 255, 0.12);
+  --color-csdn: #FC5531;
+  --color-csdn-soft: rgba(252, 85, 49, 0.12);
+  --color-cnblogs: #10B981;
+  --color-cnblogs-soft: rgba(16, 185, 129, 0.12);
 
-  /* Tactile offset shadows */
-  --craft-shadow: 4px 4px 0px #171719;
-  --craft-shadow-sm: 2px 2px 0px #171719;
-  --craft-shadow-hover: 6px 6px 0px #171719;
-  --craft-shadow-active: 1px 1px 0px #171719;
+  /* Bento Box Grid Tokens - Light Mode */
+  --bento-bg: #F8FAFC;
+  --bento-card-bg: #FFFFFF;
+  --bento-card-bg-hover: #F1F5F9;
+  --bento-card-subtle: #F8FAFC;
+  --bento-border: rgba(0, 0, 0, 0.08);
+  --bento-border-hover: rgba(30, 128, 255, 0.45);
+  --bento-inner-border: rgba(0, 0, 0, 0.04);
+  --bento-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --bento-shadow-hover: 0 12px 32px -4px rgba(30, 128, 255, 0.12);
 
-  /* Anti-mainstream Non-linear Physics Spring Transitions */
-  --craft-spring: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-  --craft-snap: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+  --bento-text-title: #0F172A;
+  --bento-text-body: #475569;
+  --bento-text-muted: #64748B;
+
+  --bento-glow-color: rgba(30, 128, 255, 0.08);
+  --bento-radius: 18px;
+  --bento-radius-sm: 12px;
+
+  /* Font Families */
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* VitePress Overrides */
-  --vp-c-bg: #F6F4ED;
-  --vp-c-bg-alt: #EFECE3;
+  --vp-c-bg: #F8FAFC;
+  --vp-c-bg-alt: #F1F5F9;
   --vp-c-bg-elv: #FFFFFF;
-  --vp-c-bg-soft: #EDE8DE;
-  --vp-c-text-1: #171719;
-  --vp-c-text-2: #52525B;
-  --vp-c-text-3: #71717A;
-  --vp-c-divider: rgba(23, 23, 25, 0.12);
-  --vp-c-border: #171719;
+  --vp-c-bg-soft: #F1F5F9;
+  --vp-c-text-1: #0F172A;
+  --vp-c-text-2: #475569;
+  --vp-c-text-3: #64748B;
+  --vp-c-divider: rgba(0, 0, 0, 0.08);
+  --vp-c-border: rgba(0, 0, 0, 0.08);
 }
 
 .dark {
-  --vp-c-brand-1: #FF5722;
-  --vp-c-brand-2: #FF7043;
-  --vp-c-brand-3: #D84315;
-  --vp-c-brand-soft: rgba(255, 87, 34, 0.18);
+  /* Juejin Brand Dark */
+  --vp-c-brand-1: #1E80FF;
+  --vp-c-brand-2: #4696FF;
+  --vp-c-brand-3: #0F6CDE;
+  --vp-c-brand-soft: rgba(30, 128, 255, 0.16);
 
-  --craft-ink: #F5F2EB;
-  --craft-ink-muted: #A1A1AA;
-  --craft-paper: #121315;
-  --craft-paper-card: #1A1C1E;
-  --craft-paper-border: #3F3F46;
-  --craft-accent-acid: #CCFF00;
-  --craft-accent-warm: #382415;
-  --craft-accent-green: #22C55E;
+  /* Bento Box Grid Tokens - Dark Mode */
+  --bento-bg: #0B0D11;
+  --bento-card-bg: #13161C;
+  --bento-card-bg-hover: #181C24;
+  --bento-card-subtle: #161A22;
+  --bento-border: rgba(255, 255, 255, 0.08);
+  --bento-border-hover: rgba(30, 128, 255, 0.45);
+  --bento-inner-border: rgba(255, 255, 255, 0.04);
+  --bento-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.35);
+  --bento-shadow-hover: 0 12px 36px -4px rgba(30, 128, 255, 0.22);
 
-  --craft-shadow: 4px 4px 0px #000000;
-  --craft-shadow-sm: 2px 2px 0px #000000;
-  --craft-shadow-hover: 6px 6px 0px #000000;
-  --craft-shadow-active: 1px 1px 0px #000000;
+  --bento-text-title: #F8FAFC;
+  --bento-text-body: #94A3B8;
+  --bento-text-muted: #64748B;
 
-  --vp-c-bg: #121315;
-  --vp-c-bg-alt: #18191C;
-  --vp-c-bg-elv: #1F2124;
-  --vp-c-bg-soft: #1B1D20;
-  --vp-c-text-1: #F5F2EB;
-  --vp-c-text-2: #A1A1AA;
-  --vp-c-text-3: #71717A;
-  --vp-c-divider: rgba(245, 242, 235, 0.12);
-  --vp-c-border: #3F3F46;
+  --bento-glow-color: rgba(30, 128, 255, 0.12);
+
+  /* VitePress Overrides */
+  --vp-c-bg: #0B0D11;
+  --vp-c-bg-alt: #101318;
+  --vp-c-bg-elv: #13161C;
+  --vp-c-bg-soft: #14171E;
+  --vp-c-text-1: #F8FAFC;
+  --vp-c-text-2: #94A3B8;
+  --vp-c-text-3: #64748B;
+  --vp-c-divider: rgba(255, 255, 255, 0.08);
+  --vp-c-border: rgba(255, 255, 255, 0.08);
 }
 
 /* ==========================================================================
-   Global Organic Noise Backdrop (NO pure flat plain backgrounds!)
+   Global Base & Dot Grid Background (Modern Developer Tool)
    ========================================================================== */
 html, body {
-  background-color: var(--vp-c-bg) !important;
+  background-color: var(--bento-bg) !important;
   color: var(--vp-c-text-1);
-  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Subtle Tech Dot Grid Pattern */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 0;
+  opacity: 0.35;
+  background-image: radial-gradient(rgba(30, 128, 255, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 .dark body::before {
-  opacity: 0.06;
+  opacity: 0.22;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
 }
 
-/* Header & Nav custom tactile touches */
+/* Linear-style Radial Glow Top */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(30, 128, 255, 0.14) 0%, rgba(30, 128, 255, 0.03) 50%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark body::after {
+  background: radial-gradient(ellipse at center, rgba(30, 128, 255, 0.20) 0%, rgba(30, 128, 255, 0.04) 50%, transparent 75%);
+}
+
+/* Header & Nav Modern Developer Tool Touches */
 .VPNav {
-  border-bottom: 2px solid var(--craft-paper-border) !important;
-  background: var(--vp-c-bg) !important;
+  border-bottom: 1px solid var(--bento-border) !important;
+  background: rgba(248, 250, 252, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
 }
 
-/* Clean typography without mushy roundness */
+.dark .VPNav {
+  background: rgba(11, 13, 17, 0.8) !important;
+}
+
+.VPNavBarTitle .title {
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: -0.01em !important;
+}
+
+.VPNavBarMenuLink {
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  color: var(--bento-text-body) !important;
+  transition: color 0.15s ease !important;
+}
+
+.VPNavBarMenuLink:hover,
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1) !important;
+}
+
+.VPNavBarMenuGroup .button {
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  color: var(--bento-text-body) !important;
+}
+
+.VPNavBarMenuGroup .button:hover {
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* Modern Bento Flyout Menu */
+.VPMenu {
+  background: var(--bento-card-bg) !important;
+  border: 1px solid var(--bento-border) !important;
+  border-radius: var(--bento-radius-sm) !important;
+  box-shadow: var(--bento-shadow-hover) !important;
+  padding: 6px !important;
+}
+
+.VPMenuLink {
+  border-radius: 6px !important;
+  font-size: 0.84rem !important;
+}
+
+.VPMenuLink:hover {
+  background: var(--vp-c-brand-soft) !important;
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* Modern Sidebar Refinements */
+.VPSidebar {
+  background: var(--bento-bg) !important;
+  border-right: 1px solid var(--bento-border) !important;
+}
+
+.VPSidebarItem.level-1.is-active > .item .link {
+  color: var(--vp-c-brand-1) !important;
+  font-weight: 600 !important;
+}
+
+.VPSidebarItem.level-1 > .item .link:hover {
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* ==========================================================================
+   Full-Bleed Canvas for Landing Page under Unified Layout
+   ========================================================================== */
+.VPContent:has(.landing-page-root) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.Layout:has(.landing-page-root) .VPFooter {
+  display: none !important;
+}
+
+.VPDoc:has(.landing-page-root) .container {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.VPDoc:has(.landing-page-root) .content {
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+.VPDoc:has(.landing-page-root) .aside {
+  display: none !important;
+}
+
+/* Headings */
 h1, h2, h3, h4, h5, h6 {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  letter-spacing: -0.02em;
-  font-weight: 800;
+  font-family: inherit;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--bento-text-title);
 }
 
 /* Document HR fix */
@@ -122,34 +258,11 @@ h1, h2, h3, h4, h5, h6 {
 .vp-doc hr {
   margin: 32px 0;
   border: none;
-  border-top: 2px solid var(--vp-c-border);
+  border-top: 1px solid var(--bento-border);
 }
 
 .vp-doc hr + h2 {
   border-top: none !important;
   padding-top: 0 !important;
   margin-top: 24px !important;
-}
-
-/* Custom Anti-mainstream Badge */
-.craft-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  line-height: 1.2;
-  background: var(--craft-accent-acid);
-  color: #171719;
-  border: 1.5px solid #171719;
-  box-shadow: 2px 2px 0px #171719;
-}
-
-.dark .craft-badge {
-  background: var(--craft-accent-acid);
-  color: #171719;
-  border-color: #000000;
-  box-shadow: 2px 2px 0px #000000;
 }

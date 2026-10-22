@@ -19,7 +19,7 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}logo.svg` }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${base}favicon.png` }],
     ['link', { rel: 'shortcut icon', href: `${base}favicon.ico` }],
-    ['meta', { name: 'theme-color', content: '#D64016' }],
+    ['meta', { name: 'theme-color', content: '#1E80FF' }],
     ['meta', { name: 'keywords', content: '掘金, CSDN, 微信公众号, 博客园, 知乎, 文章同步, 掘金同步助手, juejin-sync, Chrome扩展, Markdown, 图床转存, 草稿幂等, Manifest V3' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: '掘金同步助手 · 创作者多平台文章同步工具' }],
@@ -30,11 +30,10 @@ export default defineConfig({
     logo: '/logo.svg',
     siteTitle: '掘金同步助手',
     nav: [
-      { text: '首页', link: '/' },
-      { text: '使用指南', link: '/guide/' },
-      { text: '核心特性', link: '/features/sync-engine' },
-      { text: '架构与安全', link: '/deep-dive/pipeline' },
-      { text: '更新日志', link: '/changelog/' }
+      { text: '功能特性', link: '/#features' },
+      { text: '使用文档', link: '/guide/' },
+      { text: '更新日志', link: '/changelog/' },
+      { text: '常见排错', link: '/guide/faq' }
     ],
     sidebar: {
       '/guide/': [
@@ -47,53 +46,14 @@ export default defineConfig({
             { text: '排版预演 (Dry-run)', link: '/guide/dry-run' },
             { text: '常见问题与排错', link: '/guide/faq' }
           ]
-        },
-        {
-          text: '更多了解',
-          items: [
-            { text: '核心特性深剖', link: '/features/sync-engine' },
-            { text: '底层架构与安全', link: '/deep-dive/pipeline' }
-          ]
-        }
-      ],
-      '/features/': [
-        {
-          text: '核心特性',
-          items: [
-            { text: '智能同步引擎', link: '/features/sync-engine' },
-            { text: '原图转存与清洗', link: '/features/image-pipeline' },
-            { text: '草稿幂等与自愈', link: '/features/idempotence' },
-            { text: '旗舰工艺 UI 2.0', link: '/features/ui-craftsmanship' }
-          ]
-        },
-        {
-          text: '相关文档',
-          items: [
-            { text: '使用指南', link: '/guide/' },
-            { text: '架构与安全', link: '/deep-dive/pipeline' }
-          ]
-        }
-      ],
-      '/deep-dive/': [
-        {
-          text: '架构与安全',
-          items: [
-            { text: '同步链路与状态机', link: '/deep-dive/pipeline' },
-            { text: '零信任隐私底座', link: '/deep-dive/security-privacy' }
-          ]
-        },
-        {
-          text: '产品演进',
-          items: [
-            { text: '版本更新日志', link: '/changelog/' }
-          ]
         }
       ],
       '/changelog/': [
         {
           text: '更新日志',
           items: [
-            { text: 'v1.4.0 (最新)', link: '/changelog/#v1-4-0' },
+            { text: 'v1.5.0 (最新)', link: '/changelog/#v1-5-0' },
+            { text: 'v1.4.0', link: '/changelog/#v1-4-0' },
             { text: 'v1.3.1', link: '/changelog/#v1-3-1' },
             { text: 'v1.3.0', link: '/changelog/#v1-3-0' },
             { text: 'v1.2.0', link: '/changelog/#v1-2-0' },
