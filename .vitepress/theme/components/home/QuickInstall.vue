@@ -24,7 +24,7 @@ const copyChromeUrl = async () => {
 </script>
 
 <template>
-  <section id="quick-install" class="install-section">
+  <section id="install" class="install-section">
     <div class="install-container">
       <div class="install-head">
         <div class="install-kicker">

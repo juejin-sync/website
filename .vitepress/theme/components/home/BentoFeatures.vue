@@ -33,7 +33,7 @@ const bentoCards = [
 </script>
 
 <template>
-  <section class="bento-section">
+  <section id="features" class="bento-section">
     <div class="bento-container">
       <!-- Section Header -->
       <div class="bento-head">

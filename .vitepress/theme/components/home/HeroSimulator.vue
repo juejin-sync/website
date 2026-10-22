@@ -90,7 +90,7 @@ const resetSimulation = () => {
 </script>
 
 <template>
-  <section class="hero-section">
+  <section id="simulator" class="hero-section">
     <!-- Top Radial Light Glow -->
     <div class="hero-glow-sphere" aria-hidden="true"></div>
 
