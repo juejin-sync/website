@@ -668,7 +668,11 @@ function syncSidebar(items: ReleaseItem[]) {
 
         <!-- 时间线节点徽标 -->
         <div class="cl-timeline-dot">
-          <span v-if="index === 0" class="boat-dot">⛵</span>
+          <span v-if="index === 0" class="craft-dot-latest">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </span>
           <span v-else class="circle-dot"></span>
         </div>
 
@@ -679,7 +683,15 @@ function syncSidebar(items: ReleaseItem[]) {
             <div class="cl-title-row">
               <span class="cl-version-tag">{{ rel.tagName }}</span>
               <span v-if="index === 0" class="cl-latest-pill">最新发布</span>
-              <span class="cl-date">📅 {{ rel.date }}</span>
+              <span class="cl-date">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:4px;">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                {{ rel.date }}
+              </span>
             </div>
 
             <!-- 下载与查看按钮 -->
@@ -691,7 +703,12 @@ function syncSidebar(items: ReleaseItem[]) {
                 class="cl-btn-dl"
                 :title="rel.asset.name"
               >
-                <span>⬇️ 下载 ZIP</span>
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>下载 ZIP</span>
                 <small v-if="rel.asset.size">{{ rel.asset.size }}</small>
               </a>
               <a
@@ -765,31 +782,40 @@ function syncSidebar(items: ReleaseItem[]) {
   z-index: 2;
 }
 
-.boat-dot {
-  font-size: 16px;
-  transform: translateY(-2px);
+.craft-dot-latest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: var(--craft-accent-acid);
+  color: #171719;
+  border: 1.5px solid var(--craft-paper-border);
+  border-radius: 4px;
+  box-shadow: 1px 1px 0px var(--craft-paper-border);
 }
 
 .circle-dot {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
-  border: 2px solid var(--vp-c-brand-1);
+  border-radius: 2px;
+  border: 2px solid var(--craft-paper-border);
   background: var(--vp-c-bg);
 }
 
 /* 卡片外观 */
 .cl-card-inner {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
-  padding: 20px 24px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: var(--craft-paper-card);
+  border: 2px solid var(--craft-paper-border);
+  box-shadow: var(--craft-shadow-sm);
+  border-radius: 6px;
+  padding: 22px 24px;
+  transition: var(--craft-snap);
 }
 
 .cl-card.is-latest .cl-card-inner {
   border-color: var(--vp-c-brand-1);
-  box-shadow: 0 4px 20px rgba(29, 125, 250, 0.08);
+  box-shadow: var(--craft-shadow);
 }
 
 /* 卡片头部 */
@@ -842,40 +868,56 @@ function syncSidebar(items: ReleaseItem[]) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  border-radius: 8px;
+  padding: 5px 12px;
+  border-radius: 4px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   background: var(--vp-c-brand-1);
   color: #fff !important;
+  border: 1.5px solid var(--craft-paper-border);
+  box-shadow: 1.5px 1.5px 0px var(--craft-paper-border);
   text-decoration: none !important;
-  transition: opacity 0.2s ease;
+  transition: var(--craft-snap);
 }
 
 .cl-btn-dl:hover {
-  opacity: 0.9;
+  transform: translate(-1px, -1px);
+  box-shadow: 2.5px 2.5px 0px var(--craft-paper-border);
+}
+
+.cl-btn-dl:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0px 0px 0px var(--craft-paper-border);
 }
 
 .cl-btn-dl small {
-  opacity: 0.85;
-  font-weight: 400;
+  opacity: 0.9;
+  font-weight: 500;
 }
 
 .cl-btn-src {
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
-  border-radius: 8px;
+  padding: 5px 10px;
+  border-radius: 4px;
   font-size: 12px;
-  color: var(--vp-c-text-2) !important;
-  border: 1px solid var(--vp-c-divider);
+  font-weight: 600;
+  color: var(--vp-c-text-1) !important;
+  border: 1.5px solid var(--craft-paper-border);
+  box-shadow: 1.5px 1.5px 0px var(--craft-paper-border);
+  background: var(--vp-c-bg-soft);
   text-decoration: none !important;
-  transition: all 0.2s ease;
+  transition: var(--craft-snap);
 }
 
 .cl-btn-src:hover {
-  color: var(--vp-c-brand-1) !important;
-  border-color: var(--vp-c-brand-1);
+  transform: translate(-1px, -1px);
+  box-shadow: 2.5px 2.5px 0px var(--craft-paper-border);
+}
+
+.cl-btn-src:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0px 0px 0px var(--craft-paper-border);
 }
 
 /* Markdown 正文样式 */

@@ -1,86 +1,120 @@
-:root {
-  --vp-c-brand-1: #1D7DFA;
-  --vp-c-brand-2: #3a8dfc;
-  --vp-c-brand-3: #589eff;
-  --vp-c-brand-soft: rgba(29, 125, 250, 0.14);
+/* ==========================================================================
+   Juejin Sync - Anti-Mainstream Craft Aesthetic Theme
+   Design Rules:
+   - NO Purple / Indigo / Lavender (#6366F1, #8B5CF6)
+   - NO flat plain backgrounds (must have organic SVG noise & fine grain)
+   - NO standard SaaS boilerplate & NO generic Tailwind palette
+   - Hard offset drop-shadows & distinct tactile physical edges
+   - Non-linear spring bezier curves (NO ease-in-out)
+   ========================================================================== */
 
-  --ferry-brand-gradient: linear-gradient(135deg, #1D7DFA 0%, #0056cc 100%);
-  --ferry-card-border: rgba(29, 125, 250, 0.15);
-  --ferry-glow-shadow: 0 8px 32px rgba(29, 125, 250, 0.18);
+:root {
+  /* Brand palette: Molten Clay & Dark Forest (Craft Physical Palette) */
+  --vp-c-brand-1: #D64016;
+  --vp-c-brand-2: #E65100;
+  --vp-c-brand-3: #BF360C;
+  --vp-c-brand-soft: rgba(214, 64, 22, 0.12);
+
+  /* Anti-mainstream accent & canvas colors */
+  --craft-ink: #171719;
+  --craft-ink-muted: #52525B;
+  --craft-paper: #F6F4ED;
+  --craft-paper-card: #FFFFFF;
+  --craft-paper-border: #171719;
+  --craft-accent-acid: #D6F831;
+  --craft-accent-warm: #FFEDD5;
+  --craft-accent-green: #0E6245;
+
+  /* Tactile offset shadows */
+  --craft-shadow: 4px 4px 0px #171719;
+  --craft-shadow-sm: 2px 2px 0px #171719;
+  --craft-shadow-hover: 6px 6px 0px #171719;
+  --craft-shadow-active: 1px 1px 0px #171719;
+
+  /* Anti-mainstream Non-linear Physics Spring Transitions */
+  --craft-spring: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --craft-snap: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* VitePress Overrides */
+  --vp-c-bg: #F6F4ED;
+  --vp-c-bg-alt: #EFECE3;
+  --vp-c-bg-elv: #FFFFFF;
+  --vp-c-bg-soft: #EDE8DE;
+  --vp-c-text-1: #171719;
+  --vp-c-text-2: #52525B;
+  --vp-c-text-3: #71717A;
+  --vp-c-divider: rgba(23, 23, 25, 0.12);
+  --vp-c-border: #171719;
 }
 
 .dark {
-  --vp-c-brand-1: #3a8dfc;
-  --vp-c-brand-2: #589eff;
-  --vp-c-brand-3: #80b5ff;
-  --vp-c-brand-soft: rgba(58, 141, 252, 0.18);
+  --vp-c-brand-1: #FF5722;
+  --vp-c-brand-2: #FF7043;
+  --vp-c-brand-3: #D84315;
+  --vp-c-brand-soft: rgba(255, 87, 34, 0.18);
 
-  --ferry-card-border: rgba(58, 141, 252, 0.22);
-  --ferry-glow-shadow: 0 8px 32px rgba(29, 125, 250, 0.28);
+  --craft-ink: #F5F2EB;
+  --craft-ink-muted: #A1A1AA;
+  --craft-paper: #121315;
+  --craft-paper-card: #1A1C1E;
+  --craft-paper-border: #3F3F46;
+  --craft-accent-acid: #CCFF00;
+  --craft-accent-warm: #382415;
+  --craft-accent-green: #22C55E;
+
+  --craft-shadow: 4px 4px 0px #000000;
+  --craft-shadow-sm: 2px 2px 0px #000000;
+  --craft-shadow-hover: 6px 6px 0px #000000;
+  --craft-shadow-active: 1px 1px 0px #000000;
+
+  --vp-c-bg: #121315;
+  --vp-c-bg-alt: #18191C;
+  --vp-c-bg-elv: #1F2124;
+  --vp-c-bg-soft: #1B1D20;
+  --vp-c-text-1: #F5F2EB;
+  --vp-c-text-2: #A1A1AA;
+  --vp-c-text-3: #71717A;
+  --vp-c-divider: rgba(245, 242, 235, 0.12);
+  --vp-c-border: #3F3F46;
 }
 
-/* Custom Hero styling enhancements */
-.VPHero .name {
-  background: linear-gradient(135deg, #1D7DFA 0%, #449bfb 50%, #00c6ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* ==========================================================================
+   Global Organic Noise Backdrop (NO pure flat plain backgrounds!)
+   ========================================================================== */
+html, body {
+  background-color: var(--vp-c-bg) !important;
+  color: var(--vp-c-text-1);
+  min-height: 100vh;
 }
 
-.VPHero .image-bg {
-  filter: drop-shadow(0 0 45px rgba(29, 125, 250, 0.35));
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Feature card enhancement */
-.VPFeature {
-  border: 1px solid var(--vp-c-bg-soft);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+.dark body::before {
+  opacity: 0.06;
 }
 
-.VPFeature:hover {
-  border-color: var(--vp-c-brand-1) !important;
-  transform: translateY(-2px);
-  box-shadow: var(--ferry-glow-shadow);
+/* Header & Nav custom tactile touches */
+.VPNav {
+  border-bottom: 2px solid var(--craft-paper-border) !important;
+  background: var(--vp-c-bg) !important;
 }
 
-/* Tag / Badge styling */
-.ferry-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  line-height: 1.2;
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
-  border: 1px solid var(--ferry-card-border);
+/* Clean typography without mushy roundness */
+h1, h2, h3, h4, h5, h6 {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 800;
 }
 
-.ferry-badge-green {
-  background: rgba(16, 185, 129, 0.12);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.25);
-}
-
-.ferry-badge-orange {
-  background: rgba(245, 158, 11, 0.12);
-  color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.25);
-}
-
-/* Pipeline box */
-.pipeline-container {
-  padding: 24px;
-  background: var(--vp-c-bg-soft);
-  border-radius: 12px;
-  border: 1px solid var(--vp-c-border);
-  margin: 20px 0;
-  text-align: center;
-}
-
-/* 彻底解决双横线问题：消除 hr 与 h2 自带顶边框的重复重叠 */
+/* Document HR fix */
 .vp-doc hr:has(+ h2) {
   display: none !important;
 }
@@ -88,7 +122,7 @@
 .vp-doc hr {
   margin: 32px 0;
   border: none;
-  border-top: 1px solid var(--vp-c-divider);
+  border-top: 2px solid var(--vp-c-border);
 }
 
 .vp-doc hr + h2 {
@@ -97,11 +131,25 @@
   margin-top: 24px !important;
 }
 
-
-/* Allow HomeView to use full width gracefully */
-.VPPage .container {
-  max-width: 100% !important;
-  padding: 0 !important;
+/* Custom Anti-mainstream Badge */
+.craft-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  background: var(--craft-accent-acid);
+  color: #171719;
+  border: 1.5px solid #171719;
+  box-shadow: 2px 2px 0px #171719;
 }
 
-
+.dark .craft-badge {
+  background: var(--craft-accent-acid);
+  color: #171719;
+  border-color: #000000;
+  box-shadow: 2px 2px 0px #000000;
+}

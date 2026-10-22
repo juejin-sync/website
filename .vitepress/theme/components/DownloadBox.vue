@@ -10,52 +10,52 @@ const handleDownload = () => {
 </script>
 
 <template>
-  <div class="ferry-download-wrapper">
-    <div class="ferry-download-card">
-      <div class="download-content">
-        <div class="download-tag-row">
-          <span class="ferry-pill">免翻直链</span>
-          <span class="ferry-pill ferry-pill-sub">官方原版 ZIP 安装包</span>
-        </div>
-        <h3 class="download-headline">直接下载离线安装包</h3>
-        <p class="download-subtext">
-          国内网络无需翻墙或访问 Chrome Web Store 商店，直接下载 ZIP 压缩包，解压后拖入浏览器开发者模式即可秒级启用。
+  <div class="craft-dl-container">
+    <div class="craft-dl-card">
+      <div class="craft-tape-badge">离线安装包</div>
+
+      <div class="craft-dl-header">
+        <h3 class="craft-dl-title">不用翻墙，直接下载。</h3>
+        <p class="craft-dl-desc">
+          <span>解压后拖进浏览器。</span>
+          <span>两步开启，当场就能用。</span>
+          <span>不用折腾任何外部网络。</span>
         </p>
+      </div>
 
-        <div class="download-btn-group">
-          <a :href="release.downloadUrl" download @click="handleDownload" class="ferry-primary-btn">
-            <svg class="btn-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            <div class="btn-text-wrap">
-              <span class="btn-main-text">一键下载 ZIP 离线安装包</span>
-              <span class="btn-sub-tag">{{ release.version }} · {{ release.size }}</span>
-            </div>
-          </a>
+      <div class="craft-btn-row">
+        <a :href="release.downloadUrl" download @click="handleDownload" class="craft-btn-primary">
+          <svg class="craft-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <div class="craft-btn-info">
+            <span class="craft-btn-main">下载 ZIP 压缩包</span>
+            <span class="craft-btn-sub">{{ release.version }} · {{ release.size }}</span>
+          </div>
+        </a>
 
-          <a :href="release.githubUrl" target="_blank" rel="noopener" class="ferry-outline-btn">
-            <svg class="btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
-            <span>GitHub Releases 发行页</span>
-          </a>
+        <a :href="release.githubUrl" target="_blank" rel="noopener" class="craft-btn-ghost">
+          <svg class="craft-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>查看 GitHub 源码 ↗</span>
+        </a>
+      </div>
+
+      <div class="craft-specs-grid">
+        <div class="craft-spec-tag">
+          <span class="craft-dot"></span>
+          <span>全 Chromium 内核通用</span>
         </div>
-
-        <div class="download-specs">
-          <div class="spec-item">
-            <span class="spec-dot"></span>
-            <span>适配 Chrome / Edge / Brave / 360 等所有 Chromium 浏览器</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-dot"></span>
-            <span>Manifest V3 官方现代架构</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-dot"></span>
-            <span>100% 端侧安全 · 零 Cookie 收集</span>
-          </div>
+        <div class="craft-spec-tag">
+          <span class="craft-dot"></span>
+          <span>现代 Manifest V3 架构</span>
+        </div>
+        <div class="craft-spec-tag">
+          <span class="craft-dot"></span>
+          <span>纯本地运行，零泄露</span>
         </div>
       </div>
     </div>
@@ -63,68 +63,58 @@ const handleDownload = () => {
 </template>
 
 <style scoped>
-.ferry-download-wrapper {
-  margin: 36px 0;
+.craft-dl-container {
+  margin: 32px 0 40px;
 }
 
-.ferry-download-card {
-  background: linear-gradient(135deg, rgba(29, 125, 250, 0.07) 0%, rgba(29, 125, 250, 0.02) 100%);
-  border: 1px solid rgba(29, 125, 250, 0.22);
-  border-radius: 16px;
-  padding: 32px 28px;
+.craft-dl-card {
   position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  background: var(--craft-paper-card);
+  border: 2px solid var(--craft-paper-border);
+  box-shadow: var(--craft-shadow);
+  border-radius: 6px;
+  padding: 32px 28px 24px;
+  background-image: 
+    radial-gradient(var(--craft-paper-border) 0.6px, transparent 0.6px);
+  background-size: 14px 14px;
 }
 
-.ferry-download-card::before {
-  content: '';
+.craft-tape-badge {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #1D7DFA, #00d2ff, #1D7DFA);
-}
-
-.download-tag-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.ferry-pill {
+  top: -12px;
+  left: 24px;
+  background: var(--craft-accent-acid);
+  color: #171719;
+  border: 1.5px solid #171719;
   font-size: 0.78rem;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  background: #1D7DFA;
-  color: #fff;
-  letter-spacing: 0.5px;
+  font-weight: 800;
+  padding: 2px 10px;
+  letter-spacing: 0.05em;
+  transform: rotate(-1.5deg);
+  box-shadow: 2px 2px 0px #171719;
 }
 
-.ferry-pill-sub {
-  background: rgba(29, 125, 250, 0.12);
-  color: var(--vp-c-brand-1);
-  border: 1px solid rgba(29, 125, 250, 0.2);
+.dark .craft-tape-badge {
+  box-shadow: 2px 2px 0px #000000;
 }
 
-.download-headline {
-  font-size: 1.55rem;
-  font-weight: 700;
-  margin: 0 0 8px 0;
+.craft-dl-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 0 0 10px 0;
   color: var(--vp-c-text-1);
 }
 
-.download-subtext {
-  font-size: 0.95rem;
+.craft-dl-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.92rem;
   color: var(--vp-c-text-2);
-  line-height: 1.6;
   margin: 0 0 24px 0;
-  max-width: 680px;
 }
 
-.download-btn-group {
+.craft-btn-row {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
@@ -132,97 +122,94 @@ const handleDownload = () => {
   margin-bottom: 24px;
 }
 
-.ferry-primary-btn {
+.craft-btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 26px;
-  background: linear-gradient(135deg, #1D7DFA 0%, #005ce6 100%);
-  color: #ffffff !important;
-  border-radius: 12px;
+  padding: 10px 22px;
+  background: var(--vp-c-brand-1);
+  color: #FFFFFF !important;
+  border: 2px solid var(--craft-paper-border);
+  border-radius: 4px;
+  box-shadow: var(--craft-shadow-sm);
   text-decoration: none !important;
-  font-weight: 600;
-  box-shadow: 0 6px 20px rgba(29, 125, 250, 0.32);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 700;
+  transition: var(--craft-snap);
 }
 
-.ferry-primary-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 26px rgba(29, 125, 250, 0.45);
-  background: linear-gradient(135deg, #308cfc 0%, #0066ff 100%);
+.craft-btn-primary:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--craft-shadow);
 }
 
-.btn-text-wrap {
+.craft-btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--craft-shadow-active);
+}
+
+.craft-btn-info {
   display: flex;
   flex-direction: column;
-  text-align: left;
   line-height: 1.25;
 }
 
-.btn-main-text {
-  font-size: 1rem;
+.craft-btn-main {
+  font-size: 0.95rem;
 }
 
-.btn-sub-tag {
-  font-size: 0.72rem;
-  opacity: 0.88;
-  font-weight: 400;
+.craft-btn-sub {
+  font-size: 0.75rem;
+  opacity: 0.9;
 }
 
-.ferry-outline-btn {
+.craft-btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--vp-c-border);
-  background: var(--vp-c-bg);
+  padding: 10px 18px;
+  background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1) !important;
-  font-size: 0.95rem;
-  font-weight: 500;
+  border: 2px solid var(--craft-paper-border);
+  border-radius: 4px;
+  box-shadow: var(--craft-shadow-sm);
   text-decoration: none !important;
-  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: var(--craft-snap);
 }
 
-.ferry-outline-btn:hover {
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1) !important;
-  transform: translateY(-1px);
+.craft-btn-ghost:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--craft-shadow);
 }
 
-.download-specs {
+.craft-btn-ghost:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--craft-shadow-active);
+}
+
+.craft-specs-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  font-size: 0.84rem;
-  color: var(--vp-c-text-2);
-  border-top: 1px dashed rgba(29, 125, 250, 0.18);
-  padding-top: 16px;
+  gap: 12px 20px;
+  padding-top: 18px;
+  border-top: 1.5px dashed var(--craft-paper-border);
 }
 
-.spec-item {
-  display: flex;
+.craft-spec-tag {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
 }
 
-.spec-dot {
-  width: 6px;
-  height: 6px;
+.craft-dot {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: #10b981;
-}
-
-@media (max-width: 640px) {
-  .ferry-download-card {
-    padding: 24px 18px;
-  }
-  .download-btn-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .ferry-primary-btn, .ferry-outline-btn {
-    justify-content: center;
-  }
+  background: var(--craft-accent-green);
+  border: 1px solid var(--craft-paper-border);
 }
 </style>
