@@ -19,7 +19,7 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}logo.svg` }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${base}favicon.png` }],
     ['link', { rel: 'shortcut icon', href: `${base}favicon.ico` }],
-    ['meta', { name: 'theme-color', content: '#1D7DFA' }],
+    ['meta', { name: 'theme-color', content: '#D64016' }],
     ['meta', { name: 'keywords', content: '掘金, CSDN, 微信公众号, 博客园, 知乎, 文章同步, 掘金同步助手, juejin-sync, Chrome扩展, Markdown, 图床转存, 草稿幂等, Manifest V3' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: '掘金同步助手 · 创作者多平台文章同步工具' }],
